@@ -409,6 +409,16 @@ export default function AdminCoursesPage() {
                             <Input id="price" name="price" type="number" value={editingCourse.price} onChange={handleChange} />
                         </div>
                         <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="feeType" className="text-right">Fee type</Label>
+                            <Select name="feeType" value={editingCourse.feeType || 'registration'} onValueChange={(value) => handleSelectChange('feeType', value)}>
+                                <SelectTrigger id="feeType"><SelectValue/></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="registration">Registration fee (includes first month)</SelectItem>
+                                    <SelectItem value="full">Total fee (one-time)</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="grid grid-cols-2 items-center gap-2">
                             <Label htmlFor="level" className="text-right">Level</Label>
                             <Select name="level" value={editingCourse.level} onValueChange={(value) => handleSelectChange('level', value)}>
                                 <SelectTrigger><SelectValue/></SelectTrigger>

@@ -34,6 +34,8 @@ import { CourseCountdown } from "./course-countdown";
 import { useToast } from "@/hooks/use-toast";
 import { renderMarkdownToHtml } from "@/lib/markdown";
 import { ToastAction } from "@/components/ui/toast";
+import { PayEnrollDialog } from "@/components/pay-enroll-dialog";
+import { feeLabel, feeNote, feeShortLabel, formatRupees } from "@/lib/fees";
 
 // Custom Dharma Wheel Icon
 const DharmaIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -110,7 +112,7 @@ const highlightIcons: Record<string, React.ElementType> = {
 
 export function CourseDetailClient({ course }: { course: Course }) {
   const { toast } = useToast();
-  const ENROLL_FORM_URL = "https://forms.gle/weA9tXBK8jTb4GDP8";
+  const [enrollOpen, setEnrollOpen] = useState(false);
   const {
     title,
     description,
@@ -122,6 +124,7 @@ export function CourseDetailClient({ course }: { course: Course }) {
     whoCanAttend,
     startDate,
     price,
+    feeType,
     duration,
     lectures,
     level,
@@ -186,8 +189,8 @@ export function CourseDetailClient({ course }: { course: Course }) {
         title: "Reserve Your Slot!",
         description: `Seats for '${title}' are filling up. Enroll today!`,
         action: (
-          <ToastAction asChild altText="Enroll Now">
-            <a href={ENROLL_FORM_URL} target="_blank" rel="noreferrer">Enroll Now</a>
+          <ToastAction altText="Pay and enroll" onClick={() => setEnrollOpen(true)}>
+            Enroll now
           </ToastAction>
         ),
         duration: 8000,
@@ -204,6 +207,14 @@ export function CourseDetailClient({ course }: { course: Course }) {
 
   return (
     <div className="py-8 md:py-16">
+      <PayEnrollDialog
+        open={enrollOpen}
+        onOpenChange={setEnrollOpen}
+        slug={course.slug}
+        title={title}
+        price={price}
+        feeType={feeType}
+      />
       {/* Hero Section */}
       <section className="container mx-auto px-4">
         <div className="grid lg:grid-cols-3 gap-8">
@@ -216,7 +227,7 @@ export function CourseDetailClient({ course }: { course: Course }) {
               {category && <span className="px-2 py-1 bg-muted rounded">{category}</span>}
               {level && <span className="px-2 py-1 bg-muted rounded">{level}</span>}
               {language && <span className="px-2 py-1 bg-muted rounded">{language}</span>}
-              {typeof price !== 'undefined' && <span className="px-2 py-1 bg-muted rounded">₹{price}</span>}
+              {typeof price !== 'undefined' && <span className="px-2 py-1 bg-muted rounded">{formatRupees(price)} · {feeShortLabel(feeType)}</span>}
               {typeof duration !== 'undefined' && duration > 0 && <span className="px-2 py-1 bg-muted rounded">{Math.floor(duration / 60)}h {duration % 60}m</span>}
               {typeof lectures !== 'undefined' && lectures > 0 && <span className="px-2 py-1 bg-muted rounded">{lectures} lectures</span>}
               {instructor && <span className="px-2 py-1 bg-muted rounded">Instructor: {instructor.name}</span>}
@@ -259,10 +270,14 @@ export function CourseDetailClient({ course }: { course: Course }) {
                 <CardContent className="p-6 bg-background">
                   <CourseCountdown targetDate={startDate ? new Date(startDate) : undefined} />
                   {typeof price !== 'undefined' && (
-                    <div className="mt-4 text-lg font-semibold">Price: ₹{price}</div>
+                    <div className="mt-4">
+                    <div className="text-2xl font-semibold">{formatRupees(price)}</div>
+                    <div className="text-sm font-medium text-primary">{feeLabel(feeType)}</div>
+                    <p className="mt-1 text-xs text-muted-foreground">{feeNote(feeType)}</p>
+                  </div>
                   )}
-                  <Button asChild size="lg" className="w-full text-lg mt-4">
-                    <a href={ENROLL_FORM_URL} target="_blank" rel="noreferrer">Enroll Now</a>
+                  <Button size="lg" className="w-full text-lg mt-4" onClick={() => setEnrollOpen(true)}>
+                    Pay &amp; Enroll
                   </Button>
                 </CardContent>
               </Card>
@@ -460,10 +475,14 @@ export function CourseDetailClient({ course }: { course: Course }) {
               <CardContent className="p-6 bg-background">
                 <CourseCountdown targetDate={startDate ? new Date(startDate) : undefined} />
                 {typeof price !== 'undefined' && (
-                  <div className="mt-4 text-lg font-semibold">Price: ₹{price}</div>
+                  <div className="mt-4">
+                    <div className="text-2xl font-semibold">{formatRupees(price)}</div>
+                    <div className="text-sm font-medium text-primary">{feeLabel(feeType)}</div>
+                    <p className="mt-1 text-xs text-muted-foreground">{feeNote(feeType)}</p>
+                  </div>
                 )}
-                <Button asChild size="lg" className="w-full text-lg mt-4">
-                  <a href={ENROLL_FORM_URL} target="_blank" rel="noreferrer">Enroll Now</a>
+                <Button size="lg" className="w-full text-lg mt-4" onClick={() => setEnrollOpen(true)}>
+                  Pay &amp; Enroll
                 </Button>
               </CardContent>
             </Card>

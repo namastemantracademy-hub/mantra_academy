@@ -7,6 +7,9 @@ export type Course = {
   description: string;
   fullDescription: string;
   price: number;
+  // "registration" (default): price is a registration fee that also covers the first month.
+  // "full": price is the total fee (e.g. a workshop).
+  feeType?: "registration" | "full";
   rating: number;
   reviews: number;
   // total duration in minutes

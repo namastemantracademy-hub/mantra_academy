@@ -9,6 +9,7 @@ export interface ICourse extends Document {
   description?: string;
   fullDescription?: string;
   price?: number;
+  feeType?: "registration" | "full";
   rating?: number;
   reviews?: number;
   // total duration in minutes
@@ -54,6 +55,8 @@ const CourseSchema = new Schema<ICourse>({
   description: { type: String, required: true },
   fullDescription: { type: String, required: true },
   price: { type: Number, required: true },
+  // "registration" = registration fee that also covers the first month; "full" = total fee
+  feeType: { type: String, enum: ["registration", "full"], default: "registration" },
   rating: Number,
   reviews: Number,
   // total duration in minutes

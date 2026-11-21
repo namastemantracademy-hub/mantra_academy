@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useRef } from "react";
+import { feeShortLabel } from "@/lib/fees";
 
 
 const CourseCard = ({ course }: { course: any }) => {
@@ -52,7 +53,7 @@ const CourseCard = ({ course }: { course: any }) => {
           <p className="text-card-foreground/70 mt-2 text-sm md:text-base">{course.description}</p>
           <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
             {typeof course.price !== 'undefined' && (
-              <div className="font-semibold">₹{course.price}</div>
+              <div className="text-right"><div className="font-semibold">₹{course.price}</div><div className="text-xs text-muted-foreground">{feeShortLabel(course.feeType)}</div></div>
             )}
             {typeof course.duration !== 'undefined' && Number(course.duration) > 0 && (
               <div>{Math.floor(course.duration/60)}h {course.duration%60}m</div>
