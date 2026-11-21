@@ -168,7 +168,7 @@ export function PayEnrollDialog({ open, onOpenChange, slug, title, price, feeTyp
             By paying, you agree to our{" "}
             <a href="/terms" target="_blank" className="underline underline-offset-2">Terms</a> and{" "}
             <a href="/refund-policy" target="_blank" className="underline underline-offset-2">Refund Policy</a>
-            {" "}(full refund within 7 days).
+            {" "}(refund within 7 days).
           </p>
         </form>
       </DialogContent>

@@ -4,7 +4,7 @@ import { PolicyPage, CONTACT_EMAIL, CONTACT_PHONE_DISPLAY } from "@/components/p
 
 export const metadata: Metadata = {
   title: "Refund & Cancellation Policy | Mantra Academy",
-  description: "Full refund within 7 days of payment or before your second class.",
+  description: "Refund within 7 days of payment or before your second class.",
 };
 
 export default function RefundPolicyPage() {
@@ -16,8 +16,10 @@ export default function RefundPolicyPage() {
       <section>
         <h2>Our promise</h2>
         <p>
-          You can ask for a <b>full refund within 7 days of your payment, or before your second class,
-          whichever comes first</b>. This applies to all our courses, including the Puja vidhi workshop.
+          You can ask for a <b>refund within 7 days of your payment, or before your second class,
+          whichever comes first</b>. We return your full fee <b>minus the payment-gateway charge (about 2.4%)</b>,
+          which our payment provider keeps and doesn't return to us. For example, on a ₹1,500 fee you get back
+          about ₹1,464. This applies to all our courses, including the Puja vidhi workshop.
         </p>
       </section>
 
