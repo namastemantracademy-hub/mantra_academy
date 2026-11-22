@@ -206,7 +206,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     subtitle: "Daily prayers, stories and values for children",
     lead: "Daily prayers, ślokas and stories for children aged 4–14 — taught with patience, so *values* and *devotion* grow naturally.",
     heroImage: "/images/course/hero-jijnasa.webp",
-    heroAlt: "Dr. Karthik Sharma",
+    heroAlt: "Dr. Jyothi Sharma",
     heroCard: { icon: "child", title: "Ages 4–14", text: "small, friendly batches" },
     journeyTitle: "Jijñāsā",
     journey: [
@@ -215,7 +215,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { icon: "sound", tag: "Śloka", title: "Ślokas by heart", text: "Learn ślokas with clear pronunciation and meaning." },
       { icon: "home", tag: "Kuṭumba", title: "Chanting with family", text: "Practise at home, together with parents." },
     ],
-    teachers: ["karthik", "jyothi"],
+    teachers: ["jyothi"],
   },
 };
 
