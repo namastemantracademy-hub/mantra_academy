@@ -74,7 +74,7 @@ export function SacredAbout() {
 
       {/* INSPIRATION */}
       <section><div className="wrap split rev">
-        <div className="split-img guru medal" data-rv><img src="/images/guru.jpg" alt="Ācārya Dr. Ramachandra Bhat Kotemane" loading="lazy" /></div>
+        <div className="split-img guru" data-rv><img src="/images/guru.jpg" alt="Ācārya Dr. Ramachandra Bhat Kotemane" loading="lazy" /></div>
         <div data-rv>
           <div className="eyebrow">Our inspiration</div>
           <h2 className="h">Ācārya Dr. Ramachandra <em>Bhat Kotemane</em></h2>
