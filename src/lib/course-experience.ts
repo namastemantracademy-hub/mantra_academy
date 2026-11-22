@@ -143,7 +143,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     subtitle: "Namakam and Chamakam from the Kṛṣṇa Yajurveda",
     lead: "Learned with correct *svara*, *padapāṭha*, word-by-word meaning and personal chanting correction. Śrī Rudram is not a song to memorise — in the Veda, the sound is the mantra. This sādhana takes you from your first syllable to chanting all eleven anuvākas with confidence, clarity and devotion.",
     heroImage: "/images/course/hero-rudra.webp",
-    heroAlt: "Dr. Karthik Sharma teaching online",
+    heroAlt: "Dr. Karthik Sharma chanting, marking the svara with his hand",
     heroCard: { icon: "mala", title: "Live with your Āchārya", text: "every class recorded" },
     stats: { completed: "100+", rating: "4.9" },
     facts: [
@@ -327,7 +327,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     subtitle: "An introduction to the Vedas and Vedic chanting",
     lead: "Begin your journey into the Vedas the traditional way — hear the *svara* from your teacher, repeat it exactly, and understand what you chant.",
     heroImage: "/images/course/hero-vedashiksha.webp",
-    heroAlt: "Dr. Karthik Sharma",
+    heroAlt: "Dr. Karthik Sharma with a Veda text",
     heroCard: { icon: "palm", title: "Gurukula method", text: "listen · repeat · correct" },
     journeyTitle: "Vedaśikṣā",
     journey: [

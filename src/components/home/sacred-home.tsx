@@ -158,7 +158,7 @@ export function SacredHome({ courses, announcements, testimonies }: { courses: C
 
       {/* PHILOSOPHY */}
       <section className="alt"><div className="wrap split">
-        <div className="split-img arch" data-rv><img src="/images/home/heritage.webp" alt="Learning by a heritage wall" loading="lazy" /></div>
+        <div className="split-img arch" data-rv><img src="/images/home/temple.webp" alt="Carved stone temple tower" loading="lazy" /></div>
         <div data-rv>
           <div className="eyebrow">Our philosophy</div>
           <h2 className="h">Ancient wisdom, <em>a living guide</em></h2>
