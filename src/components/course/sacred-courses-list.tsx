@@ -5,10 +5,9 @@ import Link from "next/link";
 import type { Course } from "@/lib/initial-data";
 import { PayEnrollDialog } from "@/components/pay-enroll-dialog";
 import { WaitlistDialog } from "@/components/waitlist-dialog";
-import { feeShortLabel, formatRupees } from "@/lib/fees";
-import { batchStatus } from "@/lib/batch";
 import { getCourseExperience } from "@/lib/course-experience";
 import { Illus, IllustrationSprite } from "./illustrations";
+import { CourseCard } from "./course-card";
 import "./sacred-course.css";
 
 type Group = "all" | "chanting" | "puja" | "sanskrit" | "children";
@@ -20,12 +19,6 @@ const FILTERS: [Group, string][] = [
   ["children", "For children"],
 ];
 const WHATSAPP_UPDATES = "https://wa.me/919108787550?text=" + encodeURIComponent("Namaste! Please send me updates about new batches at Mantra Academy.");
-
-function imageUrl(img: any): string {
-  if (!img) return "";
-  if (typeof img === "string") return img;
-  return img.secure_url || img.url || img.src || "";
-}
 
 function Mandala() {
   const petals = Array.from({ length: 12 }, (_, i) => i * 30);
@@ -80,55 +73,6 @@ export function SacredCoursesList({ courses }: { courses: Course[] }) {
     return () => io.disconnect();
   }, [filter]);
 
-  const Card = ({ c, x }: { c: Course; x: ReturnType<typeof getCourseExperience> }) => {
-    const title = x.displayTitle || c.title;
-    const wait = c.registrationsOpen === false;
-    const b = wait ? { short: "Opening soon", pill: "" } : batchStatus(c.startDate);
-    const img = x.heroImage || imageUrl(c.image);
-    const rating = c.studentRating?.trim() || x.stats?.rating;
-    const completed = c.studentsCompleted?.trim() || x.stats?.completed;
-    const badges = [
-      x.group === "children" ? "For children" : null,
-      /beginner/i.test(c.level || "") || x.group === "children" ? "Beginner friendly" : null,
-      "Live classes",
-      "Recordings",
-    ].filter(Boolean) as string[];
-    const href = `/courses/${c.slug}`;
-    return (
-      <article className={`cc${wait ? " wait" : ""}`} data-rv>
-        <Link href={href} className="cc-img" aria-label={title}>
-          {img && <img src={img} alt="" loading="lazy" />}
-          <span className={`cc-status${wait ? " w" : ""}`}>{wait ? "Waitlist" : "Open now"}</span>
-          {x.heroCard && <span className="cc-ill"><Illus name={x.heroCard.icon} /></span>}
-        </Link>
-        <div className="cc-body">
-          <div className="cc-badges">{badges.map((t) => <span key={t}>{t}</span>)}</div>
-          <h3><Link href={href}>{title}</Link></h3>
-          {x.subtitle && <div className="cc-sub">{x.subtitle}</div>}
-          <p className="cc-line">{x.cardLine || c.description}</p>
-          <div className="cc-meta">
-            <span><Illus name="s-cal" />{b.short}</span>
-            {c.language && <span><Illus name="s-lang" />{c.language.split(/[\\/,]/)[0].trim()}</span>}
-            {rating && <span className="r">★ {rating}{completed ? ` · ${completed} completed` : ""}</span>}
-          </div>
-          <div className="cc-foot">
-            {typeof c.price === "number" && (
-              <div className="cc-price">{formatRupees(c.price)}<small>{feeShortLabel(c.feeType)}</small></div>
-            )}
-            <div className="cc-ctas">
-              <Link href={href} className="btn ghost">Explore →</Link>
-              {wait ? (
-                <button type="button" className="btn" onClick={() => setWaitFor(c)}>Join the waitlist</button>
-              ) : (
-                <button type="button" className="btn" onClick={() => setPayFor(c)}>Pay &amp; Enroll</button>
-              )}
-            </div>
-          </div>
-        </div>
-      </article>
-    );
-  };
-
   return (
     <div className="sacred clist" ref={rootRef}>
       <IllustrationSprite />
@@ -169,7 +113,7 @@ export function SacredCoursesList({ courses }: { courses: Course[] }) {
       {open.length > 0 && (
         <section><div className="wrap">
           <div className="lhead"><div className="eyebrow">Registrations open</div><h2 className="h">Begin <em>your sādhana</em></h2></div>
-          <div className="cgrid">{open.map(({ c, x }) => <Card key={c.slug} c={c} x={x} />)}</div>
+          <div className="cgrid">{open.map(({ c, x }) => <CourseCard key={c.slug} c={c} onPay={setPayFor} onWait={setWaitFor} />)}</div>
         </div></section>
       )}
 
@@ -177,7 +121,7 @@ export function SacredCoursesList({ courses }: { courses: Course[] }) {
       {waiting.length > 0 && (
         <section className="alt"><div className="wrap">
           <div className="lhead"><div className="eyebrow">Opening soon</div><h2 className="h">Join the <em>waitlist</em></h2><p className="lead">Be the first to know when the next batch opens.</p></div>
-          <div className="cgrid">{waiting.map(({ c, x }) => <Card key={c.slug} c={c} x={x} />)}</div>
+          <div className="cgrid">{waiting.map(({ c, x }) => <CourseCard key={c.slug} c={c} onPay={setPayFor} onWait={setWaitFor} />)}</div>
         </div></section>
       )}
 

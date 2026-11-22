@@ -472,3 +472,51 @@ body:has(.sacred) .fixed.bottom-6.right-6{width:48px!important;height:48px!impor
 .sacred .photo .img{box-shadow:0 24px 60px rgba(0,0,0,.4)}
 .sacred .cc-img img,.sacred .cc{will-change:auto}
 .sacred .hero,.sacred .facts,.sacred section{contain:paint}
+
+/* ===== HOME & ABOUT ===== */
+.sacred .btn.ghost{background:transparent;color:var(--gold-soft);border:1px solid rgba(224,178,92,.6);box-shadow:none}
+.sacred .btn.ghost:hover{background:rgba(224,178,92,.08)}
+.sacred .ctas.left,.sacred .lstats.left{justify-content:flex-start}
+.sacred.home .hero h1{font-size:68px;line-height:1.04}
+.sacred.home .hero h1 .h1em{display:block;color:var(--gold-soft);font-style:italic}
+.sacred.home .hero .sub{color:var(--gold2);font-size:15px;letter-spacing:.04em;margin-top:16px}
+.sacred.home .hero .ctas{margin-top:0}
+.sacred.home .photo .img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.sacred .news{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#24110e}
+.sacred .news .wrap{display:flex;gap:22px;align-items:center;min-height:54px;overflow-x:auto;scrollbar-width:none;white-space:nowrap;font-size:14px}
+.sacred .news .wrap::-webkit-scrollbar{display:none}
+.sacred .news .nl{flex:none;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#2a1206;background:var(--gold2);border-radius:999px;padding:4px 10px;font-weight:600}
+.sacred .news a,.sacred .news span{color:var(--body);text-decoration:none}
+.sacred .news a:hover{color:var(--gold-soft)}
+.sacred .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center}
+.sacred .split.rev>:first-child{order:2}
+.sacred .split .lead{margin-top:14px}
+.sacred .split-img{position:relative}
+.sacred .split-img img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:28px 200px 28px 200px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.sacred .split-img.guru img{aspect-ratio:4/5;object-position:50% 0;border-radius:200px 28px 200px 28px}
+.sacred .role-line{color:var(--gold2);font-size:14px;letter-spacing:.06em;margin-top:8px}
+.sacred .vm{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;text-align:left}
+.sacred .vmc{border:1px solid var(--line);border-radius:22px;padding:32px;background:rgba(255,255,255,.02);box-shadow:var(--glow)}
+.sacred .vmc p{font:500 23px/1.45 var(--serif);color:var(--ivory);margin:12px 0 0}
+.sacred .shloka{margin:56px auto 0;max-width:760px}
+.sacred .shloka .dev{font-family:var(--deva,serif);font-size:24px;line-height:1.8;color:var(--gold-soft);margin:0}
+.sacred .shloka .tr{font-style:italic;color:var(--body);font-size:15px;margin:12px 0 0}
+.sacred .shloka .mn{color:var(--muted,var(--body));font-size:14px;margin:8px 0 0;opacity:.85}
+.sacred .bios{display:grid;gap:24px;margin-top:40px}
+.sacred .bio{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:start;border:1px solid var(--line);border-radius:24px;padding:32px;background:rgba(255,255,255,.02)}
+.sacred .bio .ph img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:110px 18px 110px 18px}
+.sacred .bio h3{font:600 32px/1.1 var(--serif);color:var(--ivory);margin:0}
+.sacred .bio .role{color:var(--gold2);font-size:14px;margin:6px 0 14px}
+.sacred .bio p{color:var(--body);line-height:1.7;font-size:16px;margin:0 0 12px}
+@media (max-width:900px){
+  .sacred.home .hero h1{font-size:46px}
+  .sacred .split,.sacred .vm{grid-template-columns:1fr;gap:32px}
+  .sacred .split.rev>:first-child{order:0}
+  .sacred .split-img img{aspect-ratio:4/4.4}
+  .sacred .vmc{padding:24px}
+  .sacred .vmc p{font-size:20px}
+  .sacred .bio{grid-template-columns:1fr;padding:22px;gap:18px}
+  .sacred .bio .ph{max-width:200px}
+  .sacred .shloka .dev{font-size:19px}
+  .sacred .ctas.left .btn{flex:1 1 auto;justify-content:center}
+}
