@@ -1,30 +1,28 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BlogPostContent } from "@/components/blog-post";
 import { getPostBySlug } from "@/services/blogService";
+import { SacredArticle } from "@/components/home/sacred-article";
+import { cormorant, inter, tiro } from "../../courses/[slug]/fonts";
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  // `params` can be a thenable in some Next.js runtimes — await it first
+export const dynamic = "force-dynamic";
+
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-
-  const postDoc = await getPostBySlug(slug);
-
-  if (!postDoc) {
-    notFound();
-  }
-
-  const post = JSON.parse(JSON.stringify(postDoc));
-
-  return <BlogPostContent post={post} />;
+  const post: any = await getPostBySlug(slug);
+  if (!post) return { title: "Article not found | Mantra Academy" };
+  return { title: `${post.title} | Mantra Academy`, description: post.excerpt || undefined };
 }
 
-// Note: generateStaticParams is commented out because the data is now dynamic
-// and managed in a client-side context. If you move to a server-side data
-// source, you can re-enable this.
-// export async function generateStaticParams() {
-//   // This won't work with client-side context state
-//   return [];
-// }
+export default async function BlogPostPage({ params }: Props) {
+  const { slug } = await params;
+  const postDoc = await getPostBySlug(slug);
+  if (!postDoc) notFound();
+  const post = JSON.parse(JSON.stringify(postDoc));
+  return (
+    <div className={`${cormorant.variable} ${inter.variable} ${tiro.variable}`}>
+      <SacredArticle post={post} />
+    </div>
+  );
+}
