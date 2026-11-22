@@ -166,3 +166,10 @@
   z-index: -1;
   pointer-events: none;
 }
+
+/* Performance: "frosted glass" blur recalculates on every scroll and made pages lag.
+   The cards keep their colours; only the background blur is switched off. */
+.backdrop-blur-sm, .backdrop-blur, .backdrop-blur-md, .backdrop-blur-lg {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}

@@ -429,3 +429,46 @@
   .sacred .cc-ctas{width:100%}
   .sacred .cc-ctas .btn{flex:1;justify-content:center}
 }
+
+/* ===== Card photo + illustration badge ===== */
+.sacred .cc-ill{right:auto;left:10px}
+@media (max-width:600px){
+  .sacred .cc-img{min-height:0;height:270px}
+  .sacred .cc-img img{object-position:50% 42%}
+}
+
+/* ===== Header, footer and chat bubble match the course pages (Soft Kumkum) ===== */
+body:has(.sacred) header.sticky{background:#2b1512!important;border-bottom:1px solid rgba(224,178,92,.35)!important;box-shadow:0 6px 24px rgba(0,0,0,.25)!important}
+body:has(.sacred) header.sticky a,body:has(.sacred) header.sticky button{color:#F6EEDF}
+body:has(.sacred) header.sticky a:hover{color:#F2CE84}
+body:has(.sacred) footer{background:linear-gradient(180deg,#2b1512,#231010)!important;border-top:1px solid rgba(224,178,92,.35)!important;color:#DCC6A3!important}
+body:has(.sacred) footer h3{color:#F2CE84!important}
+body:has(.sacred) footer a:hover{color:#F6D894!important}
+body:has(.sacred) .fixed.bottom-6.right-6{width:48px!important;height:48px!important;right:14px!important;bottom:14px!important;background:#3a1914!important;color:#F2CE84!important;border:1px solid rgba(224,178,92,.7);box-shadow:0 0 18px rgba(240,176,80,.3)!important;animation:none!important}
+
+/* ===== Phones & tablets: lighter effects so scrolling stays smooth ===== */
+@media (max-width:900px){
+  .sacred .hero .mandala,.sacred .photo .img,.sacred .photo .badge,.sacred .photo .book,.sacred .stp .num,.sacred .arr,.sacred .parr,.sacred .bpill{animation:none!important}
+  .sacred .pnav,.sacred .mobilebar,.sacred .photo .book{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  .sacred .pnav{background:#2b1512}
+  .sacred .fy,.sacred .g,.sacred .t,.sacred .tq,.sacred .cy,.sacred .bf,.sacred .mod,.sacred .part,.sacred .onboard li,.sacred .stp .card,.sacred .pn,.sacred .rstat,.sacred .tstats span,.sacred .cc,.sacred .lstats span,.sacred .photo .badge,.sacred .photo .book{box-shadow:0 0 0 1px rgba(242,206,132,.08),0 4px 14px rgba(0,0,0,.25)!important}
+  .sacred .batch,.sacred .price-card,.sacred .final{box-shadow:0 0 0 1px rgba(242,206,132,.15),0 6px 20px rgba(0,0,0,.3)!important}
+  .sacred .photo .img{box-shadow:0 12px 30px rgba(0,0,0,.4)!important}
+  body:has(.sacred .mobilebar) .fixed.bottom-6.right-6{bottom:84px!important}
+}
+
+/* ===== Performance: smooth scrolling on every device =====
+   Keep the look, drop the effects that repaint on every frame. */
+.sacred{
+  --glow:0 0 0 1px rgba(242,206,132,.10),0 0 14px rgba(240,176,80,.18);
+  --glow-strong:0 0 0 1px rgba(242,206,132,.22),0 0 22px rgba(240,176,80,.32);
+}
+.sacred .hero .mandala,.sacred .photo .img,.sacred .photo .badge,.sacred .photo .book,
+.sacred .stp .num,.sacred .arr,.sacred .parr,.sacred .bpill,.sacred .flame{animation:none!important}
+.sacred .stp .num{box-shadow:0 0 0 6px var(--bg),0 0 18px rgba(217,169,78,.35)}
+.sacred .pnav,.sacred .mobilebar,.sacred .photo .book{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.sacred .pnav{background:#2b1512}
+.sacred .photo img{filter:none}
+.sacred .photo .img{box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.sacred .cc-img img,.sacred .cc{will-change:auto}
+.sacred .hero,.sacred .facts,.sacred section{contain:paint}
