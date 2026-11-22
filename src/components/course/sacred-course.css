@@ -3,8 +3,11 @@
   --serif:var(--font-cormorant),'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
   --sans:var(--font-inter),system-ui,-apple-system,'Segoe UI',sans-serif;
   --deva:var(--font-tiro),'Noto Serif Devanagari',serif;
-  --ivory:#F6EEDF;--gold-soft:#E2C07A;--body:#D6C5AC;
-  --bg:#1c0a09;--bg2:#2a110f;--card:#2f1311;--line:#5a2e1c;--gold:#D9A94E;--gold2:#F3D28A;--text:#f5ead8;--muted:#cdb698;--soft:#a88f72;
+  /* Soft Kumkum */
+  --ivory:#FAF1E2;--gold-soft:#F2CE84;--body:#E6D3B3;
+  --bg:#2b1512;--bg2:#3a1914;--card:#3d1b16;--line:#8a4a26;--gold:#E0B25C;--gold2:#F6D894;--text:#FAF1E2;--muted:#DCC6A3;--soft:#BFA784;
+  --glow:0 0 0 1px rgba(242,206,132,.10),0 0 22px rgba(240,176,80,.22),inset 0 0 18px rgba(240,176,80,.06);
+  --glow-strong:0 0 0 1px rgba(242,206,132,.22),0 0 34px rgba(240,176,80,.42),inset 0 0 22px rgba(240,176,80,.10);
   background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;font-variant-numeric:lining-nums;
   overflow-x:clip;
 }
@@ -25,10 +28,10 @@
 .sacred .divider:before,.sacred .divider:after{content:"";height:1px;width:80px;background:linear-gradient(90deg,transparent,var(--gold))}
 .sacred .divider:after{transform:scaleX(-1)}
 .sacred section{padding:96px 0}
-.sacred .alt{background:linear-gradient(180deg,#1c0a09,#26100d 30%,#26100d 70%,#1c0a09)}
+.sacred .alt{background:linear-gradient(180deg,#2b1512,#371a15 30%,#371a15 70%,#2b1512)}
 
 /* hero */
-.sacred .hero{position:relative;overflow:hidden;padding:72px 0 80px;background:radial-gradient(900px 600px at 78% 45%,#5a1a14 0,rgba(28,10,9,0) 70%),radial-gradient(600px 400px at 0% 100%,#3a120d 0,rgba(28,10,9,0) 70%)}
+.sacred .hero{position:relative;overflow:hidden;padding:72px 0 80px;background:radial-gradient(900px 600px at 78% 45%,#6e2c20 0,rgba(43,21,18,0) 70%),radial-gradient(600px 400px at 0% 100%,#4a1d16 0,rgba(43,21,18,0) 70%)}
 .sacred .hero .mandala{position:absolute;right:-120px;top:-80px;width:720px;opacity:.10;pointer-events:none}
 .sacred .hero .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative}
 .sacred .hero .eyebrow{font-size:11.5px;letter-spacing:.22em;color:var(--gold-soft)}
@@ -47,20 +50,20 @@
 .sacred .photo{position:relative;justify-self:end;width:100%;max-width:430px;margin-right:18px}
 .sacred .photo:before{content:"";position:absolute;inset:0;transform:translate(18px,18px);border:1px solid rgba(217,169,78,.6);border-radius:200px 28px 200px 28px;pointer-events:none}
 .sacred .photo .img{position:relative;border-radius:200px 28px 200px 28px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 120px rgba(232,135,58,.14);aspect-ratio:3/4}
-.sacred .photo .img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,10,9,0) 60%,rgba(28,10,9,.45) 88%,rgba(28,10,9,.8) 100%)}
+.sacred .photo .img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,21,18,0) 60%,rgba(43,21,18,.45) 88%,rgba(43,21,18,.8) 100%)}
 .sacred .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block;filter:saturate(.92) contrast(1.03)}
 .sacred .photo .badge{position:absolute;right:-30px;top:60px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:12px 16px;font-size:13px;color:var(--muted);box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:2}
 .sacred .photo .badge b{display:block;color:var(--gold2);font:600 22px var(--sans);letter-spacing:-.01em}
 .sacred .photo .badge .bstar{display:block;margin-top:4px;color:var(--gold-soft);font-size:12.5px}
-.sacred .photo .book{position:absolute;left:-40px;bottom:46px;display:flex;align-items:center;gap:10px;background:rgba(42,17,15,.92);border:1px solid var(--line);border-radius:16px;padding:10px 16px 10px 8px;box-shadow:0 14px 34px rgba(0,0,0,.45);backdrop-filter:blur(6px);z-index:2}
+.sacred .photo .book{position:absolute;left:-40px;bottom:46px;display:flex;align-items:center;gap:10px;background:rgba(58,25,20,.92);border:1px solid var(--line);border-radius:16px;padding:10px 16px 10px 8px;box-shadow:0 14px 34px rgba(0,0,0,.45);backdrop-filter:blur(6px);z-index:2}
 .sacred .photo .book svg{width:54px;height:54px}
 .sacred .photo .book b{display:block;font:600 18px var(--serif);color:var(--ivory);line-height:1.1}
 .sacred .photo .book small{color:var(--soft);font-size:12px}
 
 /* facts */
-.sacred .facts{border-top:1px solid #3a1a12;border-bottom:1px solid #3a1a12;background:linear-gradient(180deg,#24100e,#1c0a09)}
+.sacred .facts{border-top:1px solid #4f261c;border-bottom:1px solid #4f261c;background:linear-gradient(180deg,#331813,#2b1512)}
 .sacred .facts .wrap{display:grid;grid-template-columns:repeat(var(--n,5),1fr)}
-.sacred .facts .f{padding:24px 18px;display:flex;gap:12px;align-items:center;border-right:1px solid #3a1a12}
+.sacred .facts .f{padding:24px 18px;display:flex;gap:12px;align-items:center;border-right:1px solid #4f261c}
 .sacred .facts .f:last-child{border-right:0}
 .sacred .facts svg{width:34px;height:34px;flex:none}
 .sacred .facts b{display:block;font:600 22px var(--serif);color:var(--gold2);line-height:1.1}
@@ -77,7 +80,7 @@
 .sacred .journey:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%) scaleY(var(--p,1));transform-origin:top;background:linear-gradient(180deg,transparent,var(--gold) 8%,var(--gold) 92%,transparent);opacity:.5;transition:transform .2s linear}
 .sacred .stp{position:relative;display:grid;grid-template-columns:1fr 80px 1fr;align-items:center;margin-bottom:36px}
 .sacred .stp .num{grid-column:2;grid-row:1;justify-self:center;width:50px;height:50px;border-radius:50%;background:var(--bg);border:1px solid var(--gold);display:grid;place-items:center;font:600 18px var(--serif);color:var(--gold2);box-shadow:0 0 0 6px var(--bg),0 0 24px rgba(217,169,78,.35);z-index:1}
-.sacred .stp .card{background:linear-gradient(160deg,#3a1512,#25100e);border:1px solid var(--line);border-radius:22px;padding:26px 26px 26px 150px;position:relative;min-height:150px;box-shadow:0 16px 40px rgba(0,0,0,.35);grid-row:1}
+.sacred .stp .card{background:linear-gradient(160deg,#55241e,#3a1914);border:1px solid var(--line);border-radius:22px;padding:26px 26px 26px 150px;position:relative;min-height:150px;box-shadow:0 16px 40px rgba(0,0,0,.35);grid-row:1}
 .sacred .stp .card>svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:118px;height:118px}
 .sacred .stp:nth-child(odd) .card{grid-column:1}
 .sacred .stp:nth-child(even) .card{grid-column:3}
@@ -150,7 +153,7 @@
 
 /* faq */
 .sacred .faq{max-width:820px;margin:40px auto 0}
-.sacred details{border-bottom:1px solid #3a1a12;padding:20px 0}
+.sacred details{border-bottom:1px solid #4f261c;padding:20px 0}
 .sacred summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font:600 21px var(--serif);color:var(--ivory)}
 .sacred summary::-webkit-details-marker{display:none}
 .sacred summary:after{content:"+";color:var(--gold);font-size:26px;line-height:1}
@@ -159,7 +162,7 @@
 .sacred details .ans p{margin:0 0 8px}
 
 /* final */
-.sacred .final{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:64px 40px;text-align:center;background:radial-gradient(700px 300px at 50% 0,#5a1a14,#25100e)}
+.sacred .final{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:64px 40px;text-align:center;background:radial-gradient(700px 300px at 50% 0,#6e2c20,#3a1914)}
 .sacred .final .amt{margin:22px 0 18px}
 .sacred .final .assure{justify-content:center}
 .sacred .final>svg{width:90px;height:90px}
@@ -176,7 +179,7 @@
   .sacred .photo .book{left:-6px;bottom:24px}
   .sacred .photo .badge{right:-6px}
   .sacred .facts .wrap{grid-template-columns:1fr 1fr}
-  .sacred .facts .f{border-bottom:1px solid #3a1a12}
+  .sacred .facts .f{border-bottom:1px solid #4f261c}
   .sacred section{padding:64px 0}
   .sacred h2.h{font-size:36px}
   .sacred .foryou,.sacred .guided,.sacred .tgrid,.sacred .tgrid.two,.sacred .vessel{grid-template-columns:1fr}
@@ -194,7 +197,7 @@
   .sacred .path{flex-direction:column}
   .sacred .parr{transform:rotate(90deg)}
   .sacred .final{padding:44px 20px}
-  .sacred .mobilebar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(28,10,9,.96);border-top:1px solid var(--line)}
+  .sacred .mobilebar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(43,21,18,.96);border-top:1px solid var(--line)}
   .sacred .mobilebar .amt{font-size:28px}
   .sacred .mobilebar .btn{padding:12px 22px;font-size:15px}
   .sacred .final-pad{height:72px}
@@ -242,7 +245,7 @@
 }
 
 /* Next-batch card (hero) */
-.sacred .batch{max-width:520px;background:linear-gradient(160deg,rgba(90,26,20,.55),rgba(42,17,15,.85));border:1px solid rgba(217,169,78,.55);border-radius:22px;padding:22px 24px;box-shadow:0 20px 50px rgba(0,0,0,.35),inset 0 0 0 1px rgba(243,210,138,.06)}
+.sacred .batch{max-width:520px;background:linear-gradient(160deg,rgba(110,44,32,.55),rgba(58,25,20,.85));border:1px solid rgba(217,169,78,.55);border-radius:22px;padding:22px 24px;box-shadow:0 20px 50px rgba(0,0,0,.35),inset 0 0 0 1px rgba(243,210,138,.06)}
 .sacred .bhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .sacred .blabel{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-soft);font-weight:600}
 .sacred .bpill{font-size:12.5px;color:#2a1206;background:linear-gradient(180deg,#f3d28a,#d9a94e);border-radius:999px;padding:4px 12px;font-weight:600;animation:sc-pulse 2.6s ease-in-out infinite}
@@ -266,7 +269,7 @@
 .sacred .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding-top:26px;padding-bottom:26px}
 .sacred .chips span{border:1px solid rgba(217,169,78,.35);background:rgba(217,169,78,.06);color:var(--gold-soft);border-radius:999px;padding:7px 14px;font-size:13px}
 /* in-page menu */
-.sacred .pnav{position:sticky;top:64px;z-index:30;background:rgba(28,10,9,.92);backdrop-filter:blur(8px);border-top:1px solid #3a1a12;border-bottom:1px solid #3a1a12}
+.sacred .pnav{position:sticky;top:64px;z-index:30;background:rgba(43,21,18,.92);backdrop-filter:blur(8px);border-top:1px solid #4f261c;border-bottom:1px solid #4f261c}
 .sacred .pnav .wrap{display:flex;align-items:center;gap:26px;height:56px;overflow-x:auto;scrollbar-width:none}
 .sacred .pnav .wrap::-webkit-scrollbar{display:none}
 .sacred .pnav a{color:var(--gold-soft);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-decoration:none;white-space:nowrap}
@@ -279,7 +282,7 @@
 .sacred .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
 /* about */
 .sacred .parts{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;text-align:left}
-.sacred .part{display:flex;gap:20px;align-items:flex-start;background:linear-gradient(160deg,#3a1512,#25100e);border:1px solid var(--line);border-radius:22px;padding:28px}
+.sacred .part{display:flex;gap:20px;align-items:flex-start;background:linear-gradient(160deg,#55241e,#3a1914);border:1px solid var(--line);border-radius:22px;padding:28px}
 .sacred .part svg{width:96px;height:96px;flex:none}
 .sacred .part h3{font:600 32px/1.1 var(--serif);color:var(--ivory)}
 .sacred .part .tag{font:italic 500 17px var(--serif);color:var(--gold);margin:2px 0 8px}
@@ -306,7 +309,7 @@
 .sacred .onboard li span{flex:none;width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,#f0c56c,#c58d34);color:#2a1206;display:grid;place-items:center;font-weight:700}
 .sacred .onboard li p{font-size:15px;color:var(--text)}
 /* pricing */
-.sacred .price-card{max-width:620px;margin:36px auto 0;text-align:left;background:linear-gradient(160deg,rgba(90,26,20,.6),rgba(42,17,15,.9));border:1px solid rgba(217,169,78,.6);border-radius:26px;padding:30px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.sacred .price-card{max-width:620px;margin:36px auto 0;text-align:left;background:linear-gradient(160deg,rgba(110,44,32,.6),rgba(58,25,20,.9));border:1px solid rgba(217,169,78,.6);border-radius:26px;padding:30px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
 .sacred .pc-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(217,169,78,.18)}
 .sacred .pc-date{text-align:right}
 .sacred .pc-date b{display:block;font:600 22px var(--serif);color:var(--ivory)}
@@ -337,4 +340,34 @@
   .sacred .pc-date{text-align:left}
   .sacred .letter{padding:34px 26px}
   .sacred .letter p{font-size:19px}
+}
+
+/* ===== Soft Kumkum: illuminated borders ===== */
+.sacred .fy,.sacred .g,.sacred .t,.sacred .tq,.sacred .cy,.sacred .bf,.sacred .mod,.sacred .part,.sacred .onboard li,.sacred .stp .card,.sacred .pn,.sacred .rstat,.sacred .tstats span,.sacred .photo .badge,.sacred .photo .book{
+  border-color:rgba(224,178,92,.55)!important;box-shadow:var(--glow)}
+.sacred .batch,.sacred .price-card,.sacred .final,.sacred .cy.on,.sacred .pn.on{border-color:#E0B25C!important;box-shadow:var(--glow-strong)}
+.sacred .fy:hover,.sacred .g:hover,.sacred .t:hover,.sacred .tq:hover,.sacred .cy:hover,.sacred .bf:hover,.sacred .mod:hover,.sacred .part:hover,.sacred .onboard li:hover,.sacred .stp .card:hover{
+  border-color:#F2CE84!important;box-shadow:var(--glow-strong)}
+.sacred .mod,.sacred .part,.sacred .onboard li,.sacred .pn{transition:border-color .35s ease,box-shadow .35s ease,transform .35s ease}
+.sacred .photo .img{box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 60px rgba(240,176,80,.22)}
+
+/* ===== tighter rhythm between sections ===== */
+.sacred section{padding:64px 0}
+.sacred .hero{padding:64px 0 72px}
+.sacred .journey{margin-top:44px}
+.sacred .stp{margin-bottom:28px}
+
+/* ===== tablet: two columns ===== */
+@media (min-width:601px) and (max-width:900px){
+  .sacred .wrap{padding:0 28px}
+  .sacred .foryou,.sacred .guided,.sacred .guided.six,.sacred .benefits,.sacred .onboard,.sacred .parts,.sacred .vessel{grid-template-columns:1fr 1fr}
+  .sacred .tgrid,.sacred .tgrid.two{grid-template-columns:1fr 1fr}
+  .sacred .tq.big{grid-column:1 / -1}
+  .sacred .facts .wrap{grid-template-columns:repeat(3,1fr)}
+  .sacred .hero h1{font-size:62px}
+  .sacred .photo{max-width:380px}
+  .sacred .part{flex-direction:row}
+}
+@media (max-width:900px){
+  .sacred section{padding:44px 0}
 }

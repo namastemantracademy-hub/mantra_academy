@@ -54,7 +54,7 @@ export default function RootLayout({
               <main className={cn(
                 "flex-grow pt-16 w-full",
                 !isAdminPage && !isFullBleed && "container mx-auto px-4 sm:px-6 lg:px-8",
-                isFullBleed && "bg-[#1c0a09]"
+                isFullBleed && "bg-[#2b1512]"
               )}>
                 {children}
               </main>
