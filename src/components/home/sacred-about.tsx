@@ -56,7 +56,7 @@ export function SacredAbout() {
 
       {/* STORY */}
       <section><div className="wrap split">
-        <div className="split-img" data-rv><img src="/images/home/teaching.webp" alt="Dr. Karthik Sharma teaching a live online class" loading="lazy" /></div>
+        <div className="split-img framed" data-rv><img src="/images/home/teaching.webp" alt="Dr. Karthik Sharma teaching a live online class" loading="lazy" /></div>
         <div data-rv>
           <div className="eyebrow">Our story</div>
           <h2 className="h">Ancient wisdom, <em>a living guide</em></h2>
@@ -74,7 +74,7 @@ export function SacredAbout() {
 
       {/* INSPIRATION */}
       <section><div className="wrap split rev">
-        <div className="split-img guru" data-rv><img src="/images/guru.jpg" alt="Ācārya Dr. Ramachandra Bhat Kotemane" loading="lazy" /></div>
+        <div className="split-img guru medal" data-rv><img src="/images/guru.jpg" alt="Ācārya Dr. Ramachandra Bhat Kotemane" loading="lazy" /></div>
         <div data-rv>
           <div className="eyebrow">Our inspiration</div>
           <h2 className="h">Ācārya Dr. Ramachandra <em>Bhat Kotemane</em></h2>

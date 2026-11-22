@@ -597,3 +597,46 @@
   .sacred .price-duo .price-card{margin-top:22px}
   .sacred .pc-kind b{font-size:22px}
 }
+
+/* ===== Photo frames: a different shape for each kind of photo =====
+   petal = hero photos · arch = places & temples · medallion = portraits
+   offset frame = classroom moments · window = course cards */
+
+/* ARCH (temple doorway) */
+.sacred .split-img.arch img{border-radius:999px 999px 20px 20px/320px 320px 20px 20px;aspect-ratio:4/5;object-position:50% 40%}
+.sacred .split-img.arch:after{content:"";position:absolute;inset:10px;border:1px solid rgba(242,206,132,.55);border-radius:999px 999px 14px 14px/300px 300px 14px 14px;pointer-events:none}
+.sacred.about .photo .img{border-radius:999px 999px 24px 24px/340px 340px 24px 24px}
+
+/* MEDALLION (portraits) */
+.sacred .t .ph{width:190px;height:190px;margin:8px}
+.sacred .t .ph:before{inset:-8px;transform:none;border:1px solid rgba(224,178,92,.7);border-radius:50%}
+.sacred .t .ph:after{content:"";position:absolute;inset:-15px;border:1px dashed rgba(224,178,92,.28);border-radius:50%;pointer-events:none}
+.sacred .t img{width:190px;height:190px;border-radius:50%;object-position:50% 18%;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.sacred .t{grid-template-columns:210px 1fr}
+.sacred .bio .ph{position:relative;padding:10px}
+.sacred .bio .ph:before{content:"";position:absolute;inset:0;border:1px solid rgba(224,178,92,.7);border-radius:50%}
+.sacred .bio .ph img{aspect-ratio:1/1;border-radius:50%;object-position:50% 18%}
+.sacred .split-img.medal{max-width:460px;margin:0 auto;padding:16px}
+.sacred .split-img.medal:before{content:"";position:absolute;inset:0;border:1px solid rgba(224,178,92,.7);border-radius:50%}
+.sacred .split-img.medal:after{content:"";position:absolute;inset:-12px;border:1px dashed rgba(224,178,92,.3);border-radius:50%;pointer-events:none}
+.sacred .split-img.medal img{aspect-ratio:1/1;border-radius:50%;object-position:50% 12%}
+
+/* OFFSET GOLD FRAME (classroom moments) */
+.sacred .split-img.framed{margin:0 18px 18px 0}
+.sacred .split-img.framed:before{content:"";position:absolute;inset:0;transform:translate(18px,18px);border:1.5px solid rgba(224,178,92,.75);border-radius:22px}
+.sacred .split-img.framed img{position:relative;border-radius:22px;aspect-ratio:4/5}
+
+/* WINDOW (course cards): soft rectangle with a gold hairline inside */
+.sacred .cc-img{border-radius:22px}
+.sacred .cc-img:before{content:"";position:absolute;inset:8px;border:1px solid rgba(242,206,132,.45);border-radius:16px;z-index:2;pointer-events:none}
+
+@media (max-width:900px){
+  .sacred .cc-img{border-radius:20px}
+  .sacred .t{grid-template-columns:1fr}
+  .sacred .t .ph{margin:14px auto 10px}
+  .sacred .split-img.arch img,.sacred .split-img.framed img{aspect-ratio:4/4.6}
+  .sacred .split-img.medal{max-width:300px}
+  .sacred .split-img.framed{margin:0 14px 14px 0}
+  .sacred .split-img.framed:before{transform:translate(14px,14px)}
+}
+.sacred.about .photo:before{border-radius:999px 999px 24px 24px/340px 340px 24px 24px}
