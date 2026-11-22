@@ -143,7 +143,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     subtitle: "Namakam and Chamakam from the Kṛṣṇa Yajurveda",
     lead: "Learned with correct *svara*, *padapāṭha*, word-by-word meaning and personal chanting correction. Śrī Rudram is not a song to memorise — in the Veda, the sound is the mantra. This sādhana takes you from your first syllable to chanting all eleven anuvākas with confidence, clarity and devotion.",
     heroImage: "/images/course/hero-rudra.webp",
-    heroAlt: "Dr. Karthik Sharma seated in traditional dress",
+    heroAlt: "Dr. Karthik Sharma teaching, Sanskrit notes on the board behind",
     heroCard: { icon: "mala", title: "Live with your Āchārya", text: "every class recorded" },
     stats: { completed: "100+", rating: "4.9" },
     facts: [
