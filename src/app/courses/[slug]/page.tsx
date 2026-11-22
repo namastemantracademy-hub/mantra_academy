@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation";
-import { CourseDetailClient } from "@/components/course-detail-client";
+import { SacredCoursePage } from "@/components/course/sacred-course-page";
 import { getCourseBySlug } from "@/services/courseService";
+import { cormorant, inter, tiro } from "./fonts";
 
 // Ensure course detail is always rendered dynamically (fresh data)
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function CourseDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  // `params` can be a thenable in some Next.js runtimes — await it first
   const { slug } = await params;
 
   const courseDoc = await getCourseBySlug(slug);
@@ -22,14 +22,9 @@ export default async function CourseDetailPage({
   // Serialize Mongoose document to plain JSON before passing to client component
   const course = JSON.parse(JSON.stringify(courseDoc));
 
-  return <CourseDetailClient course={course} />;
+  return (
+    <div className={`${cormorant.variable} ${inter.variable} ${tiro.variable}`}>
+      <SacredCoursePage course={course} />
+    </div>
+  );
 }
-
-// Note: generateStaticParams is commented out because the data is now dynamic
-// and managed in a client-side context. If you move to a server-side data
-// source, you can re-enable this.
-// export async function generateStaticParams() {
-//   return courses.map((course) => ({
-//     slug: course.slug,
-//   }));
-// }

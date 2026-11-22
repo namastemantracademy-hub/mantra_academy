@@ -24,7 +24,9 @@ export default function RootLayout({
   const pathname = usePathname();
   const isAdminPage = pathname.startsWith('/admin');
   const isLoginPage = pathname === '/admin/login';
-  
+  // Course detail pages use a full-width design ("Sacred Night") with their own spacing.
+  const isFullBleed = /^\/courses\/[^/]+\/?$/.test(pathname);
+
   // Conditionally wrap with AppProvider. Admin pages have their own provider.
   // The login page also shouldn't be wrapped by the main AppProvider initially.
   const LayoutWrapper = (isAdminPage && !isLoginPage) ? React.Fragment : AppProvider;
@@ -50,7 +52,8 @@ export default function RootLayout({
               {!isAdminPage && <Header />}
               <main className={cn(
                 "flex-grow pt-16 w-full",
-                !isAdminPage && "container mx-auto px-4 sm:px-6 lg:px-8"
+                !isAdminPage && !isFullBleed && "container mx-auto px-4 sm:px-6 lg:px-8",
+                isFullBleed && "bg-[#1c0a09]"
               )}>
                 {children}
               </main>
