@@ -65,7 +65,7 @@ export const TEACHERS: Record<TeacherId, { name: string; role: string; image: st
     name: "Dr. Karthik Sharma",
     role: "Āchārya · Co-founder",
     image: "/images/course/teacher-karthik.webp",
-    bio: "13 years of Gurukula study — Kṛṣṇa Yajurveda, Upaniṣads and Vedānta under Dr. Ramachandra Bhat Kotemane. Vidwat (M.A.) and M.Phil in Advaita Vedānta.",
+    bio: "13 years of Gurukula study — Kṛṣṇa Yajurveda, Upaniṣads and Vedānta under Dr. Ramachandra Bhat Kotemane. Vidwat (M.A.), M.Phil and Ph.D. (Vidyāvāridhi) in Advaita Vedānta.",
   },
   jyothi: {
     name: "Dr. Jyothi Sharma",
@@ -252,7 +252,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       "WhatsApp support with your batch",
     ],
     teachers: ["karthik"],
-    teacherStats: "13 years of Veda study · 7 years teaching · 220+ students · 12 countries",
+    teacherStats: "Ph.D. in Advaita Vedānta · 13 years of Veda study · 7 years teaching · 220+ students · 12 countries",
     testimonials: [
       { quote: "What I really appreciate is the attention to detail he gives to pronunciation, clarity, and small corrections. The recordings provided for practice are extremely helpful. Highly recommend Mantra Academy to anyone who wants to learn Rudram with proper pronunciation, discipline, and understanding.", name: "Vamsee K.", place: "Austin, USA", stars: true },
       { quote: "Extremely patient with us, wonderful attention to each and every word — udātta, anudātta and svaritam. Personal attention to each and every student.", name: "Danny F.", place: "Chartered Accountant, Dubai" },
@@ -339,7 +339,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   "durga-saptashati": {
     group: "chanting",
     order: 3,
-    usd: 20, personal: true,
+    usd: 25, personal: true,
     cardLine: "A journey into the Devī tradition through the seven hundred verses.",
     displayTitle: "Durgā Saptaśatī",
     subtitle: "A journey into the heart of the Devī tradition",

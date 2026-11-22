@@ -49,7 +49,7 @@ export async function handleFaqQuery(query: string): Promise<{ answer: string }>
     // ====== TEAM: KARTHIK SHARMA ======
     if (lowerQuery.includes('karthik') || lowerQuery.includes('sharma')) {
       return { 
-        answer: "Karthik Sharma is a dedicated scholar shaped by 13+ years of Gurukula training. Introduced to Krishna Yajurveda at age 10, he has studied the Upanishads, Bhagavad Gita, Brahmasutras, and Yogasutras under Acharya Dr. Ramachandra Bhat Kotemane. He holds an M.A. (Vidwat) and M.Phil in Advaita Vedanta and is pursuing doctoral research, carrying forward the Gurukula spirit for modern seekers." 
+        answer: "Karthik Sharma is a dedicated scholar shaped by 13+ years of Gurukula training. Introduced to Krishna Yajurveda at age 10, he has studied the Upanishads, Bhagavad Gita, Brahmasutras, and Yogasutras under Acharya Dr. Ramachandra Bhat Kotemane. He holds an M.A. (Vidwat), an M.Phil and a Ph.D. (Vidyavaridhi, Karnataka Samskrit University, 2026) in Advaita Vedanta, carrying forward the Gurukula spirit for modern seekers." 
       };
     }
 
