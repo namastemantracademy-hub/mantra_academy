@@ -70,6 +70,8 @@ export type Course = {
   batchInfo?: string;
   /** false = "Join the waitlist" instead of Pay & Enroll */
   registrationsOpen?: boolean;
+  priceUSD?: number;
+  personalClasses?: boolean;
 };
 
 export const instructors: Record<string, { name: string; title: string; image: string }> = {};

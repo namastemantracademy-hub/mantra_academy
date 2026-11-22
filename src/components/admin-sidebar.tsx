@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  Home, BookOpen, LogOut, FileText, Megaphone, Users, MessageSquare, BellRing, IndianRupee, Menu, ExternalLink,
+  Home, BookOpen, LogOut, FileText, Megaphone, Users, MessageSquare, BellRing, IndianRupee, Menu, ExternalLink, CalendarClock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
@@ -15,6 +15,7 @@ const groups: { title: string; links: { href: string; label: string; icon: React
     title: "Students",
     links: [
       { href: "/admin/payments", label: "Students & payments", icon: IndianRupee },
+      { href: "/admin/personal", label: "Personal 1:1 requests", icon: CalendarClock },
       { href: "/admin/waitlist", label: "Waitlist", icon: BellRing },
     ],
   },

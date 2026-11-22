@@ -4,6 +4,7 @@ import { getCourseBySlug } from "@/services/courseService";
 import { cormorant, inter, tiro } from "./fonts";
 import type { Metadata } from "next";
 import { getCourseExperience } from "@/lib/course-experience";
+import { getPersonalPricing } from "@/services/settingsService";
 
 // Ensure course detail is always rendered dynamically (fresh data)
 export const dynamic = "force-dynamic";
@@ -31,10 +32,11 @@ export default async function CourseDetailPage({
 
   // Serialize Mongoose document to plain JSON before passing to client component
   const course = JSON.parse(JSON.stringify(courseDoc));
+  const personalPricing = await getPersonalPricing();
 
   return (
     <div className={`${cormorant.variable} ${inter.variable} ${tiro.variable}`}>
-      <SacredCoursePage course={course} />
+      <SacredCoursePage course={course} personalPricing={personalPricing} />
     </div>
   );
 }

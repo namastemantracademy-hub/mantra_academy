@@ -307,3 +307,11 @@ html:has(.admin-theme) body{background:#FBF6EE}
 .adm-seg button{border:0;background:none;border-radius:999px;padding:7px 12px;font-size:13px;font-weight:600;color:#7a5a45;cursor:pointer}
 .adm-seg button.on.o{background:#2f7a4a;color:#fff}.adm-seg button.on.w{background:#b07a24;color:#fff}
 .adm-ccard .foot{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Pop-up forms (Pay & Enroll, Waitlist, Personal request) on public pages: cream with kumkum, no pink */
+html:has(.sacred),html:has(.ma-ink){
+  --background:40 45% 97%;--foreground:12 30% 14%;--card:40 45% 98%;--card-foreground:12 30% 14%;
+  --popover:40 45% 98%;--popover-foreground:12 30% 14%;
+  --primary:8 62% 34%;--primary-foreground:40 60% 97%;--secondary:38 55% 92%;--secondary-foreground:12 30% 18%;
+  --muted:38 35% 93%;--muted-foreground:15 10% 40%;--accent:38 70% 90%;--accent-foreground:12 40% 20%;
+  --border:35 28% 84%;--input:35 25% 78%;--ring:39 70% 50%}

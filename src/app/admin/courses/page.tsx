@@ -19,6 +19,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Image from "next/image";
 import ProgressBar from "@/components/ui/progress";
 import { courseName } from "@/lib/admin-data";
+import { getCourseExperience } from "@/lib/course-experience";
 
 const emptyCourse: Omit<Course, 'rating' | 'reviews'> = {
   slug: "", title: "", category: "", featured: false, image: "https://placehold.co/600x400.png", description: "",
@@ -346,13 +347,19 @@ export default function AdminCoursesPage() {
                 <div className="body">
                   <div>
                     <h3>{courseName(course.slug, course.title)}</h3>
-                    <div className="adm-muted">₹{Number(course.price || 0).toLocaleString("en-IN")} · <a href={`/courses/${course.slug}`} target="_blank" rel="noopener noreferrer" style={{ color: "#8a2f20" }}>view page ↗</a></div>
+                    <div className="adm-muted">₹{Number(course.price || 0).toLocaleString("en-IN")}{(c.priceUSD || getCourseExperience(course.slug).usd) ? ` · US$${c.priceUSD || getCourseExperience(course.slug).usd}` : ""} · <a href={`/courses/${course.slug}`} target="_blank" rel="noopener noreferrer" style={{ color: "#8a2f20" }}>view page ↗</a></div>
                   </div>
                   <div className="adm-ctl">
                     <div className="adm-seg" role="group" aria-label="Registrations">
                       <button type="button" disabled={busy} className={open ? "on o" : ""} onClick={() => !open && quickUpdate(course.slug, { registrationsOpen: true }, "Registrations are open — visitors can pay & enroll")}>Open · Pay &amp; Enroll</button>
                       <button type="button" disabled={busy} className={!open ? "on w" : ""} onClick={() => open && quickUpdate(course.slug, { registrationsOpen: false }, "Closed — visitors can join the waitlist")}>Waitlist</button>
                     </div>
+                    {getCourseExperience(course.slug).personal && (
+                      <div className="adm-seg" role="group" aria-label="Personal classes">
+                        <button type="button" disabled={busy} className={c.personalClasses !== false ? "on o" : ""} onClick={() => c.personalClasses === false && quickUpdate(course.slug, { personalClasses: true }, "Personal 1:1 classes are shown on the course page")}>1:1 on</button>
+                        <button type="button" disabled={busy} className={c.personalClasses === false ? "on w" : ""} onClick={() => c.personalClasses !== false && quickUpdate(course.slug, { personalClasses: false }, "Personal 1:1 classes are hidden")}>1:1 off</button>
+                      </div>
+                    )}
                     <label>Starts
                       <input type="date" disabled={busy} defaultValue={c.startDate ? String(c.startDate).slice(0, 10) : ""}
                         onChange={(e) => e.target.value && quickUpdate(course.slug, { startDate: e.target.value }, "Start date saved")} />
@@ -477,6 +484,22 @@ export default function AdminCoursesPage() {
                                 </SelectContent>
                             </Select>
                           </div>
+                          <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="priceUSD" className="text-right">Group price in US$</Label>
+                            <Input id="priceUSD" name="priceUSD" type="number" min={0} placeholder={getCourseExperience((editingCourse as any).slug || '').usd ? `${getCourseExperience((editingCourse as any).slug || '').usd} (default)` : 'e.g. 25'} value={(editingCourse as any).priceUSD ?? ''} onChange={(e) => setEditingCourse({ ...(editingCourse as any), priceUSD: e.target.value === '' ? undefined : Number(e.target.value) })} />
+                          </div>
+                          {getCourseExperience((editingCourse as any).slug || '').personal && (
+                          <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="personalClasses" className="text-right">Personal 1:1 classes</Label>
+                            <Select name="personalClasses" value={(editingCourse as any).personalClasses === false ? 'off' : 'on'} onValueChange={(value) => setEditingCourse({ ...(editingCourse as any), personalClasses: value === 'on' })}>
+                                <SelectTrigger id="personalClasses"><SelectValue/></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="on">Offered</SelectItem>
+                                    <SelectItem value="off">Not offered</SelectItem>
+                                </SelectContent>
+                            </Select>
+                          </div>
+                          )}
                           <div className="grid grid-cols-2 items-center gap-2">
                             <Label htmlFor="instructor" className="text-right">Instructor</Label>
               <Select name="instructor" value={editingCourse.instructor?.name || ''} onValueChange={(value) => handleSelectChange('instructor', value)}>

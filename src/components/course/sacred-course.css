@@ -573,3 +573,27 @@
   .sacred .prosa{font-size:17px}
 }
 @media (max-width:600px){.sacred .vgrid{grid-template-columns:1fr}.sacred .vcard h3{font-size:19px}}
+
+/* ===== Group vs Personal pricing ===== */
+.sacred .curtog{display:inline-flex;margin:22px auto 0;border:1px solid rgba(224,178,92,.55);border-radius:999px;padding:3px;background:rgba(224,178,92,.06)}
+.sacred .curtog button{border:0;background:none;color:var(--body);font:600 13px var(--sans);padding:8px 14px;border-radius:999px;cursor:pointer}
+.sacred .curtog button.on{background:linear-gradient(180deg,#f0c56c,#c58d34);color:#2a1206}
+.sacred .price-duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1000px;margin:0 auto;align-items:stretch}
+.sacred .price-duo .price-card{max-width:none;margin-top:30px;display:flex;flex-direction:column}
+.sacred .price-duo .price-card ul{flex:1}
+.sacred .price-card.personal{background:linear-gradient(160deg,rgba(84,34,24,.85),rgba(43,21,18,.95));border-color:#E0B25C}
+.sacred .pc-kind{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(217,169,78,.22)}
+.sacred .pc-kind svg{width:42px;height:42px;flex:none;color:var(--gold-soft)}
+.sacred .pc-kind b{display:block;font:600 24px/1.1 var(--serif);color:var(--ivory)}
+.sacred .pc-kind small{display:block;font-size:13px;color:var(--soft);margin-top:3px}
+.sacred .pc-tag{margin-left:auto;align-self:flex-start;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#2a1206;background:var(--gold2);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.sacred .amt .per{font:500 16px var(--sans);color:var(--soft)}
+.sacred .assure.center-row{justify-content:center;margin-top:24px}
+.sacred .one2one{display:block;margin-top:14px;font-size:14px;color:var(--soft);text-decoration:none}
+.sacred .one2one b{color:var(--gold-soft);font-weight:600}
+.sacred .one2one:hover b{text-decoration:underline}
+@media (max-width:900px){
+  .sacred .price-duo{grid-template-columns:1fr;gap:0}
+  .sacred .price-duo .price-card{margin-top:22px}
+  .sacred .pc-kind b{font-size:22px}
+}

@@ -13,6 +13,10 @@ export type CourseExperience = {
   /** Courses list: filter group and position (lower = earlier) */
   group?: "chanting" | "puja" | "sanskrit" | "children";
   order?: number;
+  /** Suggested group price in US$ (admin can override per course). */
+  usd?: number;
+  /** Offer one-to-one personal classes for this course. */
+  personal?: boolean;
   /** Courses list: one short line on the card */
   cardLine?: string;
   /** One quiet line under the title. */
@@ -129,6 +133,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   "rudrachamakam-course": {
     group: "chanting",
     order: 1,
+    usd: 25, personal: true,
     cardLine: "Namakam and Chamakam with svara, padapāṭha and meaning — anuvāka by anuvāka.",
     displayTitle: "Śrī Rudra Praśnaḥ Sādhana",
     eyebrow: "Learn Śrī Rudram the way the Veda is meant to be chanted",
@@ -287,6 +292,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   "sanskrit-orientation": {
     group: "sanskrit",
     order: 5,
+    usd: 45,
     cardLine: "Script, sounds, reading and your first sentences in the Devabhāṣā.",
     displayTitle: "Sanskrit Orientation",
     subtitle: "Your first steps into the Devabhāṣā",
@@ -311,6 +317,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   "vedashiksha-introduction-to-vedas": {
     group: "chanting",
     order: 4,
+    usd: 25, personal: true,
     cardLine: "An introduction to the Vedas and the art of Vedic chanting — the right foundation.",
     displayTitle: "Vedaśikṣā",
     subtitle: "An introduction to the Vedas and Vedic chanting",
@@ -332,6 +339,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   "durga-saptashati": {
     group: "chanting",
     order: 3,
+    usd: 20, personal: true,
     cardLine: "A journey into the Devī tradition through the seven hundred verses.",
     displayTitle: "Durgā Saptaśatī",
     subtitle: "A journey into the heart of the Devī tradition",
@@ -352,6 +360,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   "jijs": {
     group: "children",
     order: 6,
+    usd: 25, personal: true,
     cardLine: "Daily prayers, ślokas and stories for children aged 4–14.",
     displayTitle: "Jijñāsā",
     subtitle: "Daily prayers, stories and values for children",

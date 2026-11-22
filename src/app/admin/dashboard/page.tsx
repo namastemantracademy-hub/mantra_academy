@@ -17,15 +17,17 @@ export default function TodayPage() {
   const [courses, setCourses] = useState<AdminCourse[]>([]);
   const [pays, setPays] = useState<AdminEnrollment[]>([]);
   const [wait, setWait] = useState<AdminWait[]>([]);
+  const [reqs, setReqs] = useState<{ status: string }[]>([]);
 
   useEffect(() => {
     (async () => {
-      const [c, p, w] = await Promise.all([
+      const [c, p, w, r] = await Promise.all([
         getJSON<AdminCourse[]>("/api/courses", []),
         getJSON<AdminEnrollment[]>("/api/admin/enrollments", []),
         getJSON<AdminWait[]>("/api/waitlist", []),
+        getJSON<{ status: string }[]>("/api/personal-requests", []),
       ]);
-      setCourses(c); setPays(p); setWait(w); setLoading(false);
+      setCourses(c); setPays(p); setWait(w); setReqs(r); setLoading(false);
     })();
   }, []);
 
@@ -37,6 +39,10 @@ export default function TodayPage() {
 
   // ---- to-do list ----
   const todos: Todo[] = [];
+  const newReqs = reqs.filter((r) => r.status === "new").length;
+  if (newReqs) {
+    todos.push({ tone: "red", text: <><b>{newReqs} new personal 1:1 {newReqs === 1 ? "request" : "requests"}</b> — message them to agree a time slot.</>, href: "/admin/personal", cta: "Open requests" });
+  }
   for (const c of courses) {
     const name = courseName(c.slug, c.title);
     const open = c.registrationsOpen !== false;

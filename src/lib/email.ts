@@ -130,3 +130,45 @@ export async function sendWaitlistEmails(w: { name: string; email: string; phone
     return false;
   }
 }
+
+export async function sendPersonalRequestEmails(r: {
+  name: string; email: string; phone: string; courseTitle: string;
+  country?: string; timezone?: string; preferredTimes?: string; note?: string;
+}): Promise<boolean> {
+  const t = getTransporter();
+  if (!t) {
+    console.warn("Personal request emails skipped: GMAIL_USER / GMAIL_APP_PASSWORD not set");
+    return false;
+  }
+  const from = `Mantra Academy <${process.env.GMAIL_USER}>`;
+  const adminTo = process.env.ADMIN_NOTIFY_EMAIL || process.env.GMAIL_USER!;
+  const first = escapeHtml(String(r.name).split(" ")[0]);
+  const course = escapeHtml(r.courseTitle);
+  const line = (label: string, v?: string) => (v ? `<br>${label}: ${escapeHtml(v)}` : "");
+  try {
+    await Promise.all([
+      t.sendMail({
+        from,
+        to: r.email,
+        subject: `Your personal class request — ${r.courseTitle}`,
+        html: shell(`<p>Namaste ${first},</p>
+<p>Thank you for asking about one-to-one classes for <b>${course}</b>.</p>
+<p>We'll message you on WhatsApp within 24 hours to find a time slot that suits you. Once the slot is agreed, we'll send you a secure payment link for the first month.</p>
+<p>Questions? Just reply to this email.</p>`),
+      }),
+      t.sendMail({
+        from,
+        to: adminTo,
+        replyTo: r.email,
+        subject: `Personal class request: ${r.courseTitle} — ${r.name}`,
+        html: shell(`<p><b>New one-to-one class request</b></p>
+<p>Course: ${course}<br>Name: ${escapeHtml(r.name)}<br>Email: ${escapeHtml(r.email)}<br>Phone / WhatsApp: ${escapeHtml(r.phone)}${line("Country", r.country)}${line("Time zone", r.timezone)}${line("Preferred days & times", r.preferredTimes)}${line("Note", r.note)}</p>
+<p>See all requests in Admin → Personal requests.</p>`),
+      }),
+    ]);
+    return true;
+  } catch (err) {
+    console.error("Personal request email failed:", err);
+    return false;
+  }
+}

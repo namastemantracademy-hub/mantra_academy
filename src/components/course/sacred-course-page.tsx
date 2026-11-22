@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import type { Course } from "@/lib/initial-data";
 import { PayEnrollDialog } from "@/components/pay-enroll-dialog";
 import { WaitlistDialog } from "@/components/waitlist-dialog";
+import { PersonalRequestDialog } from "@/components/personal-request-dialog";
+import { DEFAULT_PERSONAL_PRICING, PERSONAL_DETAILS, type PersonalPricing } from "@/lib/personal-pricing";
 import { feeLabel, feeNote, formatRupees, normalizeFeeType } from "@/lib/fees";
 import { renderMarkdownToHtml } from "@/lib/markdown";
 import { DEFAULT_FACTS, TEACHERS, getCourseExperience, type JourneyStep } from "@/lib/course-experience";
@@ -52,8 +54,19 @@ function Mandala() {
   );
 }
 
-export function SacredCoursePage({ course }: { course: Course & { _id?: string } }) {
+const DEFAULT_GROUP_INCLUDES = ["Live classes on Google Meet", "Fixed batch timing, small group", "Every class recorded", "WhatsApp group support"];
+
+export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PRICING }: { course: Course & { _id?: string }; personalPricing?: PersonalPricing }) {
   const [enrollOpen, setEnrollOpen] = useState(false);
+  const [personalOpen, setPersonalOpen] = useState(false);
+  // Show US$ first to visitors outside India (guessed from their time zone; they can switch).
+  const [abroad, setAbroad] = useState(false);
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      if (tz && !/^Asia\/(Kolkata|Calcutta)$/.test(tz)) setAbroad(true);
+    } catch {}
+  }, []);
   const [waitOpen, setWaitOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const x = getCourseExperience(course.slug);
@@ -139,11 +152,28 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
   const enroll = () => (waitlist ? setWaitOpen(true) : setEnrollOpen(true));
   const cta = waitlist ? "Join the waitlist" : "Pay & Enroll";
   const amount = price !== undefined ? formatRupees(price) : "";
+  const usd = (course as any).priceUSD > 0 ? Math.round((course as any).priceUSD) : x.usd;
+  const usdText = usd ? `US$${usd}` : "";
+  const groupMain = abroad && usdText ? usdText : amount;
+  const groupAlt = usdText ? (abroad ? `≈ ${amount}` : `≈ ${usdText}`) : "";
+  const offerPersonal = Boolean(x.personal) && (course as any).personalClasses !== false;
+  const pMain = abroad ? `US$${personalPricing.usd.toLocaleString("en-US")}` : formatRupees(personalPricing.inr);
+  const pAlt = abroad ? `≈ ${formatRupees(personalPricing.inr)}` : `≈ US$${personalPricing.usd.toLocaleString("en-US")}`;
+  const curToggle = usdText || offerPersonal ? (
+    <div className="curtog" role="group" aria-label="Show prices in">
+      <button type="button" className={!abroad ? "on" : ""} aria-pressed={!abroad} onClick={() => setAbroad(false)}>₹ India</button>
+      <button type="button" className={abroad ? "on" : ""} aria-pressed={abroad} onClick={() => setAbroad(true)}>$ Outside India</button>
+    </div>
+  ) : null;
 
   return (
     <div className="sacred" ref={rootRef}>
       <IllustrationSprite />
       <WaitlistDialog open={waitOpen} onOpenChange={setWaitOpen} slug={course.slug} title={title} />
+      {offerPersonal && (
+        <PersonalRequestDialog open={personalOpen} onOpenChange={setPersonalOpen} slug={course.slug} title={title}
+          priceLine={`${pMain} / month (${pAlt})`} />
+      )}
       <PayEnrollDialog open={enrollOpen} onOpenChange={setEnrollOpen} slug={course.slug} title={title} price={course.price} feeType={course.feeType} />
 
       {/* HERO */}
@@ -160,9 +190,10 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
               <div className="bdate"><Illus name="s-cal" />{batch.date}</div>
               {course.batchInfo && <div className="binfo">{course.batchInfo}</div>}
               <div className="brow">
-                {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}
+                {amount && <div className="amt">{groupMain}<small>{groupAlt ? `${groupAlt} · ` : ""}{feeLabel(course.feeType)}</small></div>}
                 <button type="button" className="btn" onClick={enroll}>{cta} →</button>
               </div>
+              {offerPersonal && <a className="one2one" href="#pricing">Prefer one-to-one classes? <b>See personal classes ↓</b></a>}
             </div>
             <div className="assure"><span>Refund within 7 days</span><span>Recordings of every class</span><span>Secure payment</span></div>
             <div className="world"><b>220+ students</b> in <b>12 countries</b> · India · USA · UAE · Germany</div>
@@ -366,17 +397,31 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
       )}
 
       {/* PRICING */}
-      {x.includes && amount && (
+      {amount && (x.includes || offerPersonal) && (
         <section id="pricing"><div className="wrap center">
-          <div className="eyebrow" data-rv>Fees</div>
+          <div className="eyebrow" data-rv>{offerPersonal ? "Choose how you learn" : "Fees"}</div>
           <h2 className="h" data-rv>Begin your <em>{x.journeyTitle || title}</em> sādhana</h2>
-          <div className="price-card" data-rv>
-            <div className="pc-head"><div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div><div className="pc-date"><span className="blabel">{batch.label}</span><b>{batch.date}</b>{course.batchInfo && <small>{course.batchInfo}</small>}</div></div>
-            <ul>{x.includes.map((t) => <li key={t}>{t}</li>)}</ul>
-            <button type="button" className="btn wide" onClick={enroll}>{cta} →</button>
-            <p className="fee-note">{feeNote(course.feeType)}</p>
-            <div className="assure"><span>Refund within 7 days or before your 2nd class</span><span>Secure payment by Razorpay</span></div>
+          {curToggle}
+          <div className={offerPersonal ? "price-duo" : ""}>
+            <div className="price-card" data-rv>
+              {offerPersonal && <div className="pc-kind"><Illus name="s-live" /><div><b>Group class</b><small>Learn live with a small batch</small></div></div>}
+              <div className="pc-head"><div className="amt">{groupMain}<small>{groupAlt ? `${groupAlt} · ` : ""}{feeLabel(course.feeType)}</small></div><div className="pc-date"><span className="blabel">{batch.label}</span><b>{batch.date}</b>{course.batchInfo && <small>{course.batchInfo}</small>}</div></div>
+              <ul>{(x.includes || DEFAULT_GROUP_INCLUDES).map((t) => <li key={t}>{t}</li>)}</ul>
+              <button type="button" className="btn wide" onClick={enroll}>{cta} →</button>
+              <p className="fee-note">{feeNote(course.feeType)}{abroad && !waitlist ? " Payment is charged in Indian rupees; your bank converts it. Trouble paying from abroad? WhatsApp us on +91 91087 87550." : ""}</p>
+              {!offerPersonal && <div className="assure"><span>Refund within 7 days or before your 2nd class</span><span>Secure payment by Razorpay</span></div>}
+            </div>
+            {offerPersonal && (
+              <div className="price-card personal" data-rv>
+                <div className="pc-kind"><Illus name="guru" /><div><b>Personal class</b><small>Your own āchārya, your own pace</small></div><span className="pc-tag">One-to-one</span></div>
+                <div className="pc-head"><div className="amt">{pMain}<span className="per"> / month</span><small>{pAlt} · monthly guru dakṣiṇā</small></div></div>
+                <ul>{PERSONAL_DETAILS.map((t) => <li key={t}>{t}</li>)}</ul>
+                <button type="button" className="btn wide ghost" onClick={() => setPersonalOpen(true)}>Request your time slot →</button>
+                <p className="fee-note">Monthly subscription with a dedicated time slot. We agree your slot on WhatsApp first, then send a secure payment link — no payment now.</p>
+              </div>
+            )}
           </div>
+          {offerPersonal && <div className="assure center-row"><span>Refund within 7 days or before your 2nd class</span><span>Secure payment by Razorpay</span></div>}
         </div></section>
       )}
 
