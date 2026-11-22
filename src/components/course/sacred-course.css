@@ -255,3 +255,86 @@
 .sacred .mobilebar .amt small{margin-top:4px;color:var(--gold-soft)}
 @keyframes sc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(243,210,138,.45)}50%{box-shadow:0 0 0 8px rgba(243,210,138,0)}}
 @media (max-width:900px){.sacred .bdate{font-size:26px}.sacred .batch{padding:18px}.sacred .brow .btn{width:100%;justify-content:center}}
+
+/* ===== Content-sheet sections ===== */
+.sacred .btn.ghost{background:transparent;color:var(--gold2);border:1px solid rgba(217,169,78,.6);box-shadow:none;padding:13px 22px;font-size:15px}
+.sacred .btn.ghost:hover{background:rgba(217,169,78,.1)}
+.sacred .btn.sm{padding:9px 18px;font-size:14px}
+.sacred .btn.wide{width:100%;justify-content:center}
+.sacred .lead.narrow{max-width:720px;margin:0 auto}
+/* badges */
+.sacred .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding-top:26px;padding-bottom:26px}
+.sacred .chips span{border:1px solid rgba(217,169,78,.35);background:rgba(217,169,78,.06);color:var(--gold-soft);border-radius:999px;padding:7px 14px;font-size:13px}
+/* in-page menu */
+.sacred .pnav{position:sticky;top:64px;z-index:30;background:rgba(28,10,9,.92);backdrop-filter:blur(8px);border-top:1px solid #3a1a12;border-bottom:1px solid #3a1a12}
+.sacred .pnav .wrap{display:flex;align-items:center;gap:26px;height:56px;overflow-x:auto;scrollbar-width:none}
+.sacred .pnav .wrap::-webkit-scrollbar{display:none}
+.sacred .pnav a{color:var(--gold-soft);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-decoration:none;white-space:nowrap}
+.sacred .pnav a:hover{color:var(--gold2)}
+.sacred .pnav .btn{margin-left:auto;flex:none}
+.sacred section[id]{scroll-margin-top:130px}
+/* for-you note */
+.sacred .fy-note{margin-top:34px}
+.sacred .fy-note p{font:italic 500 22px var(--serif);color:var(--gold-soft)}
+.sacred .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+/* about */
+.sacred .parts{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px;text-align:left}
+.sacred .part{display:flex;gap:20px;align-items:flex-start;background:linear-gradient(160deg,#3a1512,#25100e);border:1px solid var(--line);border-radius:22px;padding:28px}
+.sacred .part svg{width:96px;height:96px;flex:none}
+.sacred .part h3{font:600 32px/1.1 var(--serif);color:var(--ivory)}
+.sacred .part .tag{font:italic 500 17px var(--serif);color:var(--gold);margin:2px 0 8px}
+.sacred .part p{font-size:15px;color:var(--muted)}
+/* curriculum */
+.sacred .modules{max-width:900px;margin:36px auto 0;display:grid;gap:10px}
+.sacred .mod{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px}
+.sacred .mod summary{align-items:center;font:600 19px/1.3 var(--serif)}
+.sacred .mod .mn{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font:600 14px var(--sans);color:var(--gold2);margin-right:4px}
+.sacred .mod .mt{flex:1}
+.sacred .mod p{color:var(--muted);font-size:14.5px;margin:10px 0 2px 54px}
+/* support (6) */
+.sacred .guided.six{grid-template-columns:repeat(3,1fr)}
+/* benefits */
+.sacred .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px;text-align:left}
+.sacred .bf{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;transition:transform .35s ease,border-color .35s ease}
+.sacred .bf:hover{transform:translateY(-4px);border-color:rgba(217,169,78,.5)}
+.sacred .bf svg{width:64px;height:64px;margin-bottom:8px}
+.sacred .bf h4{font:600 23px var(--serif);color:var(--ivory);margin-bottom:4px}
+.sacred .bf p{font-size:14.5px;color:var(--muted)}
+/* onboarding */
+.sacred .onboard{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0 0;padding:0;text-align:left;counter-reset:x}
+.sacred .onboard li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.sacred .onboard li span{flex:none;width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,#f0c56c,#c58d34);color:#2a1206;display:grid;place-items:center;font-weight:700}
+.sacred .onboard li p{font-size:15px;color:var(--text)}
+/* pricing */
+.sacred .price-card{max-width:620px;margin:36px auto 0;text-align:left;background:linear-gradient(160deg,rgba(90,26,20,.6),rgba(42,17,15,.9));border:1px solid rgba(217,169,78,.6);border-radius:26px;padding:30px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.sacred .pc-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid rgba(217,169,78,.18)}
+.sacred .pc-date{text-align:right}
+.sacred .pc-date b{display:block;font:600 22px var(--serif);color:var(--ivory)}
+.sacred .pc-date small{color:var(--body);font-size:13px}
+.sacred .price-card ul{list-style:none;padding:0;margin:18px 0 22px;display:grid;gap:10px}
+.sacred .price-card li{padding-left:28px;position:relative;color:var(--text);font-size:15px}
+.sacred .price-card li:before{content:"✓";position:absolute;left:0;top:0;color:var(--gold);font-weight:700}
+.sacred .price-card .fee-note{margin-top:12px}
+.sacred .price-card .assure{margin-top:14px}
+/* teacher stats */
+.sacred .tstats{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:26px}
+.sacred .tstats span{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 16px;color:var(--gold-soft);font-size:14px}
+/* founders' letter */
+.sacred .letter{max-width:760px;margin:0 auto;background:linear-gradient(180deg,#f4ead6,#ead9b8);color:#3a2414;border-radius:6px;padding:48px 52px;box-shadow:0 30px 70px rgba(0,0,0,.45);position:relative}
+.sacred .letter:before{content:"";position:absolute;inset:10px;border:1px solid rgba(138,91,34,.35);border-radius:3px;pointer-events:none}
+.sacred .letter .eyebrow{color:#8a5a22}
+.sacred .letter p{font:500 21px/1.6 var(--serif);margin-top:14px}
+.sacred .letter .greet{font-style:italic;margin-top:18px}
+.sacred .letter .sign{font-style:italic;color:#7a1c1f;margin-top:24px}
+
+@media (max-width:900px){
+  .sacred .pnav{top:64px}
+  .sacred .pnav .wrap{gap:18px;height:50px}
+  .sacred .pnav .btn{display:none}
+  .sacred .parts,.sacred .benefits,.sacred .onboard,.sacred .guided.six{grid-template-columns:1fr}
+  .sacred .part{flex-direction:column}
+  .sacred .mod p{margin-left:0}
+  .sacred .pc-date{text-align:left}
+  .sacred .letter{padding:34px 26px}
+  .sacred .letter p{font-size:19px}
+}

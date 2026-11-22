@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  async redirects() {
+    return [
+      { source: "/sri-rudram", destination: "/courses/rudrachamakam-course", permanent: false },
+    ];
+  },
   async headers() {
     return [
       {

@@ -11,11 +11,19 @@ import "./sacred-course.css";
 
 const STEP_ICONS: IllusName[] = ["palm", "sound", "kalasha", "flowers", "arati", "home", "lotus", "mala"];
 const FACT_ICONS: IllusName[] = ["s-live", "s-cal", "s-lang", "s-rec", "s-book"];
+const SUPPORT_ICONS: IllusName[] = ["s-live", "hand", "ear", "s-rec", "s-book", "lotus"];
+const WHATSAPP = "https://wa.me/919108787550";
+const DEFAULT_SUPPORT = [
+  { title: "Live classes", text: "On Google Meet, with your āchārya.", live: true },
+  { title: "Chanting correction", text: "Your pronunciation corrected, one by one, in class." },
+  { title: "Recordings", text: "Missed a class? Watch it and bring doubts to the next one." },
+  { title: "WhatsApp group", text: "Questions answered between classes, with your batch." },
+];
 
 /** "*word*" → highlighted */
-function Emph({ text }: { text: string }) {
+function Emph({ text, em }: { text: string; em?: boolean }) {
   const parts = text.split(/\*([^*]+)\*/g);
-  return <>{parts.map((p, i) => (i % 2 ? <b key={i}>{p}</b> : <React.Fragment key={i}>{p}</React.Fragment>))}</>;
+  return <>{parts.map((p, i) => (i % 2 ? (em ? <em key={i}>{p}</em> : <b key={i}>{p}</b>) : <React.Fragment key={i}>{p}</React.Fragment>))}</>;
 }
 
 function imageUrl(img: any): string {
@@ -98,7 +106,17 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
 
   const teachers = (x.teachers || ["karthik", "jyothi"]).map((id) => TEACHERS[id]);
   const testimonials = x.testimonials || [];
-  const faqs = course.faqs || [];
+  const faqs = x.faqs || course.faqs || [];
+  const support = x.support || DEFAULT_SUPPORT;
+  const navItems = ([
+    x.about ? ["about", "About"] : null,
+    journey.length ? ["learn", "How you'll learn"] : null,
+    x.curriculum ? ["curriculum", "Curriculum"] : null,
+    ["support", "Support"],
+    ["acharya", "Āchārya"],
+    testimonials.length ? ["reviews", "Reviews"] : null,
+    faqs.length ? ["faq", "FAQ"] : null,
+  ].filter(Boolean) as [string, string][]);
 
   // ---- motion: reveal on scroll + timeline progress ----
   useEffect(() => {
@@ -155,7 +173,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
               </div>
             </div>
             <div className="assure"><span>Refund within 7 days</span><span>Recordings of every class</span><span>Secure payment</span></div>
-            <div className="world">Students from <b>India · USA · UAE · Germany</b></div>
+            <div className="world"><b>220+ students</b> in <b>12 countries</b> · India · USA · UAE · Germany</div>
           </div>
           {heroImage && (
             <div className="photo">
@@ -184,21 +202,60 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
         </div>
       )}
 
+      {/* BADGES */}
+      {x.badges && x.badges.length > 0 && (
+        <div className="chips wrap" data-rv>{x.badges.map((b) => <span key={b}>✦ {b}</span>)}</div>
+      )}
+
+      {/* IN-PAGE MENU */}
+      {navItems.length > 2 && (
+        <nav className="pnav" aria-label="On this page">
+          <div className="wrap">
+            {navItems.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
+            <button type="button" className="btn sm" onClick={enroll}>Pay &amp; Enroll</button>
+          </div>
+        </nav>
+      )}
+
       {/* FOR YOU */}
       {forYou.length > 0 && (
-        <section><div className="wrap center">
+        <section id="foryou"><div className="wrap center">
           <div className="eyebrow" data-rv>Is this for you?</div>
-          <h2 className="h" data-rv>If you relate to any of these, <em>this course is for you</em></h2>
+          <h2 className="h" data-rv>{x.forYouNote ? <>Does any of this <em>sound like you?</em></> : <>If you relate to any of these, <em>this course is for you</em></>}</h2>
           <div className="divider" data-rv>✦</div>
           <div className="foryou">
             {forYou.map((t, i) => <div className="fy" key={i} data-rv><span className="tick">✓</span><p>{t}</p></div>)}
           </div>
+          {x.forYouNote && (
+            <div className="fy-note" data-rv>
+              <p>{x.forYouNote}</p>
+              <div className="ctas"><a className="btn ghost" href="#learn">See how you will learn →</a><a className="btn ghost" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Ask us on WhatsApp →</a></div>
+            </div>
+          )}
+        </div></section>
+      )}
+
+      {/* ABOUT */}
+      {x.about && (
+        <section id="about" className="alt"><div className="wrap center">
+          <div className="eyebrow" data-rv>{x.about.eyebrow}</div>
+          <h2 className="h" data-rv><Emph text={x.about.title} em /></h2>
+          <p className="lead narrow" data-rv>{x.about.intro}</p>
+          <div className="parts">
+            {x.about.parts.map((p) => (
+              <div className="part" key={p.name} data-rv>
+                <Illus name={p.icon} />
+                <div><h3>{p.name}</h3><div className="tag">{p.tag}</div><p>{p.text}</p></div>
+              </div>
+            ))}
+          </div>
+          {x.about.note && <p className="journey-note" data-rv>{x.about.note}</p>}
         </div></section>
       )}
 
       {/* GURUKULA (Rudra) */}
       {x.gurukula && (
-        <section className="alt"><div className="wrap">
+        <section className={x.about ? "" : "alt"}><div className="wrap">
           <div className="rudra-head">
             <div>
               <div className="eyebrow" data-rv>Learning the Gurukula way</div>
@@ -229,7 +286,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
 
       {/* JOURNEY */}
       {journey.length > 0 && (
-        <section className={x.gurukula ? "" : "alt"}><div className="wrap">
+        <section id="learn" className="alt"><div className="wrap">
           <div className="center">
             <div className="eyebrow" data-rv>Clear steps · Rooted guidance</div>
             <h2 className="h" data-rv>How you&apos;ll learn <em>{x.journeyTitle || title}</em></h2>
@@ -258,21 +315,82 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
         </div></section>
       )}
 
-      {/* LIVE & GUIDED */}
-      <section><div className="wrap center">
+      {/* CURRICULUM */}
+      {x.curriculum && (
+        <section id="curriculum"><div className="wrap">
+          <div className="center">
+            <div className="eyebrow" data-rv>Curriculum</div>
+            <h2 className="h" data-rv>The full curriculum, <em>nothing hidden</em></h2>
+            <p className="lead narrow" data-rv>{x.curriculum.intro}</p>
+          </div>
+          <div className="modules">
+            {x.curriculum.modules.map((m, i) => (
+              <details key={i} className="mod" open={i < 2} data-rv>
+                <summary><span className="mn">{String(i).padStart(2, "0")}</span><span className="mt">{m.title.replace(/^Module \d+ · /, "")}</span></summary>
+                <p>{m.text}</p>
+              </details>
+            ))}
+          </div>
+        </div></section>
+      )}
+
+      {/* SUPPORT */}
+      <section id="support" className={x.curriculum ? "alt" : ""}><div className="wrap center">
         <div className="eyebrow" data-rv>Live · Guided · Personal</div>
-        <h2 className="h" data-rv>Learn live. <em>Never alone.</em></h2>
-        <div className="guided">
-          <div className="g" data-rv><div className="live">Live</div><div className="ic"><Illus name="s-live" /></div><h4>Live classes</h4><p>On Google Meet, with your āchārya.</p></div>
-          <div className="g" data-rv><div className="ic"><Illus name="sound" /></div><h4>Chanting correction</h4><p>Your pronunciation corrected, one by one, in class.</p></div>
-          <div className="g" data-rv><div className="ic"><Illus name="s-rec" /></div><h4>Recordings</h4><p>Missed a class? Watch it and bring doubts to the next one.</p></div>
-          <div className="g" data-rv><div className="ic"><Illus name="s-book" /></div><h4>WhatsApp group</h4><p>Questions answered between classes, with your batch.</p></div>
+        <h2 className="h" data-rv><Emph text={x.supportTitle || "Learn live. *Never alone.*"} em /></h2>
+        <div className={`guided${support.length > 4 ? " six" : ""}`}>
+          {support.map((g, i) => (
+            <div className="g" key={i} data-rv>
+              {g.live && <div className="live">Live</div>}
+              <div className="ic"><Illus name={SUPPORT_ICONS[i % SUPPORT_ICONS.length]} /></div>
+              <h4>{g.title}</h4><p>{g.text}</p>
+            </div>
+          ))}
         </div>
       </div></section>
 
+      {/* BENEFITS */}
+      {x.benefits && (
+        <section><div className="wrap center">
+          <div className="eyebrow" data-rv>The fruit of practice</div>
+          <h2 className="h" data-rv>What this sādhana can <em>bring into your life</em></h2>
+          <div className="benefits">
+            {x.benefits.map((b) => (
+              <div className="bf" key={b.title} data-rv><Illus name={b.icon} /><h4>{b.title}</h4><p>{b.text}</p></div>
+            ))}
+          </div>
+        </div></section>
+      )}
+
+      {/* ONBOARDING */}
+      {x.onboarding && (
+        <section className="alt"><div className="wrap center">
+          <div className="eyebrow" data-rv>A gentle beginning</div>
+          <h2 className="h" data-rv><Emph text={x.onboarding.title} em /></h2>
+          <ol className="onboard">
+            {x.onboarding.steps.map((s, i) => <li key={i} data-rv><span>{i + 1}</span><p>{s}</p></li>)}
+          </ol>
+        </div></section>
+      )}
+
+      {/* PRICING */}
+      {x.includes && amount && (
+        <section id="pricing"><div className="wrap center">
+          <div className="eyebrow" data-rv>Fees</div>
+          <h2 className="h" data-rv>Begin your <em>{x.journeyTitle || title}</em> sādhana</h2>
+          <div className="price-card" data-rv>
+            <div className="pc-head"><div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div><div className="pc-date"><span className="blabel">{batch.label}</span><b>{batch.date}</b>{course.batchInfo && <small>{course.batchInfo}</small>}</div></div>
+            <ul>{x.includes.map((t) => <li key={t}>{t}</li>)}</ul>
+            <button type="button" className="btn wide" onClick={enroll}>Pay &amp; Enroll →</button>
+            <p className="fee-note">{feeNote(course.feeType)}</p>
+            <div className="assure"><span>Refund within 7 days or before your 2nd class</span><span>Secure payment by Razorpay</span></div>
+          </div>
+        </div></section>
+      )}
+
       {/* TEACHERS */}
-      <section className="alt"><div className="wrap center">
-        <div className="eyebrow" data-rv>{teachers.length > 1 ? "Your teachers" : "Your teacher"}</div>
+      <section id="acharya" className="alt"><div className="wrap center">
+        <div className="eyebrow" data-rv>{teachers.length > 1 ? "Your teachers" : "Meet your Āchārya"}</div>
         <h2 className="h" data-rv>Taught in the <em>Gurukula</em> tradition</h2>
         <div className={`teachers${teachers.length === 1 ? " one" : ""}`} style={{ ["--n" as any]: teachers.length }}>
           {teachers.map((t) => (
@@ -282,11 +400,12 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
             </div>
           ))}
         </div>
+        {x.teacherStats && <div className="tstats" data-rv>{x.teacherStats.split(" · ").map((s) => <span key={s}>{s}</span>)}</div>}
       </div></section>
 
       {/* TESTIMONIALS */}
       {testimonials.length > 0 && (
-        <section><div className="wrap center">
+        <section id="reviews"><div className="wrap center">
           <div className="eyebrow" data-rv>Words from students</div>
           <h2 className="h" data-rv>What students say</h2>
           {(rating || completed) && (
@@ -308,9 +427,21 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
         </div></section>
       )}
 
+      {/* FOUNDERS' NOTE */}
+      {x.foundersNote && (
+        <section className="alt"><div className="wrap">
+          <div className="letter" data-rv>
+            <div className="eyebrow">A note from the founders</div>
+            <p className="greet">{x.foundersNote.greeting}</p>
+            {x.foundersNote.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+            <p className="sign">{x.foundersNote.signoff}</p>
+          </div>
+        </div></section>
+      )}
+
       {/* FAQ */}
       {faqs.length > 0 && (
-        <section className={testimonials.length ? "alt" : ""}><div className="wrap">
+        <section id="faq"><div className="wrap">
           <div className="center"><div className="eyebrow" data-rv>Questions</div><h2 className="h" data-rv>Frequently asked</h2></div>
           <div className="faq">
             {faqs.map((f, i) => (
@@ -319,10 +450,12 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
                 <div className="ans" dangerouslySetInnerHTML={{ __html: renderMarkdownToHtml(f.answer || "") }} />
               </details>
             ))}
-            <details data-rv>
-              <summary>Can I get a refund?</summary>
-              <div className="ans"><p>Yes — within 7 days of payment or before your second class, minus the small payment-gateway charge. <a href="/refund-policy" style={{ color: "var(--gold-soft)" }}>Read the refund policy</a>.</p></div>
-            </details>
+            {!x.faqs && (
+              <details data-rv>
+                <summary>Can I get a refund?</summary>
+                <div className="ans"><p>Yes — within 7 days of payment or before your second class, minus the small payment-gateway charge. <a href="/refund-policy" style={{ color: "var(--gold-soft)" }}>Read the refund policy</a>.</p></div>
+              </details>
+            )}
           </div>
         </div></section>
       )}
@@ -331,7 +464,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
       <section style={{ paddingTop: 20 }}><div className="wrap">
         <div className="final" data-rv>
           <Illus name="diya" />
-          <h2 className="h">Begin your <em>{title}</em></h2>
+          <h2 className="h">{x.finalTitle ? <Emph text={x.finalTitle} em /> : <>Begin your <em>{title}</em></>}</h2>
           <p className="lead">{x.finalLine || "Learn it the traditional way — live, guided and personal."}</p>
           <div className="fdate"><span className="blabel">{batch.label}</span> <b>{batch.date}</b>{course.batchInfo ? <> · {course.batchInfo}</> : null}</div>
           {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}

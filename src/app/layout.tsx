@@ -35,9 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Mantra Academy</title>
+        {/* Course pages set their own title and description (generateMetadata). */}
+        {!isFullBleed && <title>Mantra Academy</title>}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Learn the power of mantras and transform your life." />
+        {!isFullBleed && <meta name="description" content="Learn the power of mantras and transform your life." />}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet" />
