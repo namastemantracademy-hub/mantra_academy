@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { Course } from "@/lib/initial-data";
 import { PayEnrollDialog } from "@/components/pay-enroll-dialog";
+import { WaitlistDialog } from "@/components/waitlist-dialog";
 import { feeLabel, feeNote, formatRupees, normalizeFeeType } from "@/lib/fees";
 import { renderMarkdownToHtml } from "@/lib/markdown";
 import { DEFAULT_FACTS, TEACHERS, getCourseExperience, type JourneyStep } from "@/lib/course-experience";
@@ -68,6 +69,7 @@ function Mandala() {
 
 export function SacredCoursePage({ course }: { course: Course & { _id?: string } }) {
   const [enrollOpen, setEnrollOpen] = useState(false);
+  const [waitOpen, setWaitOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const x = getCourseExperience(course.slug);
   const title = x.displayTitle || course.title;
@@ -78,7 +80,10 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
   const subtitle = x.subtitle;
   const lead = x.lead || course.description || "";
   const heroImage = x.heroImage || imageUrl(course.image);
-  const batch = batchStatus(course.startDate);
+  const waitlist = course.registrationsOpen === false;
+  const batch = waitlist
+    ? { label: "Next batch", date: "Opening soon", pill: "Join the waitlist to hear first", short: "Waitlist open" }
+    : batchStatus(course.startDate);
   const completed = course.studentsCompleted?.trim() || x.stats?.completed;
   const rating = course.studentRating?.trim() || x.stats?.rating;
 
@@ -146,12 +151,14 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
     return () => { io.disconnect(); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
 
-  const enroll = () => setEnrollOpen(true);
+  const enroll = () => (waitlist ? setWaitOpen(true) : setEnrollOpen(true));
+  const cta = waitlist ? "Join the waitlist" : "Pay & Enroll";
   const amount = price !== undefined ? formatRupees(price) : "";
 
   return (
     <div className="sacred" ref={rootRef}>
       <IllustrationSprite />
+      <WaitlistDialog open={waitOpen} onOpenChange={setWaitOpen} slug={course.slug} title={title} />
       <PayEnrollDialog open={enrollOpen} onOpenChange={setEnrollOpen} slug={course.slug} title={title} price={course.price} feeType={course.feeType} />
 
       {/* HERO */}
@@ -159,7 +166,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
         <Mandala />
         <div className="wrap grid">
           <div className="hero-text">
-            <div className="eyebrow">✦ {x.eyebrow || "Live online course · Registrations open"}</div>
+            <div className="eyebrow">✦ {waitlist ? `${(x.eyebrow || "Live online course").replace(/\s*·\s*Registrations open/i, "")} · Waitlist open` : x.eyebrow || "Live online course · Registrations open"}</div>
             <h1>{title}</h1>
             {subtitle ? <div className="sub">{subtitle}</div> : <div />}
             <p className="lead"><Emph text={lead} /></p>
@@ -169,7 +176,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
               {course.batchInfo && <div className="binfo">{course.batchInfo}</div>}
               <div className="brow">
                 {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}
-                <button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll →</button>
+                <button type="button" className="btn" onClick={enroll}>{cta} →</button>
               </div>
             </div>
             <div className="assure"><span>Refund within 7 days</span><span>Recordings of every class</span><span>Secure payment</span></div>
@@ -212,7 +219,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
         <nav className="pnav" aria-label="On this page">
           <div className="wrap">
             {navItems.map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
-            <button type="button" className="btn sm" onClick={enroll}>Pay &amp; Enroll</button>
+            <button type="button" className="btn sm" onClick={enroll}>{cta}</button>
           </div>
         </nav>
       )}
@@ -381,7 +388,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
           <div className="price-card" data-rv>
             <div className="pc-head"><div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div><div className="pc-date"><span className="blabel">{batch.label}</span><b>{batch.date}</b>{course.batchInfo && <small>{course.batchInfo}</small>}</div></div>
             <ul>{x.includes.map((t) => <li key={t}>{t}</li>)}</ul>
-            <button type="button" className="btn wide" onClick={enroll}>Pay &amp; Enroll →</button>
+            <button type="button" className="btn wide" onClick={enroll}>{cta} →</button>
             <p className="fee-note">{feeNote(course.feeType)}</p>
             <div className="assure"><span>Refund within 7 days or before your 2nd class</span><span>Secure payment by Razorpay</span></div>
           </div>
@@ -468,7 +475,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
           <p className="lead">{x.finalLine || "Learn it the traditional way — live, guided and personal."}</p>
           <div className="fdate"><span className="blabel">{batch.label}</span> <b>{batch.date}</b>{course.batchInfo ? <> · {course.batchInfo}</> : null}</div>
           {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}
-          <button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll →</button>
+          <button type="button" className="btn" onClick={enroll}>{cta} →</button>
           <p className="fee-note" style={{ margin: "16px auto 0" }}>{feeNote(course.feeType)}</p>
           <div className="assure"><span>Refund within 7 days</span><span>Secure payment by Razorpay</span></div>
         </div>
@@ -476,7 +483,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
       </div></section>
 
       {amount && (
-        <div className="mobilebar"><div className="amt">{amount}<small>{batch.short}</small></div><button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll</button></div>
+        <div className="mobilebar"><div className="amt">{amount}<small>{batch.short}</small></div><button type="button" className="btn" onClick={enroll}>{cta}</button></div>
       )}
     </div>
   );

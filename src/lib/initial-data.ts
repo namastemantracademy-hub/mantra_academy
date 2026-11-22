@@ -68,6 +68,8 @@ export type Course = {
   studentRating?: string;
   /** e.g. "Mon & Thu · 7:00–8:15 PM IST" */
   batchInfo?: string;
+  /** false = "Join the waitlist" instead of Pay & Enroll */
+  registrationsOpen?: boolean;
 };
 
 export const instructors: Record<string, { name: string; title: string; image: string }> = {};

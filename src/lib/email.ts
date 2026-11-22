@@ -91,3 +91,42 @@ export async function sendEnrollmentEmails(e: IEnrollment): Promise<boolean> {
   });
   return results.every((r) => r.status === "fulfilled");
 }
+
+// ---- Waitlist ----
+export async function sendWaitlistEmails(w: { name: string; email: string; phone: string; courseTitle: string; note?: string }): Promise<boolean> {
+  const t = getTransporter();
+  if (!t) {
+    console.warn("Waitlist emails skipped: GMAIL_USER / GMAIL_APP_PASSWORD not set");
+    return false;
+  }
+  const from = `Mantra Academy <${process.env.GMAIL_USER}>`;
+  const adminTo = process.env.ADMIN_NOTIFY_EMAIL || process.env.GMAIL_USER!;
+  const first = escapeHtml(String(w.name).split(" ")[0]);
+  const course = escapeHtml(w.courseTitle);
+  try {
+    await Promise.all([
+      t.sendMail({
+        from,
+        to: w.email,
+        subject: `You're on the waitlist — ${w.courseTitle}`,
+        html: shell(`<p>Namaste ${first},</p>
+<p>Thank you for your interest in <b>${course}</b>. You're on the waitlist.</p>
+<p>As soon as the next batch opens, we'll write to you here and on WhatsApp with the dates, timings and a link to register — before we announce it publicly.</p>
+<p>Questions? Just reply to this email.</p>`),
+      }),
+      t.sendMail({
+        from,
+        to: adminTo,
+        replyTo: w.email,
+        subject: `Waitlist: ${w.courseTitle} — ${w.name}`,
+        html: shell(`<p><b>New waitlist sign-up</b></p>
+<p>Course: ${course}<br>Name: ${escapeHtml(w.name)}<br>Email: ${escapeHtml(w.email)}<br>Phone / WhatsApp: ${escapeHtml(w.phone)}${w.note ? `<br>Note: ${escapeHtml(w.note)}` : ""}</p>
+<p>See everyone in Admin → Waitlist.</p>`),
+      }),
+    ]);
+    return true;
+  } catch (err) {
+    console.error("Waitlist email failed:", err);
+    return false;
+  }
+}

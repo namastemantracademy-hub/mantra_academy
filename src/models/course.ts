@@ -30,6 +30,8 @@ export interface ICourse extends Document {
   studentsCompleted?: string;
   studentRating?: string;
   batchInfo?: string;
+  // false = show "Join the waitlist" instead of Pay & Enroll
+  registrationsOpen?: boolean;
 }
 
 const LessonSchema = new Schema({
@@ -79,6 +81,7 @@ const CourseSchema = new Schema<ICourse>({
   studentsCompleted: { type: String, default: "" },
   studentRating: { type: String, default: "" },
   batchInfo: { type: String, default: "" },
+  registrationsOpen: { type: Boolean, default: true },
 }, { timestamps: true });
 
 // Replace cached model if it used the old image:String path

@@ -3,13 +3,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, BookOpen, LogOut, FileText, ShieldCheck, Megaphone, Users, MessageSquare } from "lucide-react";
+import { Home, BookOpen, LogOut, FileText, ShieldCheck, Megaphone, Users, MessageSquare, BellRing } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 
 const navLinks = [
   { href: "/admin/dashboard", label: "Dashboard", icon: Home },
   { href: "/admin/courses", label: "Courses", icon: BookOpen },
+  { href: "/admin/waitlist", label: "Waitlist", icon: BellRing },
   { href: "/admin/blog", label: "Blog", icon: FileText },
   { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
   { href: "/admin/instructors", label: "Instructors", icon: Users },

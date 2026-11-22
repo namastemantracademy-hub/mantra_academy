@@ -449,6 +449,16 @@ export default function AdminCoursesPage() {
                             <Input id="studentRating" name="studentRating" placeholder="e.g. 4.9 — real ratings only" value={(editingCourse as any).studentRating || ''} onChange={handleChange} />
                           </div>
                           <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="registrationsOpen" className="text-right">Registrations</Label>
+                            <Select name="registrationsOpen" value={(editingCourse as any).registrationsOpen === false ? 'waitlist' : 'open'} onValueChange={(value) => setEditingCourse({ ...(editingCourse as any), registrationsOpen: value === 'open' })}>
+                                <SelectTrigger id="registrationsOpen"><SelectValue/></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="open">Open — Pay &amp; Enroll</SelectItem>
+                                    <SelectItem value="waitlist">Closed — Join waitlist</SelectItem>
+                                </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="grid grid-cols-2 items-center gap-2">
                             <Label htmlFor="instructor" className="text-right">Instructor</Label>
               <Select name="instructor" value={editingCourse.instructor?.name || ''} onValueChange={(value) => handleSelectChange('instructor', value)}>
                 <SelectTrigger><SelectValue/></SelectTrigger>
