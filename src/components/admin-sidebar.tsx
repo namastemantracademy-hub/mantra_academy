@@ -1,83 +1,113 @@
-
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, BookOpen, LogOut, FileText, ShieldCheck, Megaphone, Users, MessageSquare, BellRing } from "lucide-react";
+import {
+  Home, BookOpen, LogOut, FileText, Megaphone, Users, MessageSquare, BellRing, IndianRupee, Menu, ExternalLink,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 
-const navLinks = [
-  { href: "/admin/dashboard", label: "Dashboard", icon: Home },
-  { href: "/admin/courses", label: "Courses", icon: BookOpen },
-  { href: "/admin/waitlist", label: "Waitlist", icon: BellRing },
-  { href: "/admin/blog", label: "Blog", icon: FileText },
-  { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
-  { href: "/admin/instructors", label: "Instructors", icon: Users },
-  { href: "/admin/testimonies", label: "Testimonies", icon: MessageSquare },
+const groups: { title: string; links: { href: string; label: string; icon: React.ElementType }[] }[] = [
+  { title: "", links: [{ href: "/admin/dashboard", label: "Today", icon: Home }] },
+  {
+    title: "Students",
+    links: [
+      { href: "/admin/payments", label: "Students & payments", icon: IndianRupee },
+      { href: "/admin/waitlist", label: "Waitlist", icon: BellRing },
+    ],
+  },
+  {
+    title: "Website",
+    links: [
+      { href: "/admin/courses", label: "Courses & batches", icon: BookOpen },
+      { href: "/admin/announcements", label: "Announcements", icon: Megaphone },
+      { href: "/admin/blog", label: "Wisdom articles", icon: FileText },
+      { href: "/admin/testimonies", label: "Student reviews", icon: MessageSquare },
+      { href: "/admin/instructors", label: "Teachers", icon: Users },
+    ],
+  },
 ];
 
-const NavLink = ({ href, label, icon: Icon }: { href: string; label: string; icon: React.ElementType }) => {
-  const pathname = usePathname();
-  const isActive = pathname === href;
-
-
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
-        isActive && "bg-primary/10 text-primary"
-      )}
-    >
-      <Icon className="h-4 w-4" />
-      {label}
-    </Link>
-  );
-};
-
-export function AdminSidebar() {
+function useSignOut() {
   const router = useRouter();
-
-  const handleSignOut = () => {
-    (async () => {
-      try {
-        await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
-      } catch (err) {
-        console.error('Logout request failed:', err);
-      } finally {
-        router.push('/');
-      }
-    })();
+  return async () => {
+    try {
+      await fetch("/api/admin/logout", { method: "POST", credentials: "same-origin" });
+    } catch (err) {
+      console.error("Logout request failed:", err);
+    } finally {
+      router.push("/");
+    }
   };
+}
 
+function Brand() {
   return (
-    <div className="hidden border-r bg-card md:block fixed top-0 left-0 h-screen w-64">
-      <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex h-16 items-center border-b px-6">
-           <div className="flex items-center gap-2 font-semibold">
-                <ShieldCheck className="h-6 w-6 text-primary" />
-                <span className="font-headline text-xl">Admin Panel</span>
-            </div>
-        </div>
-        <div className="flex-1 overflow-auto py-2">
-          <nav className="grid items-start px-4 text-sm font-medium">
-            {navLinks.map((link) => (
-              <NavLink key={link.label} {...link} />
+    <div className="adm-brand">
+      <span className="adm-om" aria-hidden>ॐ</span>
+      <div><b>Mantra Academy</b><small>Admin</small></div>
+    </div>
+  );
+}
+
+function NavList({ onPick }: { onPick?: () => void }) {
+  const pathname = usePathname();
+  const signOut = useSignOut();
+  return (
+    <div className="adm-nav">
+      <nav aria-label="Admin">
+        {groups.map((g) => (
+          <div key={g.title || "top"} className="adm-group">
+            {g.title && <div className="adm-gt">{g.title}</div>}
+            {g.links.map(({ href, label, icon: Icon }) => (
+              <Link key={href} href={href} onClick={onPick}
+                className={cn("adm-link", pathname.startsWith(href) && "on")}
+                aria-current={pathname.startsWith(href) ? "page" : undefined}>
+                <Icon className="h-[18px] w-[18px]" aria-hidden />{label}
+              </Link>
             ))}
-          </nav>
-        </div>
-         <div className="mt-auto p-4 border-t">
-            <Button
-              variant="ghost"
-              onClick={handleSignOut}
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-destructive/10 hover:text-destructive w-full justify-start"
-            >
-              <LogOut className="h-4 w-4" />
-              Sign Out
-            </Button>
-        </div>
+          </div>
+        ))}
+      </nav>
+      <div className="adm-nav-foot">
+        <a className="adm-link" href="/" target="_blank" rel="noopener noreferrer"><ExternalLink className="h-[18px] w-[18px]" aria-hidden />View website</a>
+        <button type="button" className="adm-link out" onClick={signOut}><LogOut className="h-[18px] w-[18px]" aria-hidden />Sign out</button>
       </div>
+    </div>
+  );
+}
+
+/** Desktop: fixed left sidebar. */
+export function AdminSidebar() {
+  return (
+    <aside className="adm-side hidden md:flex">
+      <Brand />
+      <NavList />
+    </aside>
+  );
+}
+
+/** Phone: top bar with a menu. */
+export function AdminTopbar() {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const current = groups.flatMap((g) => g.links).find((l) => pathname.startsWith(l.href));
+  return (
+    <div className="adm-top md:hidden">
+      <Brand />
+      <span className="adm-top-title">{current?.label}</span>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <button type="button" className="adm-burger" aria-label="Open admin menu"><Menu className="h-6 w-6" /></button>
+        </SheetTrigger>
+        <SheetContent side="left" className="adm-sheet w-[82vw] max-w-xs p-0">
+          <SheetTitle className="sr-only">Admin menu</SheetTitle>
+          <Brand />
+          <NavList onPick={() => setOpen(false)} />
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

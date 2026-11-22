@@ -8,7 +8,7 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen">
+    <div className="admin-theme min-h-screen">
         {children}
     </div>
   );

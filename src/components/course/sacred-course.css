@@ -438,13 +438,6 @@
 }
 
 /* ===== Header, footer and chat bubble match the course pages (Soft Kumkum) ===== */
-body:has(.sacred) header.sticky{background:#2b1512!important;border-bottom:1px solid rgba(224,178,92,.35)!important;box-shadow:0 6px 24px rgba(0,0,0,.25)!important}
-body:has(.sacred) header.sticky a,body:has(.sacred) header.sticky button{color:#F6EEDF}
-body:has(.sacred) header.sticky a:hover{color:#F2CE84}
-body:has(.sacred) footer{background:linear-gradient(180deg,#2b1512,#231010)!important;border-top:1px solid rgba(224,178,92,.35)!important;color:#DCC6A3!important}
-body:has(.sacred) footer h3{color:#F2CE84!important}
-body:has(.sacred) footer a:hover{color:#F6D894!important}
-body:has(.sacred) .fixed.bottom-6.right-6{width:48px!important;height:48px!important;right:14px!important;bottom:14px!important;background:#3a1914!important;color:#F2CE84!important;border:1px solid rgba(224,178,92,.7);box-shadow:0 0 18px rgba(240,176,80,.3)!important;animation:none!important}
 
 /* ===== Phones & tablets: lighter effects so scrolling stays smooth ===== */
 @media (max-width:900px){

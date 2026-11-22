@@ -18,6 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Image from "next/image";
 import ProgressBar from "@/components/ui/progress";
+import { courseName } from "@/lib/admin-data";
 
 const emptyCourse: Omit<Course, 'rating' | 'reviews'> = {
   slug: "", title: "", category: "", featured: false, image: "https://placehold.co/600x400.png", description: "",
@@ -60,6 +61,21 @@ export default function AdminCoursesPage() {
       }
     })();
   }, []);
+
+  const [quickBusy, setQuickBusy] = useState<Record<string, boolean>>({});
+  const quickUpdate = async (slug: string, patch: Record<string, any>, done: string) => {
+    setQuickBusy((b) => ({ ...b, [slug]: true }));
+    try {
+      const resp = await fetch(`/api/courses/${encodeURIComponent(slug)}`, { method: 'PUT', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(patch) });
+      if (!resp.ok) throw new Error('Save failed');
+      setCourses((list) => list.map((c) => (c.slug === slug ? ({ ...c, ...patch } as any) : c)));
+      toast({ title: 'Saved', description: done });
+    } catch {
+      toast({ variant: 'destructive', title: 'Could not save', description: 'Please check your connection and try again.' });
+    } finally {
+      setQuickBusy((b) => ({ ...b, [slug]: false }));
+    }
+  };
 
   const handleAdd = () => {
     setEditingCourse(JSON.parse(JSON.stringify(emptyCourse)));
@@ -309,47 +325,50 @@ export default function AdminCoursesPage() {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-                <CardTitle>Manage Courses</CardTitle>
-                <CardDescription>Add, edit, or delete courses offered by the academy.</CardDescription>
-            </div>
-            <Button onClick={handleAdd}>
-                <PlusCircle className="mr-2 h-4 w-4" /> Add Course
-            </Button>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Featured</TableHead>
-                <TableHead>Level</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {courses.map((course) => (
-                <TableRow key={course.slug}>
-                  <TableCell className="font-medium">{course.title}</TableCell>
-                  <TableCell>{course.category}</TableCell>
-                  <TableCell>{course.featured ? 'Yes' : 'No'}</TableCell>
-                  <TableCell>{course.level}</TableCell>
-                  <TableCell>₹{course.price}</TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => handleEdit(course)} disabled={isSaving}><Edit className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(course.slug)} disabled={Boolean(deletingSlugs[course.slug])}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+    <div className="adm-page">
+      <div className="adm-page" style={{ padding: 0 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "space-between", alignItems: "flex-end" }}>
+          <div>
+            <h1 className="adm-h1">Courses &amp; batches</h1>
+            <p className="adm-sub">Switch registrations and set start dates here. Tap “Edit details” for everything else.</p>
+          </div>
+          <button type="button" className="adm-btn pri" onClick={handleAdd}><PlusCircle className="h-4 w-4" />Add course</button>
+        </div>
+        <div className="adm-ccards">
+          {courses.map((course) => {
+            const c: any = course;
+            const open = c.registrationsOpen !== false;
+            const img = typeof c.image === "string" ? c.image : c.image?.secure_url || c.image?.url;
+            const busy = Boolean(quickBusy[course.slug]);
+            return (
+              <div className="adm-ccard" key={course.slug}>
+                {img ? <img src={img} alt="" /> : <div />}
+                <div className="body">
+                  <div>
+                    <h3>{courseName(course.slug, course.title)}</h3>
+                    <div className="adm-muted">₹{Number(course.price || 0).toLocaleString("en-IN")} · <a href={`/courses/${course.slug}`} target="_blank" rel="noopener noreferrer" style={{ color: "#8a2f20" }}>view page ↗</a></div>
+                  </div>
+                  <div className="adm-ctl">
+                    <div className="adm-seg" role="group" aria-label="Registrations">
+                      <button type="button" disabled={busy} className={open ? "on o" : ""} onClick={() => !open && quickUpdate(course.slug, { registrationsOpen: true }, "Registrations are open — visitors can pay & enroll")}>Open · Pay &amp; Enroll</button>
+                      <button type="button" disabled={busy} className={!open ? "on w" : ""} onClick={() => open && quickUpdate(course.slug, { registrationsOpen: false }, "Closed — visitors can join the waitlist")}>Waitlist</button>
+                    </div>
+                    <label>Starts
+                      <input type="date" disabled={busy} defaultValue={c.startDate ? String(c.startDate).slice(0, 10) : ""}
+                        onChange={(e) => e.target.value && quickUpdate(course.slug, { startDate: e.target.value }, "Start date saved")} />
+                    </label>
+                  </div>
+                  <div className="foot">
+                    <button type="button" className="adm-btn sec" onClick={() => handleEdit(course)} disabled={isSaving}><Edit className="h-4 w-4" />Edit details</button>
+                    <button type="button" className="adm-btn sec" onClick={() => handleDelete(course.slug)} disabled={Boolean(deletingSlugs[course.slug])} aria-label={`Delete ${course.title}`}><Trash2 className="h-4 w-4" style={{ color: "#a1261a" }} /></button>
+                    {busy && <span className="adm-muted" style={{ alignSelf: "center" }}>Saving…</span>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-4xl">

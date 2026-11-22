@@ -1,73 +1,77 @@
-
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, MessageCircle } from "lucide-react";
 
 import { Logo } from "@/components/logo";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/courses", label: "Courses" },
-  { href: "/blog", label: "Wisdom" },
-  { href: "/about", label: "About Us" },
+  { href: "/", label: "Home", sub: "Welcome" },
+  { href: "/courses", label: "Courses", sub: "Live batches & waitlists" },
+  { href: "/blog", label: "Wisdom", sub: "Free videos & articles" },
+  { href: "/about", label: "About Us", sub: "Our story & āchāryas" },
 ];
+const WHATSAPP = "https://wa.me/919108787550?text=" + encodeURIComponent("Namaste! I'd like to know more about the courses at Mantra Academy.");
+
+const isActive = (pathname: string, href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
 export function Header() {
   const pathname = usePathname();
-
-  const NavLink = ({ href, label, className }: { href: string; label: string, className?: string }) => (
-    <Link
-      href={href}
-      className={cn(
-        "text-lg font-medium transition-colors hover:text-primary-foreground/80",
-        pathname === href ? "text-primary-foreground" : "text-primary-foreground/60",
-        className
-      )}
-    >
-      {label}
-    </Link>
-  );
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 left-0 w-full z-50 border-b border-primary/20 bg-primary shadow-lg">
+    <header className="sticky top-0 left-0 w-full z-50">
       <div className="container flex h-16 items-center px-4 sm:px-6 lg:px-8">
         <div className="flex-1 md:flex-none">
           <Link href="/" aria-label="Mantra Academy Home">
-            <Logo className="[&>span]:text-2xl [&>span]:text-primary-foreground [&>span]:hover:text-primary-foreground" />
+            <Logo className="[&>span]:text-2xl" />
           </Link>
         </div>
-        <div className="hidden md:flex flex-1 items-center justify-end gap-6">
-          <nav className="flex items-center space-x-6">
-            {navLinks.map((link) => (
-              <NavLink key={link.href} {...link} />
-            ))}
-          </nav>
-        </div>
+
+        {/* Desktop */}
+        <nav className="hidden md:flex flex-1 items-center justify-end gap-7" aria-label="Main">
+          {navLinks.map((l) => (
+            <Link key={l.href} href={l.href} aria-current={isActive(pathname, l.href) ? "page" : undefined}
+              className={cn("text-[15px] font-medium tracking-wide transition-colors", isActive(pathname, l.href) ? "nav-on" : "opacity-75 hover:opacity-100")}>
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Phone */}
         <div className="md:hidden flex flex-1 justify-end items-center">
-            
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-primary/90 text-primary-foreground hover:text-primary-foreground">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="bg-primary text-primary-foreground border-l-primary/20">
-                 <div className="flex justify-center my-8">
-                   <Logo className="[&>span]:text-primary-foreground [&>span]:hover:text-primary-foreground/80" />
-                 </div>
-                <div className="flex flex-col items-center space-y-6 pt-10">
-                  {navLinks.map((link) => (
-                    <NavLink key={link.href} {...link} className="text-2xl" />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <button type="button" className="h-10 w-10 grid place-items-center rounded-full" aria-label="Open menu">
+                <Menu className="h-6 w-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="ma-menu w-[86vw] max-w-sm p-0 border-0">
+              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <div className="ma-menu-in">
+                <div className="ma-menu-logo"><Logo className="[&>span]:text-2xl" /></div>
+                <nav className="ma-menu-links" aria-label="Main">
+                  {navLinks.map((l) => (
+                    <Link key={l.href} href={l.href} onClick={() => setOpen(false)}
+                      className={isActive(pathname, l.href) ? "on" : ""} aria-current={isActive(pathname, l.href) ? "page" : undefined}>
+                      <b>{l.label}</b><small>{l.sub}</small><span aria-hidden>›</span>
+                    </Link>
                   ))}
+                </nav>
+                <div className="ma-menu-foot">
+                  <Link className="ma-menu-cta" href="/courses" onClick={() => setOpen(false)}>Explore courses →</Link>
+                  <a className="ma-menu-wa" href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="h-4 w-4" aria-hidden /> Talk to us on WhatsApp
+                  </a>
+                  <p className="ma-menu-om">ॐ · Sacred sound, correctly learned</p>
                 </div>
-              </SheetContent>
-            </Sheet>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

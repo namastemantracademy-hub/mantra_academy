@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { AdminSidebar } from "@/components/admin-sidebar";
+import { AdminSidebar, AdminTopbar } from "@/components/admin-sidebar";
 import { AppProvider } from "@/context/AppDataContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -70,9 +70,10 @@ export default function AdminLayout({
 
   return (
     <AppProvider>
-      <div className="flex min-h-screen">
+      <div className="admin-theme flex min-h-screen">
         <AdminSidebar />
-        <main className="flex-1 bg-muted/30 pl-64">
+        <AdminTopbar />
+        <main className="adm-main flex-1 min-w-0 md:pl-64">
           {children}
         </main>
       </div>

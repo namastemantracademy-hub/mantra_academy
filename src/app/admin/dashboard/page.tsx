@@ -1,118 +1,123 @@
+"use client";
 
-"use client"
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, FileText, Megaphone, MessageSquare } from "lucide-react";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { CalendarDays, Megaphone, FileText, MessageSquare } from "lucide-react";
+import {
+  getJSON, courseName, rupees, dateTime, shortDate,
+  type AdminCourse, type AdminEnrollment, type AdminWait,
+} from "@/lib/admin-data";
 
-const RupeeIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M6 3h12" />
-        <path d="M6 8h12" />
-        <path d="M6 13h10" />
-        <path d="m14 13 5 8" />
-        <path d="M6 21h12" />
-    </svg>
-)
+type Todo = { tone: "red" | "gold" | "green"; text: React.ReactNode; href?: string; cta?: string };
 
+const DAY = 86400000;
 
-export default function AdminDashboard() {
-  const [coursesCount, setCoursesCount] = useState(0);
-  const [postsCount, setPostsCount] = useState(0);
-  const [annCount, setAnnCount] = useState(0);
-  const [wordsCount, setWordsCount] = useState(0);
-  const [featuredCount, setFeaturedCount] = useState(0);
+export default function TodayPage() {
+  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState<AdminCourse[]>([]);
+  const [pays, setPays] = useState<AdminEnrollment[]>([]);
+  const [wait, setWait] = useState<AdminWait[]>([]);
 
   useEffect(() => {
     (async () => {
-      try {
-        const [c, b, a] = await Promise.all([
-          fetch('/api/courses').then(r => r.ok ? r.json() : []),
-          fetch('/api/blogs').then(r => r.ok ? r.json() : []),
-          fetch('/api/announcements').then(r => r.ok ? r.json() : []),
-          fetch('/api/words').then(r => r.ok ? r.json() : []),
-        ]);
-        setCoursesCount(Array.isArray(c) ? c.length : 0);
-        setPostsCount(Array.isArray(b) ? b.length : 0);
-        setAnnCount(Array.isArray(a) ? a.length : 0);
-        const wordsArr = Array.isArray(arguments[0][3]) ? arguments[0][3] : null;
-        // The above Promise.all returns an array; easier to re-fetch words separately for clarity
-        try {
-          const wResp = await fetch('/api/testimonies');
-          if (wResp.ok) {
-            const wjson = await wResp.json();
-            setWordsCount(Array.isArray(wjson) ? wjson.length : 0);
-            setFeaturedCount(Array.isArray(wjson) ? wjson.filter((x: any) => x.featured).length : 0);
-          }
-        } catch (e) {
-          console.error('Failed to load words count', e);
-        }
-      } catch (err) {
-        console.error('Failed to load dashboard counts', err);
-      }
+      const [c, p, w] = await Promise.all([
+        getJSON<AdminCourse[]>("/api/courses", []),
+        getJSON<AdminEnrollment[]>("/api/admin/enrollments", []),
+        getJSON<AdminWait[]>("/api/waitlist", []),
+      ]);
+      setCourses(c); setPays(p); setWait(w); setLoading(false);
     })();
   }, []);
 
+  const paid = pays.filter((p) => p.status === "paid");
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+  const thisMonth = paid.filter((p) => new Date(p.paidAt || p.createdAt).getTime() >= monthStart);
+  const waiting = wait.filter((w) => !w.notifiedAt);
+
+  // ---- to-do list ----
+  const todos: Todo[] = [];
+  for (const c of courses) {
+    const name = courseName(c.slug, c.title);
+    const open = c.registrationsOpen !== false;
+    const people = waiting.filter((w) => w.courseSlug === c.slug).length;
+    const start = c.startDate ? new Date(c.startDate).getTime() : NaN;
+    if (open && (isNaN(start) || start < Date.now() - 21 * DAY)) {
+      todos.push({ tone: "gold", text: <><b>{name}</b> is open but has no upcoming start date. Visitors see “Starting soon”.</>, href: "/admin/courses", cta: "Set start date" });
+    }
+    if (open && people > 0) {
+      todos.push({ tone: "red", text: <><b>{people} {people === 1 ? "person is" : "people are"}</b> on the waitlist for <b>{name}</b>, and registrations are now open — tell them!</>, href: "/admin/waitlist", cta: "Open waitlist" });
+    } else if (!open && people > 0) {
+      todos.push({ tone: "gold", text: <><b>{people} {people === 1 ? "person is" : "people are"}</b> waiting for <b>{name}</b>. When you open registrations, tell them first.</>, href: "/admin/waitlist", cta: "See who" });
+    }
+  }
+  const pending = pays.filter((p) => p.status === "created" && Date.now() - new Date(p.createdAt).getTime() < 2 * DAY);
+  if (pending.length) {
+    todos.push({ tone: "gold", text: <><b>{pending.length}</b> {pending.length === 1 ? "person" : "people"} started paying in the last 2 days but didn’t finish. You could message them.</>, href: "/admin/payments?show=unfinished", cta: "See them" });
+  }
+  todos.sort((a, b) => (a.tone === "red" ? -1 : 0) - (b.tone === "red" ? -1 : 0));
+
+  const hello = now.getHours() < 12 ? "Good morning" : now.getHours() < 17 ? "Good afternoon" : "Good evening";
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="p-4 sm:p-6 lg:p-8"
-    >
-      <h1 className="text-3xl font-headline font-bold text-primary mb-6">Admin Dashboard</h1>
-      
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Courses</CardTitle>
-            <BookOpen className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{coursesCount}</div>
-            <p className="text-xs text-muted-foreground">courses currently offered</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Blog Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{postsCount}</div>
-            <p className="text-xs text-muted-foreground">posts published</p>
-          </CardContent>
-        </Card>
-         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Announcements</CardTitle>
-            <Megaphone className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{annCount}</div>
-            <p className="text-xs text-muted-foreground">active announcements</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Testimonies</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{wordsCount}</div>
-            <p className="text-xs text-muted-foreground">total testimonies ({featuredCount} featured)</p>
-          </CardContent>
-        </Card>
+    <div className="adm-page">
+      <h1 className="adm-h1">{hello} 🙏</h1>
+      <p className="adm-sub">{now.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })} · here’s what’s happening at Mantra Academy</p>
+
+      <div className="adm-stats">
+        <Link className="adm-stat gold" href="/admin/payments"><small>Money received this month</small><b>{loading ? "…" : rupees(thisMonth.reduce((s, p) => s + p.amount, 0))}</b><span>{thisMonth.length} payment{thisMonth.length === 1 ? "" : "s"}</span></Link>
+        <Link className="adm-stat" href="/admin/payments"><small>New students this month</small><b>{loading ? "…" : thisMonth.length}</b><span>paid enrollments</span></Link>
+        <Link className="adm-stat" href="/admin/payments"><small>All paid enrollments</small><b>{loading ? "…" : paid.length}</b><span>since payments went live</span></Link>
+        <Link className="adm-stat" href="/admin/waitlist"><small>Waiting on waitlist</small><b>{loading ? "…" : waiting.length}</b><span>not yet informed</span></Link>
       </div>
-      <Card>
-        <CardHeader>
-            <CardTitle>Welcome, Admin!</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <p className="text-muted-foreground">You can manage your courses, blog posts, and announcements from the navigation on the left.</p>
-        </CardContent>
-      </Card>
-    </motion.div>
+
+      <div className="adm-grid2">
+        <div className="adm-card">
+          <h2 className="adm-h2">To do</h2>
+          {loading ? <p className="adm-muted">Loading…</p> : todos.length === 0 ? (
+            <div className="adm-todo"><span className="adm-dot green" /><p>All set — nothing needs your attention right now.</p></div>
+          ) : todos.map((t, i) => (
+            <div className="adm-todo" key={i}>
+              <span className={`adm-dot ${t.tone}`} />
+              <div><p>{t.text}</p>{t.href && <Link href={t.href}>{t.cta} →</Link>}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="adm-card">
+          <h2 className="adm-h2">Quick actions</h2>
+          <div className="adm-quick">
+            <Link className="adm-qbtn" href="/admin/courses"><CalendarDays className="h-5 w-5" />Set batch dates</Link>
+            <Link className="adm-qbtn" href="/admin/announcements"><Megaphone className="h-5 w-5" />Add announcement</Link>
+            <Link className="adm-qbtn" href="/admin/blog"><FileText className="h-5 w-5" />Write article</Link>
+            <Link className="adm-qbtn" href="/admin/testimonies"><MessageSquare className="h-5 w-5" />Add review</Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="adm-grid2">
+        <div className="adm-card">
+          <h2 className="adm-h2">Latest payments</h2>
+          {loading ? <p className="adm-muted">Loading…</p> : paid.length === 0 ? <p className="adm-muted">No payments yet.</p> : paid.slice(0, 6).map((p) => (
+            <div className="adm-row" key={p._id}>
+              <div><b>{p.name}</b><div className="adm-muted">{courseName(p.courseSlug, p.courseTitle)} · {dateTime(p.paidAt || p.createdAt)}</div></div>
+              <b style={{ color: "#5e1d14", whiteSpace: "nowrap" }}>{rupees(p.amount)}</b>
+            </div>
+          ))}
+          {paid.length > 0 && <div style={{ marginTop: 10 }}><Link className="adm-btn sec" href="/admin/payments">See all students →</Link></div>}
+        </div>
+
+        <div className="adm-card">
+          <h2 className="adm-h2">Courses</h2>
+          {loading ? <p className="adm-muted">Loading…</p> : courses.map((c) => (
+            <div className="adm-row" key={c.slug}>
+              <div><b>{courseName(c.slug, c.title)}</b><div className="adm-muted">{c.startDate ? `Starts ${shortDate(c.startDate)}` : "No start date"}</div></div>
+              <span className={`adm-pill ${c.registrationsOpen === false ? "wait" : "open"}`}>{c.registrationsOpen === false ? "Waitlist" : "Open"}</span>
+            </div>
+          ))}
+          <div style={{ marginTop: 10 }}><Link className="adm-btn sec" href="/admin/courses">Manage courses →</Link></div>
+        </div>
+      </div>
+    </div>
   );
 }
