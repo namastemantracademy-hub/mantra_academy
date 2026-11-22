@@ -62,6 +62,12 @@ export type Course = {
     icon?: string;
   }[];
   startDate?: string;
+  /** e.g. "52+" — shown as "52+ completed" */
+  studentsCompleted?: string;
+  /** e.g. "4.9" — only from real student ratings; blank hides it */
+  studentRating?: string;
+  /** e.g. "Mon & Thu · 7:00–8:15 PM IST" */
+  batchInfo?: string;
 };
 
 export const instructors: Record<string, { name: string; title: string; image: string }> = {};

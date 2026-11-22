@@ -4,7 +4,7 @@ import { Cormorant_Garamond, Inter, Tiro_Devanagari_Sanskrit } from "next/font/g
 // latin-ext covers IAST diacritics (ā ī ū ṛ ṣ ṇ ṃ ḥ ś).
 export const cormorant = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700"],
+  weight: ["500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
@@ -21,4 +21,5 @@ export const tiro = Tiro_Devanagari_Sanskrit({
   weight: "400",
   variable: "--font-tiro",
   display: "swap",
+  preload: false, // only small Devanagari details; load on demand
 });

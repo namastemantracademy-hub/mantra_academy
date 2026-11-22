@@ -28,6 +28,22 @@ function plain(md?: string) {
   return (md || "").replace(/[#*_`>\[\]]/g, "").replace(/\s+/g, " ").trim();
 }
 
+/** Day difference in India time, identical on server and browser. */
+function istDay(d: Date) {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
+}
+function batchStatus(iso?: string) {
+  if (!iso) return { label: "Next batch", date: "Starting soon", pill: "Reserve your seat", short: "Starting soon" };
+  const d = new Date(iso);
+  const days = Math.round((Date.parse(istDay(d)) - Date.parse(istDay(new Date()))) / 86400000);
+  const date = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", weekday: "short", day: "numeric", month: "long", year: "numeric" }).format(d);
+  const short = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", day: "numeric", month: "short" }).format(d);
+  if (days > 0) return { label: "Next batch starts", date, pill: days === 1 ? "Starts tomorrow" : days <= 60 ? `Starts in ${days} days` : "", short: `Starts ${short}` };
+  if (days === 0) return { label: "Batch starts", date: "Today", pill: "Starts today", short: "Starts today" };
+  if (days >= -21) return { label: "Batch started", date, pill: "Join now · recordings of earlier classes included", short: "Join now" };
+  return { label: "Next batch", date: "Starting soon", pill: "Reserve your seat", short: "Starting soon" };
+}
+
 function Mandala() {
   const petals = Array.from({ length: 12 }, (_, i) => i * 30);
   return (
@@ -54,12 +70,13 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
   const subtitle = x.subtitle;
   const lead = x.lead || course.description || "";
   const heroImage = x.heroImage || imageUrl(course.image);
-  const startDate = course.startDate ? new Intl.DateTimeFormat("en-IN", { dateStyle: "long" }).format(new Date(course.startDate)) : "";
+  const batch = batchStatus(course.startDate);
+  const completed = course.studentsCompleted?.trim() || x.stats?.completed;
+  const rating = course.studentRating?.trim() || x.stats?.rating;
 
   const facts: [string, string][] =
     x.facts ||
     ([
-      startDate ? ["Starts", startDate] : null,
       course.lectures ? [`${course.lectures} live classes`, "on Google Meet"] : DEFAULT_FACTS[0],
       course.language ? [course.language.split(/[\\/,]/)[0].trim(), course.level || "All levels"] : null,
       DEFAULT_FACTS[1],
@@ -128,9 +145,14 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
             <h1>{title}</h1>
             {subtitle ? <div className="sub">{subtitle}</div> : <div />}
             <p className="lead"><Emph text={lead} /></p>
-            <div className="pricebar">
-              <button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll →</button>
-              {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}
+            <div className="batch">
+              <div className="bhead"><span className="blabel">{batch.label}</span>{batch.pill && <span className="bpill">{batch.pill}</span>}</div>
+              <div className="bdate"><Illus name="s-cal" />{batch.date}</div>
+              {course.batchInfo && <div className="binfo">{course.batchInfo}</div>}
+              <div className="brow">
+                {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}
+                <button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll →</button>
+              </div>
             </div>
             <div className="assure"><span>Refund within 7 days</span><span>Recordings of every class</span><span>Secure payment</span></div>
             <div className="world">Students from <b>India · USA · UAE · Germany</b></div>
@@ -138,10 +160,10 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
           {heroImage && (
             <div className="photo">
               <div className="img"><img src={heroImage} alt={x.heroAlt || title} /></div>
-              {x.stats?.rating ? (
-                <div className="badge"><b>{x.stats.rating} ★</b>rated by our students{x.stats.completed && <span className="bstar">{x.stats.completed} completed</span>}</div>
-              ) : x.stats?.completed ? (
-                <div className="badge"><b>{x.stats.completed}</b>students completed</div>
+              {rating ? (
+                <div className="badge"><b>{rating} ★</b>rated by our students{completed && <span className="bstar">{completed} completed</span>}</div>
+              ) : completed ? (
+                <div className="badge"><b>{completed}</b>students completed</div>
               ) : null}
               {x.heroCard && (
                 <div className="book"><Illus name={x.heroCard.icon} /><div><b>{x.heroCard.title}</b><small>{x.heroCard.text}</small></div></div>
@@ -183,7 +205,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
               <h2 className="h" data-rv>From the Guru&apos;s voice <em>to yours</em></h2>
               <p className="lead" data-rv>The Veda passes from mouth to ear — <i>gurumukha-paramparā</i>. This is how every class works.</p>
             </div>
-            {x.stats?.completed && <div className="rstat" data-rv><b>{x.stats.completed}</b><span>students have completed<br />{title}</span></div>}
+            {completed && <div className="rstat" data-rv><b>{completed}</b><span>students have completed<br />{title}</span></div>}
           </div>
           <div className="cycle">
             <div className="cy" data-rv><Illus name="ear" /><b>Guru-mukha uccāraṇa</b><small>Listen to the Guru</small></div>
@@ -267,11 +289,11 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
         <section><div className="wrap center">
           <div className="eyebrow" data-rv>Words from students</div>
           <h2 className="h" data-rv>What students say</h2>
-          {(x.stats?.rating || x.stats?.completed) && (
+          {(rating || completed) && (
             <div className="rating" data-rv>
-              {x.stats?.rating && <><b>{x.stats.rating}</b><span className="stars">★★★★★</span><span>rated by our students</span></>}
-              {x.stats?.rating && x.stats?.completed && <span className="sep">·</span>}
-              {x.stats?.completed && <><b>{x.stats.completed}</b><span>completed {title}</span></>}
+              {rating && <><b>{rating}</b><span className="stars">★★★★★</span><span>rated by our students</span></>}
+              {rating && completed && <span className="sep">·</span>}
+              {completed && <><b>{completed}</b><span>completed {title}</span></>}
             </div>
           )}
           <div className={`tgrid${testimonials.length === 2 ? " two" : ""}`}>
@@ -311,6 +333,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
           <Illus name="diya" />
           <h2 className="h">Begin your <em>{title}</em></h2>
           <p className="lead">{x.finalLine || "Learn it the traditional way — live, guided and personal."}</p>
+          <div className="fdate"><span className="blabel">{batch.label}</span> <b>{batch.date}</b>{course.batchInfo ? <> · {course.batchInfo}</> : null}</div>
           {amount && <div className="amt">{amount}<small>{feeLabel(course.feeType)}</small></div>}
           <button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll →</button>
           <p className="fee-note" style={{ margin: "16px auto 0" }}>{feeNote(course.feeType)}</p>
@@ -320,7 +343,7 @@ export function SacredCoursePage({ course }: { course: Course & { _id?: string }
       </div></section>
 
       {amount && (
-        <div className="mobilebar"><div className="amt">{amount}</div><button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll</button></div>
+        <div className="mobilebar"><div className="amt">{amount}<small>{batch.short}</small></div><button type="button" className="btn" onClick={enroll}>Pay &amp; Enroll</button></div>
       )}
     </div>
   );

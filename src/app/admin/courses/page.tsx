@@ -437,6 +437,18 @@ export default function AdminCoursesPage() {
                             <Input id="startDate" name="startDate" type="date" value={editingCourse.startDate?.split('T')[0]} onChange={handleChange} />
                           </div>
                           <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="batchInfo" className="text-right">Batch timing</Label>
+                            <Input id="batchInfo" name="batchInfo" placeholder="Mon & Thu · 7:00–8:15 PM IST" value={(editingCourse as any).batchInfo || ''} onChange={handleChange} />
+                          </div>
+                          <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="studentsCompleted" className="text-right">Students completed</Label>
+                            <Input id="studentsCompleted" name="studentsCompleted" placeholder="e.g. 52+ (blank hides)" value={(editingCourse as any).studentsCompleted || ''} onChange={handleChange} />
+                          </div>
+                          <div className="grid grid-cols-2 items-center gap-2">
+                            <Label htmlFor="studentRating" className="text-right">Student rating</Label>
+                            <Input id="studentRating" name="studentRating" placeholder="e.g. 4.9 — real ratings only" value={(editingCourse as any).studentRating || ''} onChange={handleChange} />
+                          </div>
+                          <div className="grid grid-cols-2 items-center gap-2">
                             <Label htmlFor="instructor" className="text-right">Instructor</Label>
               <Select name="instructor" value={editingCourse.instructor?.name || ''} onValueChange={(value) => handleSelectChange('instructor', value)}>
                 <SelectTrigger><SelectValue/></SelectTrigger>

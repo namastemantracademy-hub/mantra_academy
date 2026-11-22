@@ -26,6 +26,10 @@ export interface ICourse extends Document {
   // small badges/info cards shown on course page
   badges?: { title: string; subtitle?: string; icon?: string }[];
   startDate?: Date;
+  // shown on the course page; edit in admin
+  studentsCompleted?: string;
+  studentRating?: string;
+  batchInfo?: string;
 }
 
 const LessonSchema = new Schema({
@@ -72,6 +76,9 @@ const CourseSchema = new Schema<ICourse>({
   whoCanAttend: [{ title: String, description: String }],
   badges: [{ title: String, subtitle: String, icon: String }],
   startDate: { type: Date, required: true },
+  studentsCompleted: { type: String, default: "" },
+  studentRating: { type: String, default: "" },
+  batchInfo: { type: String, default: "" },
 }, { timestamps: true });
 
 // Replace cached model if it used the old image:String path
