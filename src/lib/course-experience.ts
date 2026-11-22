@@ -17,6 +17,8 @@ export type CourseExperience = {
   usd?: number;
   /** Offer one-to-one personal classes for this course. */
   personal?: boolean;
+  /** Course-content line on the personal (one-to-one) card. */
+  personalLine?: string;
   /** Courses list: one short line on the card */
   cardLine?: string;
   /** One quiet line under the title. */
@@ -134,6 +136,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     group: "chanting",
     order: 1,
     usd: 25, personal: true,
+    personalLine: "All 14 modules of Namakam and Chamakam — svara, padapāṭha and meaning",
     cardLine: "Namakam and Chamakam with svara, padapāṭha and meaning — anuvāka by anuvāka.",
     displayTitle: "Śrī Rudra Praśnaḥ Sādhana",
     eyebrow: "Learn Śrī Rudram the way the Veda is meant to be chanted",
@@ -318,6 +321,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     group: "chanting",
     order: 4,
     usd: 25, personal: true,
+    personalLine: "Vedic chanting from the foundations — sounds, svara and meaning",
     cardLine: "An introduction to the Vedas and the art of Vedic chanting — the right foundation.",
     displayTitle: "Vedaśikṣā",
     subtitle: "An introduction to the Vedas and Vedic chanting",
@@ -340,6 +344,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     group: "chanting",
     order: 3,
     usd: 25, personal: true,
+    personalLine: "The seven hundred verses of the Saptaśatī — svara, pronunciation and meaning",
     cardLine: "A journey into the Devī tradition through the seven hundred verses.",
     displayTitle: "Durgā Saptaśatī",
     subtitle: "A journey into the heart of the Devī tradition",
@@ -361,6 +366,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     group: "children",
     order: 6,
     usd: 25, personal: true,
+    personalLine: "Prayers, ślokas and stories chosen for your child’s age",
     cardLine: "Daily prayers, ślokas and stories for children aged 4–14.",
     displayTitle: "Jijñāsā",
     subtitle: "Daily prayers, stories and values for children",

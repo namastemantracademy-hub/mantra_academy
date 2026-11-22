@@ -5,7 +5,7 @@ import type { Course } from "@/lib/initial-data";
 import { PayEnrollDialog } from "@/components/pay-enroll-dialog";
 import { WaitlistDialog } from "@/components/waitlist-dialog";
 import { PersonalRequestDialog } from "@/components/personal-request-dialog";
-import { DEFAULT_PERSONAL_PRICING, PERSONAL_DETAILS, type PersonalPricing } from "@/lib/personal-pricing";
+import { DEFAULT_PERSONAL_PRICING, personalDetails, type PersonalPricing } from "@/lib/personal-pricing";
 import { feeLabel, feeNote, formatRupees, normalizeFeeType } from "@/lib/fees";
 import { renderMarkdownToHtml } from "@/lib/markdown";
 import { DEFAULT_FACTS, TEACHERS, getCourseExperience, type JourneyStep } from "@/lib/course-experience";
@@ -415,7 +415,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
               <div className="price-card personal" data-rv>
                 <div className="pc-kind"><Illus name="guru" /><div><b>Personal class</b><small>Your own āchārya, your own pace</small></div><span className="pc-tag">One-to-one</span></div>
                 <div className="pc-head"><div className="amt">{pMain}<span className="per"> / month</span><small>{pAlt} · monthly guru dakṣiṇā</small></div></div>
-                <ul>{PERSONAL_DETAILS.map((t) => <li key={t}>{t}</li>)}</ul>
+                <ul>{personalDetails(x.personalLine).map((t) => <li key={t}>{t}</li>)}</ul>
                 <button type="button" className="btn wide ghost" onClick={() => setPersonalOpen(true)}>Request your time slot →</button>
                 <p className="fee-note">Monthly subscription with a dedicated time slot. We agree your slot on WhatsApp first, then send a secure payment link — no payment now.</p>
               </div>
