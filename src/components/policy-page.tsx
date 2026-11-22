@@ -3,7 +3,9 @@ import Link from "next/link";
 export const CONTACT_EMAIL = "namaste.mantracademy@gmail.com";
 export const CONTACT_PHONE_DISPLAY = "+91 91087 87550";
 export const CONTACT_PHONE_TEL = "+919108787550";
-export const POLICY_UPDATED = "21 November 2026";
+export const POLICY_UPDATED = "22 November 2026";
+/** Person who answers privacy questions and complaints (DPDP Act). */
+export const GRIEVANCE_CONTACT = "Dr. Karthik Sharma";
 
 export const policyLinks = [
   { href: "/refund-policy", label: "Refund & Cancellation" },

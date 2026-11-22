@@ -19,7 +19,7 @@ export default function RefundPolicyPage() {
           You can ask for a <b>refund within 7 days of your payment, or before your second class,
           whichever comes first</b>. We return your full fee <b>minus the payment-gateway charge (about 2.4%)</b>,
           which our payment provider keeps and doesn't return to us. For example, on a ₹1,500 fee you get back
-          about ₹1,464. This applies to all our courses, including the Puja vidhi workshop.
+          about ₹1,464. This applies to all our group courses and workshops, including the Puja vidhi workshop. Personal one-to-one classes have their own rule, below.
         </p>
       </section>
 
@@ -52,6 +52,16 @@ export default function RefundPolicyPage() {
         <p>
           For monthly courses, if you decide to stop, tell us before the next month starts and you won't be
           charged for it.
+        </p>
+      </section>
+
+      <section>
+        <h2>Personal one-to-one classes</h2>
+        <p>
+          You can ask for a refund <b>before your second class of the first month</b>. We return your fee minus the
+          payment-gateway charge. After that, monthly fees are not refundable. To stop, just tell us before the
+          next month begins and you won't be charged for it. Rescheduling a class is possible with prior notice,
+          by mutual understanding.
         </p>
       </section>
 

@@ -5,6 +5,7 @@ import { Waitlist } from "@/models/waitlist";
 import { Course } from "@/models/course";
 import { sendWaitlistEmails } from "@/lib/email";
 import { isAdminRequest } from "@/lib/admin-auth";
+import { consentBody, consentRecord, guardianProblem } from "@/lib/consent";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,7 @@ const Body = z.object({
   email: z.string().trim().email().max(160),
   phone: z.string().trim().regex(/^\+?[0-9 ()-]{7,20}$/),
   note: z.string().trim().max(500).optional(),
+  ...consentBody,
   website: z.string().optional(), // honeypot: real people leave this empty
 });
 
@@ -21,11 +23,18 @@ const Body = z.object({
 export async function POST(req: Request) {
   let data: z.infer<typeof Body>;
   try {
-    data = Body.parse(await req.json());
+    const parsed = Body.safeParse(await req.json());
+    if (!parsed.success) {
+      const consentIssue = parsed.error.issues.find((i) => i.path[0] === "consent");
+      return NextResponse.json({ error: consentIssue?.message || "Please check your name, email and phone number." }, { status: 400 });
+    }
+    data = parsed.data;
   } catch {
     return NextResponse.json({ error: "Please check your name, email and phone number." }, { status: 400 });
   }
   if (data.website) return NextResponse.json({ ok: true }); // bot
+  const gp = guardianProblem(data.slug, data.guardian);
+  if (gp) return NextResponse.json({ error: gp }, { status: 400 });
 
   try {
     await connectToDatabase();
@@ -38,6 +47,7 @@ export async function POST(req: Request) {
       existing.name = data.name;
       existing.phone = data.phone;
       if (data.note) existing.note = data.note;
+      existing.consent = consentRecord(data.slug, data.guardian);
       await existing.save();
       return NextResponse.json({ ok: true, already: true });
     }
@@ -49,6 +59,7 @@ export async function POST(req: Request) {
       email: data.email,
       phone: data.phone,
       note: data.note,
+      consent: consentRecord(data.slug, data.guardian),
     });
     await sendWaitlistEmails({ name: data.name, email: data.email, phone: data.phone, courseTitle: course.title, note: data.note });
     return NextResponse.json({ ok: true });

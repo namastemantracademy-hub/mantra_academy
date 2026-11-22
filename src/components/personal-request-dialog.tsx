@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { ConsentCheck, consentReady } from "@/components/consent-check";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 type Props = { open: boolean; onOpenChange: (open: boolean) => void; slug: string; title: string; priceLine: string };
@@ -19,6 +20,8 @@ export function PersonalRequestDialog({ open, onOpenChange, slug, title, priceLi
   const [note, setNote] = useState("");
   const [timezone, setTimezone] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
+  const [agree, setAgree] = useState(false);
+  const [guardian, setGuardian] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
@@ -36,6 +39,7 @@ export function PersonalRequestDialog({ open, onOpenChange, slug, title, priceLi
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "Enter a valid email";
     if (!/^\+?[0-9 ()-]{7,20}$/.test(phone.trim())) return "Enter a valid WhatsApp number, with country code if outside India";
     if (preferredTimes.trim().length < 3) return "Tell us which days and times suit you";
+    if (!consentReady(slug, agree, guardian)) return "Please tick the box to give your consent";
     return "";
   };
 
@@ -49,7 +53,7 @@ export function PersonalRequestDialog({ open, onOpenChange, slug, title, priceLi
       const res = await fetch("/api/personal-requests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, name: name.trim(), email: email.trim(), phone: phone.trim(), country: country.trim(), timezone, preferredTimes: preferredTimes.trim(), note: note.trim() || undefined, website }),
+        body: JSON.stringify({ slug, name: name.trim(), email: email.trim(), phone: phone.trim(), country: country.trim(), timezone, preferredTimes: preferredTimes.trim(), note: note.trim() || undefined, website, consent: agree, guardian }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error || "Could not send. Please try again.");
@@ -110,8 +114,10 @@ export function PersonalRequestDialog({ open, onOpenChange, slug, title, priceLi
                 <Textarea id="pr-note" rows={2} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Your experience with chanting, goals, etc." />
               </div>
               <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+              <ConsentCheck idPrefix="pr" slug={slug} kind="contact" purpose="We use your details only to agree your class time and send your payment link."
+                agree={agree} onAgree={(v) => { setAgree(v); clear(); }} guardian={guardian} onGuardian={(v) => { setGuardian(v); clear(); }} />
               {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
-              <Button type="submit" size="lg" className="w-full text-lg" disabled={busy}>
+              <Button type="submit" size="lg" className="w-full text-lg" disabled={busy || !consentReady(slug, agree, guardian)}>
                 {busy ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <CalendarClock className="mr-2 h-4 w-4" />}
                 {busy ? "Sending…" : "Request my time slot"}
               </Button>

@@ -5,6 +5,7 @@ import { Course } from "@/models/course";
 import { Enrollment } from "@/models/enrollment";
 import { getRazorpay, getRazorpayKeyId } from "@/lib/razorpay";
 import { normalizeFeeType } from "@/lib/fees";
+import { consentBody, consentRecord, guardianProblem } from "@/lib/consent";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,6 +18,7 @@ const BodySchema = z.object({
     .string()
     .trim()
     .regex(/^\+?[0-9 ()-]{7,20}$/, "Enter a valid phone number"),
+  ...consentBody,
 });
 
 // Creates a Razorpay order. The amount always comes from the course record in
@@ -33,7 +35,9 @@ export async function POST(req: Request) {
     const first = parsed.error.issues[0];
     return NextResponse.json({ error: first?.message || "Invalid details" }, { status: 400 });
   }
-  const { slug, name, email, phone } = parsed.data;
+  const { slug, name, email, phone, guardian } = parsed.data;
+  const gp = guardianProblem(slug, guardian);
+  if (gp) return NextResponse.json({ error: gp }, { status: 400 });
 
   try {
     await connectToDatabase();
@@ -71,6 +75,7 @@ export async function POST(req: Request) {
       currency: "INR",
       razorpayOrderId: order.id,
       status: "created",
+      consent: consentRecord(slug, guardian),
     });
 
     return NextResponse.json({

@@ -5,6 +5,7 @@ import { CheckCircle2, Loader2, BellRing } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ConsentCheck, consentReady } from "@/components/consent-check";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 type Props = { open: boolean; onOpenChange: (open: boolean) => void; slug: string; title: string };
@@ -14,6 +15,8 @@ export function WaitlistDialog({ open, onOpenChange, slug, title }: Props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [website, setWebsite] = useState(""); // honeypot
+  const [agree, setAgree] = useState(false);
+  const [guardian, setGuardian] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [done, setDone] = useState<"" | "new" | "already">("");
@@ -22,6 +25,7 @@ export function WaitlistDialog({ open, onOpenChange, slug, title }: Props) {
     if (name.trim().length < 2) return "Enter your full name";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "Enter a valid email";
     if (!/^\+?[0-9 ()-]{7,20}$/.test(phone.trim())) return "Enter a valid phone number, with country code if outside India";
+    if (!consentReady(slug, agree, guardian)) return "Please tick the box to give your consent";
     return "";
   };
 
@@ -35,7 +39,7 @@ export function WaitlistDialog({ open, onOpenChange, slug, title }: Props) {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, name: name.trim(), email: email.trim(), phone: phone.trim(), website }),
+        body: JSON.stringify({ slug, name: name.trim(), email: email.trim(), phone: phone.trim(), website, consent: agree, guardian }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data?.error || "Could not save. Please try again.");
@@ -49,7 +53,7 @@ export function WaitlistDialog({ open, onOpenChange, slug, title }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!busy) { onOpenChange(o); if (!o) setDone(""); } }}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[92vh] overflow-y-auto">
         {done ? (
           <div className="text-center space-y-3 py-4">
             <CheckCircle2 className="h-12 w-12 text-primary mx-auto" aria-hidden />
@@ -83,12 +87,14 @@ export function WaitlistDialog({ open, onOpenChange, slug, title }: Props) {
                 <Input id="wl-phone" type="tel" autoComplete="tel" value={phone} onChange={(e) => { setPhone(e.target.value); setError(""); }} placeholder="+91 98765 43210" />
               </div>
               <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+              <ConsentCheck idPrefix="wl" slug={slug} kind="contact" purpose="We use your details only to tell you when this course opens."
+                agree={agree} onAgree={(v) => { setAgree(v); setError(""); }} guardian={guardian} onGuardian={(v) => { setGuardian(v); setError(""); }} />
               {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
-              <Button type="submit" size="lg" className="w-full text-lg" disabled={busy}>
+              <Button type="submit" size="lg" className="w-full text-lg" disabled={busy || !consentReady(slug, agree, guardian)}>
                 {busy ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <BellRing className="mr-2 h-4 w-4" />}
                 {busy ? "Saving…" : "Notify me when it opens"}
               </Button>
-              <p className="text-xs text-center text-muted-foreground">No payment now · We only use your details to tell you about this course</p>
+              <p className="text-xs text-center text-muted-foreground">No payment now</p>
             </form>
           </>
         )}

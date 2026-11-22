@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ConsentCheck, consentReady } from "@/components/consent-check";
 import { feeLabel, feeNote, formatRupees, normalizeFeeType } from "@/lib/fees";
 
 declare global {
@@ -53,6 +54,8 @@ export function PayEnrollDialog({ open, onOpenChange, slug, title, price, feeTyp
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [agree, setAgree] = useState(false);
+  const [guardian, setGuardian] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
@@ -60,6 +63,7 @@ export function PayEnrollDialog({ open, onOpenChange, slug, title, price, feeTyp
     if (name.trim().length < 2) return "Enter your full name";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return "Enter a valid email";
     if (!/^\+?[0-9 ()-]{7,20}$/.test(phone.trim())) return "Enter a valid phone number, with country code if outside India";
+    if (!consentReady(slug, agree, guardian)) return "Please tick the box to give your consent";
     return "";
   };
 
@@ -80,7 +84,7 @@ export function PayEnrollDialog({ open, onOpenChange, slug, title, price, feeTyp
       const res = await fetch("/api/payments/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, name: name.trim(), email: email.trim(), phone: phone.trim() }),
+        body: JSON.stringify({ slug, name: name.trim(), email: email.trim(), phone: phone.trim(), consent: agree, guardian }),
       });
       const order = await res.json();
       if (!res.ok) throw new Error(order?.error || "Could not start the payment");
@@ -132,7 +136,7 @@ export function PayEnrollDialog({ open, onOpenChange, slug, title, price, feeTyp
 
   return (
     <Dialog open={open} onOpenChange={(o) => !busy && onOpenChange(o)}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[92vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-primary">Enroll in {title}</DialogTitle>
           <DialogDescription asChild>
@@ -158,18 +162,14 @@ export function PayEnrollDialog({ open, onOpenChange, slug, title, price, feeTyp
             <Label htmlFor="enroll-phone">Phone (WhatsApp)</Label>
             <Input id="enroll-phone" type="tel" autoComplete="tel" value={phone} onChange={(e) => { setPhone(e.target.value); setError(""); }} placeholder="+91 98765 43210" />
           </div>
+          <ConsentCheck idPrefix="enroll" slug={slug} kind="pay" purpose="We use your details only to confirm your seat, send your receipt and share class links on email and WhatsApp."
+            agree={agree} onAgree={(v) => { setAgree(v); setError(""); }} guardian={guardian} onGuardian={(v) => { setGuardian(v); setError(""); }} />
           {error && <p className="text-sm text-destructive" role="alert">{error}</p>}
-          <Button type="submit" size="lg" className="w-full text-lg" disabled={busy}>
+          <Button type="submit" size="lg" className="w-full text-lg" disabled={busy || !consentReady(slug, agree, guardian)}>
             {busy ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Lock className="mr-2 h-4 w-4" />}
             {busy ? "Opening secure payment…" : `Pay ${formatRupees(price)} and enroll`}
           </Button>
           <p className="text-xs text-center text-muted-foreground">Secure payment by Razorpay · UPI, cards, net banking</p>
-          <p className="text-xs text-center text-muted-foreground">
-            By paying, you agree to our{" "}
-            <a href="/terms" target="_blank" className="underline underline-offset-2">Terms</a> and{" "}
-            <a href="/refund-policy" target="_blank" className="underline underline-offset-2">Refund Policy</a>
-            {" "}(refund within 7 days).
-          </p>
         </form>
       </DialogContent>
     </Dialog>

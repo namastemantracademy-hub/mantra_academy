@@ -130,6 +130,7 @@ export function AIChatbot() {
             <span className="sr-only">Send</span>
           </Button>
         </form>
+        <p className="text-[11px] text-muted-foreground text-center pt-1">Please don't type personal details here. <a href="/privacy" target="_blank" rel="noopener" className="underline">Privacy</a></p>
       </SheetContent>
     </Sheet>
   );

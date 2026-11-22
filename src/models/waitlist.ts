@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { consentSchemaDef } from "@/lib/consent";
 
 // People who asked to be told when the next batch of a course opens.
 export interface IWaitlist extends Document {
@@ -9,6 +10,8 @@ export interface IWaitlist extends Document {
   phone: string;
   note?: string;
   notifiedAt?: Date;
+  /** Proof of consent (DPDP Act): when they ticked the box, and which policy version. */
+  consent?: { agreedAt?: Date; version?: string; guardian?: boolean };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,6 +25,7 @@ const WaitlistSchema = new Schema<IWaitlist>(
     phone: { type: String, required: true, trim: true },
     note: { type: String, trim: true },
     notifiedAt: { type: Date },
+    consent: consentSchemaDef,
   },
   { timestamps: true },
 );

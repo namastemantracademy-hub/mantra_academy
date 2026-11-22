@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { consentSchemaDef } from "@/lib/consent";
 
 // Someone asking for one-to-one classes. We agree a time slot first, then send a payment link.
 export interface IPersonalRequest extends Document {
@@ -12,6 +13,8 @@ export interface IPersonalRequest extends Document {
   preferredTimes?: string;
   note?: string;
   status: "new" | "contacted" | "confirmed" | "closed";
+  /** Proof of consent (DPDP Act): when they ticked the box, and which policy version. */
+  consent?: { agreedAt?: Date; version?: string; guardian?: boolean };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +31,7 @@ const PersonalRequestSchema = new Schema<IPersonalRequest>(
     preferredTimes: { type: String, trim: true },
     note: { type: String, trim: true },
     status: { type: String, enum: ["new", "contacted", "confirmed", "closed"], default: "new", index: true },
+    consent: consentSchemaDef,
   },
   { timestamps: true },
 );

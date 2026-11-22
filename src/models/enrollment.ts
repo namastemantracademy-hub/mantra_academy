@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { consentSchemaDef } from "@/lib/consent";
 
 // One record per Razorpay order. It starts as "created" when the student
 // opens checkout and becomes "paid" once the payment signature (or the
@@ -18,6 +19,8 @@ export interface IEnrollment extends Document {
   paidAt?: Date;
   confirmedBy?: "checkout" | "webhook";
   emailsSentAt?: Date;
+  /** Proof of consent (DPDP Act): when they ticked the box, and which policy version. */
+  consent?: { agreedAt?: Date; version?: string; guardian?: boolean };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -38,6 +41,7 @@ const EnrollmentSchema = new Schema<IEnrollment>(
     paidAt: Date,
     confirmedBy: { type: String, enum: ["checkout", "webhook"] },
     emailsSentAt: Date,
+    consent: consentSchemaDef,
   },
   { timestamps: true }
 );
