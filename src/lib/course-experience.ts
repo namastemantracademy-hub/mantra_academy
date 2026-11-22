@@ -10,6 +10,11 @@ export type TeacherId = "karthik" | "jyothi";
 export type CourseExperience = {
   /** Title as shown on the page (with diacritics); falls back to the admin title. */
   displayTitle?: string;
+  /** Courses list: filter group and position (lower = earlier) */
+  group?: "chanting" | "puja" | "sanskrit" | "children";
+  order?: number;
+  /** Courses list: one short line on the card */
+  cardLine?: string;
   /** One quiet line under the title. */
   subtitle?: string;
   /** Short paragraph in the hero. Words wrapped in *stars* are highlighted. */
@@ -74,6 +79,9 @@ const LIVE_FACTS: [string, string][] = [
 export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   // ---------------- Pūjā Vidhi ----------------
   "mantras-for-healing": {
+    group: "puja",
+    order: 2,
+    cardLine: "The complete 16-step pūjā — every mantra, its meaning and how to perform it at home.",
     displayTitle: "Pūjā Vidhi",
     eyebrow: "Live online workshop · Registrations open",
     subtitle: "The 16 Upachāra Pūjā, the traditional way",
@@ -119,6 +127,9 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Śrī Rudra Adhyayana ----------------
   "rudrachamakam-course": {
+    group: "chanting",
+    order: 1,
+    cardLine: "Namakam and Chamakam with svara, padapāṭha and meaning — anuvāka by anuvāka.",
     displayTitle: "Śrī Rudra Praśnaḥ Sādhana",
     eyebrow: "Learn Śrī Rudram the way the Veda is meant to be chanted",
     subtitle: "Namakam and Chamakam from the Kṛṣṇa Yajurveda",
@@ -274,6 +285,9 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Sanskrit Orientation ----------------
   "sanskrit-orientation": {
+    group: "sanskrit",
+    order: 5,
+    cardLine: "Script, sounds, reading and your first sentences in the Devabhāṣā.",
     displayTitle: "Sanskrit Orientation",
     subtitle: "Your first steps into the Devabhāṣā",
     heroImage: "/images/course/hero-sanskrit.webp",
@@ -295,6 +309,9 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Vedaśikṣā ----------------
   "vedashiksha-introduction-to-vedas": {
+    group: "chanting",
+    order: 4,
+    cardLine: "An introduction to the Vedas and the art of Vedic chanting — the right foundation.",
     displayTitle: "Vedaśikṣā",
     subtitle: "An introduction to the Vedas and Vedic chanting",
     lead: "Begin your journey into the Vedas the traditional way — hear the *svara* from your teacher, repeat it exactly, and understand what you chant.",
@@ -313,6 +330,9 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Durgā Saptaśatī ----------------
   "durga-saptashati": {
+    group: "chanting",
+    order: 3,
+    cardLine: "A journey into the Devī tradition through the seven hundred verses.",
     displayTitle: "Durgā Saptaśatī",
     subtitle: "A journey into the heart of the Devī tradition",
     heroImage: "/images/course/hero-durga-saptashati.webp",
@@ -330,6 +350,9 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Jijñāsā (children) ----------------
   "jijs": {
+    group: "children",
+    order: 6,
+    cardLine: "Daily prayers, ślokas and stories for children aged 4–14.",
     displayTitle: "Jijñāsā",
     subtitle: "Daily prayers, stories and values for children",
     lead: "Daily prayers, ślokas and stories for children aged 4–14 — taught with patience, so *values* and *devotion* grow naturally.",

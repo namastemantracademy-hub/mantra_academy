@@ -25,7 +25,7 @@ export default function RootLayout({
   const isAdminPage = pathname.startsWith('/admin');
   const isLoginPage = pathname === '/admin/login';
   // Course detail pages use a full-width design ("Sacred Night") with their own spacing.
-  const isFullBleed = /^\/courses\/[^/]+\/?$/.test(pathname);
+  const isFullBleed = /^\/courses(\/[^/]+)?\/?$/.test(pathname);
 
   // Conditionally wrap with AppProvider. Admin pages have their own provider.
   // The login page also shouldn't be wrapped by the main AppProvider initially.
