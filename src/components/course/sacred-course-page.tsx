@@ -11,7 +11,7 @@ import { renderMarkdownToHtml } from "@/lib/markdown";
 import { DEFAULT_FACTS, TEACHERS, getCourseExperience, type JourneyStep } from "@/lib/course-experience";
 import { Illus, IllustrationSprite, type IllusName } from "./illustrations";
 import { batchStatus } from "@/lib/batch";
-import { SampleVerse, Pancayatana, VedaStory, ManualPreview, WhatItTakes } from "./veda-extras";
+import { SampleVerse, Pancayatana, VedaStory, ManualPreview } from "./veda-extras";
 import "./sacred-course.css";
 
 const STEP_ICONS: IllusName[] = ["palm", "sound", "kalasha", "flowers", "arati", "home", "lotus", "mala"];
@@ -308,12 +308,14 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
             <div className="loop">↺ and again</div>
           </div>
           <div className="guru-art" data-rv><Illus name="guru" /></div>
+          {!x.veda && <>
           <div className="center" style={{ marginTop: 40 }}><div className="eyebrow" data-rv>Preparing the vessel</div></div>
           <div className="vessel">
             <div className="g" data-rv><h4>Deha · Body</h4><p>Clean, steady posture (āsana) and calm breath, to support the resonance of the sound.</p></div>
             <div className="g" data-rv><h4>Manas · Mind</h4><p>Reverence, focused attention (ekāgratā) and humility before the text.</p></div>
             <div className="g" data-rv><h4>Vāstu · Place</h4><p>A clean, dedicated space that honours the sacredness of the vibration.</p></div>
           </div>
+          </>}
         </div></section>
       )}
 
@@ -327,14 +329,14 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
             <h2 className="h" data-rv>How you&apos;ll learn <em>{x.journeyTitle || title}</em></h2>
             {x.journeyIntro && <p className="lead" data-rv>{x.journeyIntro}</p>}
           </div>
-          <div className="journey">
+          {!x.pathOnly && <div className="journey">
             {journey.map((s, i) => (
               <div className="stp" key={i} data-rv>
                 <div className="card"><Illus name={s.icon} /><div className="tag">{s.tag}</div><h3>{s.title}</h3><p>{s.text}</p></div>
                 <div className="num">{String(i + 1).padStart(2, "0")}</div>
               </div>
             ))}
-          </div>
+          </div>}
           {x.journeyNote && <p className="journey-note" data-rv><Emph text={x.journeyNote} /></p>}
           {x.path && (
             <div className="path">
@@ -493,8 +495,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
       {/* FAQ */}
       {faqs.length > 0 && (
         <section id="faq"><div className="wrap">
-          <div className="center"><div className="eyebrow" data-rv>Questions</div><h2 className="h" data-rv>{x.veda ? <>What it <em>takes</em></> : "Frequently asked"}</h2></div>
-          {x.veda && <WhatItTakes v={x.veda} />}
+          <div className="center"><div className="eyebrow" data-rv>Questions</div><h2 className="h" data-rv>Frequently asked</h2></div>
           <div className="faq">
             {faqs.map((f, i) => (
               <details key={i} open={i === 0} data-rv>
@@ -524,8 +525,24 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
           <p className="fee-note" style={{ margin: "16px auto 0" }}>{feeNote(course.feeType)}</p>
           <div className="assure"><span>Refund within 7 days</span><span>Secure payment by Razorpay</span></div>
         </div>
-        <div className="final-pad" />
       </div></section>
+
+      {/* GO DEEPER */}
+      {x.goDeeper && (
+        <section style={{ paddingTop: 0 }}><div className="wrap">
+          <a className="deeper" href={x.goDeeper.href} data-rv>
+            <Illus name="lotus" />
+            <div>
+              <div className="eyebrow">{x.goDeeper.eyebrow}</div>
+              <h3><Emph text={x.goDeeper.title} em /></h3>
+              <p>{x.goDeeper.text}</p>
+            </div>
+            <span className="btn ghost">{x.goDeeper.cta} →</span>
+          </a>
+        </div></section>
+      )}
+
+      <div className="wrap"><div className="final-pad" /></div>
 
       {amount && (
         <div className="mobilebar"><div className="amt">{amount}<small>{batch.short}</small></div><button type="button" className="btn" onClick={enroll}>{cta}</button></div>

@@ -9,7 +9,7 @@ export type TeacherId = "karthik" | "jyothi";
 export type VedaExtras = {
   sample: { deva: string; roman: string; meaning: string; source: string; caption: string };
   pancayatana: { text: string; image: string; alt: string; note: string };
-  foundations: { title: string; text: string }[];
+  foundations?: { title: string; text: string }[];
   sikshaIntro: string;
   lessons: { deva: string; name: string; text: string }[];
   svaraStory: string;
@@ -62,6 +62,10 @@ export type CourseExperience = {
   /** Extra sections (shown only when present) */
   forYouNote?: string;
   about?: { eyebrow: string; title: string; intro: string; parts: { icon: IllusName; name: string; tag: string; text: string; source?: string; puja?: string }[]; note?: string; small?: string };
+  /** Show only the learning-path strip in "How you'll learn" (no step cards). */
+  pathOnly?: boolean;
+  /** Small card linking to a related course. */
+  goDeeper?: { eyebrow: string; title: string; text: string; href: string; cta: string };
   /** Vedaśikṣā: extra immersive sections (shown only when present). */
   veda?: VedaExtras;
   support?: { title: string; text: string; live?: boolean }[];
@@ -133,7 +137,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { icon: "palm", tag: "Tattva", title: "Why we worship", text: "The philosophy and purpose of pūjā, explained from the śāstra — no made-up stories." },
       { icon: "sound", tag: "Uccāraṇa", title: "Chant correctly", text: "Every mantra with clear pronunciation and svara, corrected live in class." },
       { icon: "kalasha", tag: "Saṅkalpa & Āvāhana", title: "Begin the pūjā", text: "Setting up, the resolve, and inviting the deity — the right way." },
-      { icon: "flowers", tag: "Ṣoḍaśa Upacāra", title: "The 16 offerings", text: "Each upacāra demonstrated, then practised — and what each one means." },
+      { icon: "flowers", tag: "Ṣoḍaśa Upacāra", title: "The 16 offerings", text: "Each upacāra demonstrated, then practised — and what each one means. In Vedic pūjā, each is offered with a verse of the Puruṣa Sūktam." },
       { icon: "arati", tag: "Naivedya & Ārati", title: "Offer with devotion", text: "Naivedya, ārati and prayers — understanding the bhāva behind them." },
       { icon: "home", tag: "Visarjana & Sādhanā", title: "Your pūjā at home", text: "Conclude correctly and perform the full pūjā yourself, with the Pūjā Handbook." },
     ],
@@ -144,6 +148,13 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { quote: "Got to know the Nithya Pooja vidhana in more detail. This gives me confidence that I am not doing it wrongly.", name: "Srirama V.", place: "India" },
       { quote: "Experience of learning Puja Vidhi mantras and the process has been very pleasant, enriching and very professionally delivered.", name: "Krishna M. C.", place: "Professor, Bengaluru" },
     ],
+    goDeeper: {
+      eyebrow: "Your next step",
+      title: "After Pūjā Vidhi, offer it with *Vedic mantras*",
+      text: "Vedaśikṣā teaches the five sūktas of the Pañcāyatana — one for each deity: Gaṇapati, Sūrya, Nārāyaṇa, Devī and Śiva.",
+      href: "/courses/vedashiksha-introduction-to-vedas",
+      cta: "Explore Vedaśikṣā",
+    },
     finalLine: "Learn it once, properly — and carry it for a lifetime.",
   },
 
@@ -342,10 +353,25 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     cardLine: "An introduction to the Vedas and the art of Vedic chanting — the right foundation.",
     displayTitle: "Vedaśikṣā",
     subtitle: "An introduction to the Vedas and Vedic chanting",
-    lead: "Begin your journey into the Vedas the traditional way — hear the *svara* from your teacher, repeat it exactly, and understand what you chant.",
+    lead: "In six months, learn to chant five Vedic sūktas with correct *svara* and meaning — and offer them in your own *pūjā*. Beginners welcome.",
     heroImage: "/images/course/hero-vedashiksha.webp",
+    facts: [
+      ["8 live classes", "every month"],
+      ["6 months", "5 Vedic sūktas"],
+      ["Beginners", "no Sanskrit needed"],
+      ["Recordings", "of every class"],
+      ["68-page manual", "illustrated"],
+    ],
     heroAlt: "Dr. Karthik Sharma teaching, Sanskrit notes on the whiteboard behind",
     heroCard: { icon: "palm", title: "Gurukula method", text: "listen · repeat · correct" },
+    forYou: [
+      "I do pūjā at home, but I don't know the Vedic mantras.",
+      "I want to chant correctly — not just listen.",
+      "I have never read Sanskrit, and want to start properly.",
+      "I want my daily sādhanā to have a Vedic foundation.",
+    ],
+    forYouNote: "If any of these is you, Vedaśikṣā is the right first step.",
+    pathOnly: true,
     journeyTitle: "Vedaśikṣā",
     journey: [
       { icon: "palm", tag: "Paricaya", title: "What the Vedas are", text: "Where the Vedas come from and how they have been preserved." },
@@ -353,7 +379,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { icon: "ear", tag: "Guru-mukha", title: "First chants, by ear", text: "Listen to the teacher, repeat, and receive correction." },
       { icon: "mala", tag: "Abhyāsa", title: "Daily practice", text: "A steady routine so the chanting becomes your own." },
     ],
-    journeyNote: "These sūktas will enrich your *pūjā vidhi* — and deepen your sādhanā on these cosmic forces.",
+    journeyNote: "One sūkta at a time, over *six months* — with your teacher beside you.",
     path: [
       { title: "1 · Gaṇapati", text: "Gaṇapati Sūktam" },
       { title: "2 · Sūrya", text: "Saura Sūktam" },
@@ -364,13 +390,13 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     about: {
       eyebrow: "What you will chant",
       title: "Five sūktas. *Five forms of the Divine.*",
-      intro: "In the Pañcāyatana pūjā, five deities are worshipped together: Gaṇapati, Sūrya, Nārāyaṇa, Devī and Śiva. In Vedaśikṣā you learn a Vedic sūkta for each of them.",
+      intro: "One Vedic hymn for each deity of the Pañcāyatana pūjā.",
       parts: [
-        { icon: "kalasha", name: "Gaṇapati Sūktam", tag: "for Gaṇapati · gaṇānāṃ tvā", source: "Ṛgveda · twelve ṛks", text: "The Lord of the hosts — “seer among seers, eldest king of sacred words”. Without him, says the Veda, nothing is done, near or far.", puja: "Chanted first, to invoke Gaṇapati at the start of every pūjā." },
-        { icon: "diya", name: "Saura Sūktam", tag: "for Sūrya · sūryo devīm uṣasam", source: "Taittirīya Brāhmaṇa 2.8.7", text: "A hymn to the rising Sun, the eye of the world — prayed for health, clear sight and the radiance of learning. It ends: “Sūrya is the Self of all that moves and all that is still.”", puja: "Sūrya arghya at sunrise; the Sun of the Pañcāyatana." },
-        { icon: "lotus", name: "Puruṣa Sūktam", tag: "for Nārāyaṇa · sahasraśīrṣā puruṣaḥ", source: "Taittirīya Āraṇyaka 3.12–13 · Ṛgveda 10.90", text: "The hymn of the Cosmic Person, whose heads are the heads of all beings — the whole creation seen as one great offering.", puja: "Its mantras accompany the sixteen offerings (ṣoḍaśopacāra) of pūjā." },
-        { icon: "trishula", name: "Śrī Sūktam", tag: "for Devī · hiraṇyavarṇāṃ hariṇīm", source: "Ṛgveda Khila · fifteen ṛks", text: "A prayer to Śrī — the Divine Mother as abundance, beauty and grace — to come and never depart, and to drive away all lack.", puja: "Lakṣmī and Devī pūjā; Fridays and Varalakṣmī vrata." },
-        { icon: "linga", name: "Sadyojātādi Pañca Mantrāḥ", tag: "for Śiva · sadyojātaṃ prapadyāmi", source: "Taittirīya Āraṇyaka 10 · Mahānārāyaṇa Upaniṣad", text: "Five mantras for the five faces of Śiva — Sadyojāta, Vāmadeva, Aghora, Tatpuruṣa and Īśāna, “lord of all knowledge”.", puja: "The heart of Śiva pūjā and liṅgārcana." },
+        { icon: "kalasha", name: "Gaṇapati Sūktam", tag: "for Gaṇapati · gaṇānāṃ tvā", source: "Ṛgveda · twelve ṛks", text: "The Lord of the hosts, “seer among seers”. Without him, says the Veda, nothing is done.", puja: "Chanted first, at the start of every pūjā." },
+        { icon: "diya", name: "Saura Sūktam", tag: "for Sūrya · sūryo devīm uṣasam", source: "Taittirīya Brāhmaṇa 2.8.7", text: "The rising Sun, eye of the world — for health, clear sight and the light of learning.", puja: "Sūrya arghya at sunrise; the Sun of the Pañcāyatana." },
+        { icon: "lotus", name: "Puruṣa Sūktam", tag: "for Nārāyaṇa · sahasraśīrṣā puruṣaḥ", source: "Taittirīya Āraṇyaka 3.12–13 · Ṛgveda 10.90", text: "The Cosmic Person, whose heads are the heads of all beings — creation as one great offering.", puja: "A verse for each of the sixteen offerings." },
+        { icon: "trishula", name: "Śrī Sūktam", tag: "for Devī · hiraṇyavarṇāṃ hariṇīm", source: "Ṛgveda Khila · fifteen ṛks", text: "Śrī — abundance, beauty and grace — invited to come and never leave.", puja: "Lakṣmī and Devī pūjā; Fridays and Varalakṣmī vrata." },
+        { icon: "linga", name: "Sadyojātādi Pañca Mantrāḥ", tag: "for Śiva · sadyojātaṃ prapadyāmi", source: "Taittirīya Āraṇyaka 10 · Mahānārāyaṇa Upaniṣad", text: "Five mantras for Śiva’s five faces: Sadyojāta, Vāmadeva, Aghora, Tatpuruṣa and Īśāna.", puja: "The heart of Śiva pūjā and liṅgārcana." },
       ],
       note: "These sūktas will enrich your pūjā vidhi. Through them you worship and honour the divine energy in each form, and your sādhanā on these cosmic forces grows deeper.",
       small: "Meanings in the course follow the classical commentary of Sāyaṇācārya.",
@@ -384,18 +410,12 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         caption: "The line below a syllable, the stroke above it — these are svara marks. You will learn to read and chant them.",
       },
       pancayatana: {
-        text: "In the Pañcāyatana pūjā five deities are worshipped together — Gaṇapati, Sūrya, Nārāyaṇa, Devī and Śiva — as five forms of the one Brahman. The tradition credits Ādi Śaṅkarācārya with establishing it for householders. The family’s chosen deity sits in the centre; the other four sit in the corners. In Vedaśikṣā you learn one Vedic hymn for each of the five.",
+        text: "Gaṇapati, Sūrya, Nārāyaṇa, Devī and Śiva — worshipped together as five forms of the one Brahman. Tradition credits Ādi Śaṅkarācārya with giving this pūjā to householders. Your chosen deity sits in the centre, the other four in the corners.",
         image: "/images/vedashiksha/pancayatana.webp",
         alt: "Pañcāyatana layout with Śiva in the centre, Viṣṇu north-east, Sūrya south-east, Gaṇapati south-west and Devī north-west.",
         note: "Arrangements differ between traditions; this shows Śiva in the centre.",
       },
-      foundations: [
-        { title: "Seen, not made", text: "The Veda is apauruṣeya — not of human authorship. The ṛṣis did not compose the mantras; they saw them in deep tapas and handed them on exactly as received." },
-        { title: "One Veda, arranged as four", text: "Kṛṣṇa Dvaipāyana arranged the one Veda into four — Ṛg, Yajus, Sāma and Atharva — and so is called Veda-Vyāsa." },
-        { title: "1,131 branches once — 13 today", text: "Each Veda was carried by many lineages, or śākhās. Patañjali counts over a thousand; only thirteen survive. Our hymns come from the Taittirīya śākhā of the Kṛṣṇa Yajurveda." },
-        { title: "A world heritage", text: "UNESCO proclaimed the Tradition of Vedic Chanting a Masterpiece of the Oral and Intangible Heritage of Humanity in 2003, and inscribed it on the Representative List in 2008." },
-      ],
-      sikshaIntro: "The Pāṇinīya Śikṣā pictures the Veda as a person: Śikṣā, the science of sound, is its nose — its very breath. And our own Veda gives the whole syllabus of chanting in one sentence.",
+      sikshaIntro: "Śikṣā, the science of sound, is called the nose of the Veda — its breath. Our own Veda gives its six lessons in one line.",
       lessons: [
         { deva: "वर्णः", name: "Varṇa — the letter", text: "Each sound from its right place in the mouth." },
         { deva: "स्वरः", name: "Svara — the pitch", text: "Low, steady and rising — marked with voice and hand." },
@@ -404,13 +424,13 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         { deva: "साम", name: "Sāma — evenness", text: "A steady pace — neither rushed nor dragged." },
         { deva: "सन्तानः", name: "Santāna — the flow", text: "Words joined as the text joins them." },
       ],
-      svaraStory: "The Taittirīya Saṃhitā tells how Tvaṣṭṛ, angry with Indra, poured an offering into the fire crying *“indraśatrur vardhasva”* — “grow, O slayer of Indra!” But he placed the svara on the wrong part of the word, and it meant “one whose slayer is Indra”. The son who rose from the fire was slain by Indra. One pitch changed the meaning — and the outcome.",
-      guarded: "For thousands of years the Veda was preserved without writing, through pāṭhas — reciting the same words in woven patterns. In the ghana pāṭha every pair of words is chanted forwards and backwards, so a single wrong syllable breaks the pattern at once.",
+      svaraStory: "Tvaṣṭṛ poured an offering into the fire, crying *“indraśatrur vardhasva”* — “grow, slayer of Indra!” But he chanted one svara wrongly, and the words meant “one whose slayer is Indra”. And so it happened. *One pitch changed the outcome.*",
+      guarded: "Without writing — by chanting the same words in woven patterns. In the ghana pāṭha, one wrong syllable breaks the pattern at once.",
       pathaImage: "/images/vedashiksha/patha-patterns.webp",
       pathaAlt: "Word patterns of the saṃhitā, pada, krama, jaṭā and ghana pāṭhas.",
       svaraClose: "This is why, in class, your chanting is corrected one svara at a time.",
       manual: {
-        text: "Every student receives the Vedaśikṣā manual — the five hymns with svara marks and transliteration, verse-by-verse meanings following Sāyaṇācārya, a complete guide to Vedic sound, the story of the Veda and its sciences, and a daily practice plan.",
+        text: "The five hymns with svara marks, meanings after Sāyaṇācārya, a guide to Vedic sound and a daily practice plan.",
         pages: [
           { src: "/images/vedashiksha/manual-cover.webp", alt: "Vedaśikṣā manual cover" },
           { src: "/images/vedashiksha/manual-vidya-wheel.webp", alt: "Manual page: the eighteen branches of knowledge" },

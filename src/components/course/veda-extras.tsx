@@ -30,7 +30,7 @@ export function SampleVerse({ v }: { v: VedaExtras }) {
 export function Pancayatana({ v }: { v: VedaExtras }) {
   const p = v.pancayatana;
   return (
-    <section className="alt"><div className="wrap">
+    <section><div className="wrap">
       <div className="vx-split">
         <figure className="vx-diagram" data-rv>
           <img src={p.image} alt={p.alt} width={900} height={755} loading="lazy" />
@@ -38,7 +38,7 @@ export function Pancayatana({ v }: { v: VedaExtras }) {
         </figure>
         <div>
           <div className="eyebrow" data-rv>Pañcāyatana pūjā</div>
-          <h2 className="h" data-rv>One Brahman. <em>Five forms.</em></h2>
+          <h2 className="h" data-rv>Why <em>these five?</em></h2>
           <p className="lead" data-rv>{p.text}</p>
         </div>
       </div>
@@ -50,20 +50,7 @@ export function Pancayatana({ v }: { v: VedaExtras }) {
 export function VedaStory({ v }: { v: VedaExtras }) {
   return (
     <>
-      <section id="veda"><div className="wrap center">
-        <div className="eyebrow" data-rv>Foundations</div>
-        <h2 className="h" data-rv>Knowledge that was <em>seen, not written.</em></h2>
-        <div className="vx-four">
-          {v.foundations.map((f, i) => (
-            <div className="vx-fc" key={f.title} data-rv>
-              <span className="vx-n">{["I", "II", "III", "IV"][i]}</span>
-              <h4>{f.title}</h4><p>{f.text}</p>
-            </div>
-          ))}
-        </div>
-      </div></section>
-
-      <section className="alt"><div className="wrap center">
+      <section><div className="wrap center">
         <div className="eyebrow" data-rv>Taittirīya Upaniṣad 1.2</div>
         <h2 className="h" data-rv>Six lessons. <em>Every syllable.</em></h2>
         <p className="lead narrow" data-rv>{v.sikshaIntro}</p>
@@ -91,6 +78,7 @@ export function VedaStory({ v }: { v: VedaExtras }) {
           </div>
         </div>
         <p className="journey-note" data-rv>{v.svaraClose}</p>
+        <div className="center" data-rv><a className="btn" href="#pricing">See fees &amp; join →</a></div>
       </div></section>
     </>
   );
@@ -109,14 +97,5 @@ export function ManualPreview({ v }: { v: VedaExtras }) {
         ))}
       </div>
     </div></section>
-  );
-}
-
-/** Three stat tiles shown above the FAQ. */
-export function WhatItTakes({ v }: { v: VedaExtras }) {
-  return (
-    <div className="vx-takes">
-      {v.takes.map(([b, s]) => <div key={b} data-rv><b>{b}</b><small>{s}</small></div>)}
-    </div>
   );
 }
