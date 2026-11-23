@@ -79,6 +79,8 @@ export type CourseExperience = {
   faqs?: { question: string; answer: string }[];
   finalTitle?: string;
   seo?: { title: string; description: string };
+  /** Link preview (WhatsApp, Facebook…): short title and selling line; the card image is /images/share/<slug>.jpg */
+  share?: { title: string; text: string };
 };
 
 export const TEACHERS: Record<TeacherId, { name: string; role: string; image: string; bio: string }> = {
@@ -110,6 +112,7 @@ const LIVE_FACTS: [string, string][] = [
 export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
   // ---------------- Pūjā Vidhi ----------------
   "mantras-for-healing": {
+    share: { title: "Pūjā Vidhi — Live Workshop | Mantra Academy", text: "Learn the complete 16-step pūjā live — correct mantras, the meaning of every step, and a manual in 5 languages." },
     group: "puja",
     order: 2,
     cardLine: "The complete 16-step pūjā — every mantra, its meaning and how to perform it at home.",
@@ -183,6 +186,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Śrī Rudra Adhyayana ----------------
   "rudrachamakam-course": {
+    share: { title: "Śrī Rudram — Live & Guided | Mantra Academy", text: "Learn Namakam, Chamakam and Puruṣa Sūktam live — correct svara, meaning, personal correction and a 40-page manual." },
     group: "chanting",
     order: 1,
     usd: 25, personal: true,
@@ -356,6 +360,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Sanskrit Orientation ----------------
   "sanskrit-orientation": {
+    share: { title: "Sanskrit Orientation | Mantra Academy", text: "Your first steps into the Devabhāṣā — script, sounds, reading and your first sentences, taught live." },
     group: "sanskrit",
     order: 5,
     usd: 45,
@@ -381,6 +386,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Vedaśikṣā ----------------
   "vedashiksha-introduction-to-vedas": {
+    share: { title: "Veda Śikṣā — Live & Guided | Mantra Academy", text: "Chant five Vedic sūktas with correct svara and meaning in six months — beginners welcome, with a 68-page manual." },
     group: "chanting",
     order: 4,
     usd: 25, personal: true,
@@ -524,6 +530,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Durgā Saptaśatī ----------------
   "durga-saptashati": {
+    share: { title: "Durgā Saptaśatī — Live & Guided | Mantra Academy", text: "A journey into the Devī tradition through the seven hundred verses — taught live by your Ācāryas." },
     group: "chanting",
     order: 3,
     usd: 25, personal: true,
@@ -546,6 +553,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Jijñāsā (children) ----------------
   "jijs": {
+    share: { title: "Jijñāsā — for Children | Mantra Academy", text: "Daily prayers, ślokas and stories for children aged 4–14 — taught live, with patience." },
     group: "children",
     order: 6,
     usd: 25, personal: true,

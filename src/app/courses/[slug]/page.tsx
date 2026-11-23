@@ -14,7 +14,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const x = getCourseExperience(slug);
   const title = x.seo?.title || `${x.displayTitle || "Course"} | Mantra Academy`;
   const description = x.seo?.description || x.subtitle || "Learn the Vedic way — live, guided and personal — at Mantra Academy.";
-  return { title, description, openGraph: { title, description, images: x.heroImage ? [x.heroImage] : undefined } };
+  const shareTitle = x.share?.title || title;
+  const shareText = x.share?.text || description;
+  const images = x.share
+    ? [{ url: `/images/share/${slug}.jpg`, width: 1200, height: 630, alt: x.displayTitle || "Mantra Academy course" }]
+    : x.heroImage ? [x.heroImage] : undefined;
+  return {
+    metadataBase: new URL("https://www.mantracademy.in"),
+    title,
+    description,
+    openGraph: { title: shareTitle, description: shareText, url: `/courses/${slug}`, siteName: "Mantra Academy", type: "website", images },
+    twitter: { card: "summary_large_image", title: shareTitle, description: shareText, images },
+  };
 }
 
 export default async function CourseDetailPage({
