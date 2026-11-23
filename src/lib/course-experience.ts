@@ -12,7 +12,6 @@ export type VedaExtras = {
   sikshaIntro: string;
   lessons: { deva: string; name: string; text: string }[];
   svaraStory: string;
-  guarded: string;
   svaraClose: string;
   takes: [string, string][];
 };
@@ -455,7 +454,6 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         { deva: "सन्तानः", name: "Santāna — the flow", text: "Words joined as the text joins them." },
       ],
       svaraStory: "Tvaṣṭṛ poured an offering into the fire, crying *“indraśatrur vardhasva”* — “grow, slayer of Indra!” But he chanted one svara wrongly, and the words meant “one whose slayer is Indra”. And so it happened. *One pitch changed the outcome.*",
-      guarded: "Without writing — by chanting the same words in woven patterns, forwards and backwards. Here are the first three words of the Gaṇapati Sūktam you saw above:",
       svaraClose: "This is why, in class, your chanting is corrected one svara at a time.",
       takes: [["6 months", "seven modules"], ["8 live classes", "every month, on Google Meet"], ["20 minutes", "of daily practice"]],
     },

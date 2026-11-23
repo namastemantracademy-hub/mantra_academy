@@ -86,47 +86,6 @@ export function Pancayatana({ p }: { p: NonNullable<CourseExperience["pancayatan
   );
 }
 
-const WORDS = ["gaṇānāṃ", "tvā", "gaṇapatiṃ"];
-const PATHAS: { name: string; hint: string; groups: number[][]; joined?: boolean }[] = [
-  { name: "Saṃhitā", hint: "the verse, flowing", groups: [[0, 1, 2]], joined: true },
-  { name: "Pada", hint: "word by word", groups: [[0], [1], [2]] },
-  { name: "Krama", hint: "in pairs", groups: [[0, 1], [1, 2]] },
-  { name: "Jaṭā", hint: "a braid — forward, back, forward", groups: [[0, 1], [1, 0], [0, 1]] },
-  { name: "Ghana", hint: "the dense weave", groups: [[0, 1], [1, 0], [0, 1, 2], [2, 1, 0], [0, 1, 2]] },
-];
-
-/** The pāṭhas, shown with three real words. Tap a word to follow it through every pattern. */
-function Weave({ text }: { text: string }) {
-  const [hi, setHi] = useState<number | null>(null);
-  return (
-    <div className="vx-guard" data-rv>
-      <h4>How the Veda was guarded</h4>
-      <p>{text}</p>
-      <div className="wv-key">
-        {WORDS.map((w, i) => (
-          <button key={w} type="button" className={`wv-w c${i}${hi === i ? " hi" : ""}`} onClick={() => setHi(hi === i ? null : i)} aria-pressed={hi === i}>{w}</button>
-        ))}
-        <span className="wv-tip">← tap a word to follow it</span>
-      </div>
-      <div className={`wv-rows${hi !== null ? " focus" : ""}`}>
-        {PATHAS.map((r) => (
-          <div className="wv-row" key={r.name} data-rv>
-            <div className="wv-name"><b>{r.name}</b><small>{r.hint}</small></div>
-            <div className="wv-seq">
-              {r.groups.map((g, gi) => (
-                <span className={`wv-g${r.joined ? " joined" : ""}`} key={gi}>
-                  {g.map((w, wi) => <span key={wi} className={`wv-w c${w}${hi === w ? " hi" : ""}`}>{WORDS[w]}</span>)}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="wv-foot">Every pattern must agree with the others — so a single wrong syllable stands out at once. <span>(Shown simply, without the sound-joins of real chanting.)</span></p>
-    </div>
-  );
-}
-
 /** What is the Veda + the six lessons of Śikṣā + why every svara matters. */
 export function VedaStory({ v }: { v: VedaExtras }) {
   return (
@@ -152,7 +111,6 @@ export function VedaStory({ v }: { v: VedaExtras }) {
         </div>
         <div className="vx-story">
           <blockquote data-rv><It text={v.svaraStory} /></blockquote>
-          <Weave text={v.guarded} />
         </div>
         <p className="journey-note" data-rv>{v.svaraClose}</p>
         <div className="center" data-rv><a className="btn" href="#pricing">See fees &amp; join →</a></div>
