@@ -287,6 +287,7 @@
 .sacred .part h3{font:600 32px/1.1 var(--serif);color:var(--ivory)}
 .sacred .part .tag{font:italic 500 17px var(--serif);color:var(--gold);margin:2px 0 8px}
 .sacred .part p{font-size:15px;color:var(--muted)}
+.sacred .part:last-child:nth-child(odd){grid-column:1/-1;max-width:640px;justify-self:center;width:100%}
 /* curriculum */
 .sacred .modules{max-width:900px;margin:36px auto 0;display:grid;gap:10px}
 .sacred .mod{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px}
