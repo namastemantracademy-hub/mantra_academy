@@ -77,6 +77,7 @@ export default function PaymentsPage() {
             <div className="adm-muted">
               {courseName(r.courseSlug, r.courseTitle)} · {dateTime(r.paidAt || r.createdAt)} ·{" "}
               <span className={`adm-pill ${r.status}`}>{STATUS_LABEL[r.status] || r.status}</span>
+              {r.source === "google-form" && <> · <span className="adm-pill created" title="Registered on the Google Form and paid outside the website">Google Form · paid outside website</span></>}
             </div>
             <div className="adm-muted" style={{ wordBreak: "break-all" }}>{r.email}{r.razorpayPaymentId ? ` · ${r.razorpayPaymentId}` : ""}</div>
             <div className="acts">

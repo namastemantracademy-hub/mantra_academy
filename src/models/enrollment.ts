@@ -19,6 +19,8 @@ export interface IEnrollment extends Document {
   paidAt?: Date;
   confirmedBy?: "checkout" | "webhook";
   emailsSentAt?: Date;
+  /** Where the record came from. "google-form": registered on our old Google Form and paid outside the website. */
+  source?: "website" | "google-form";
   /** Proof of consent (DPDP Act): when they ticked the box, and which policy version. */
   consent?: { agreedAt?: Date; version?: string; guardian?: boolean };
   createdAt: Date;
@@ -41,6 +43,7 @@ const EnrollmentSchema = new Schema<IEnrollment>(
     paidAt: Date,
     confirmedBy: { type: String, enum: ["checkout", "webhook"] },
     emailsSentAt: Date,
+    source: { type: String, enum: ["website", "google-form"] },
     consent: consentSchemaDef,
   },
   { timestamps: true }

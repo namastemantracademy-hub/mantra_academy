@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   if (!isAdminRequest(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   await connectToDatabase();
   const rows = await Enrollment.find({})
-    .select("courseSlug courseTitle feeType name email phone amount currency razorpayOrderId razorpayPaymentId status paidAt createdAt")
+    .select("courseSlug courseTitle feeType name email phone amount currency razorpayOrderId razorpayPaymentId status paidAt source createdAt")
     .sort({ createdAt: -1 })
     .limit(2000)
     .lean();

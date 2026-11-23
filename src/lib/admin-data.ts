@@ -4,7 +4,7 @@ import { getCourseExperience } from "@/lib/course-experience";
 export type AdminEnrollment = {
   _id: string; courseSlug: string; courseTitle: string; feeType?: string; name: string; email: string; phone: string;
   amount: number; currency?: string; razorpayOrderId: string; razorpayPaymentId?: string;
-  status: "created" | "paid" | "failed"; paidAt?: string; createdAt: string;
+  status: "created" | "paid" | "failed"; paidAt?: string; source?: string; createdAt: string;
 };
 export type AdminWait = { _id: string; courseSlug: string; courseTitle: string; name: string; email: string; phone: string; notifiedAt?: string; createdAt: string };
 export type AdminCourse = { slug: string; title: string; image?: any; price?: number; startDate?: string; registrationsOpen?: boolean; batchInfo?: string; featured?: boolean };
