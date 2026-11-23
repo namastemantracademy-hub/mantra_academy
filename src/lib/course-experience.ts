@@ -136,7 +136,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     group: "chanting",
     order: 1,
     usd: 25, personal: true,
-    personalLine: "All 14 modules of Namakam and Chamakam — svara, padapāṭha and meaning",
+    personalLine: "All 15 modules — Namakam, Chamakam and Puruṣa Sūktam — with svara, padapāṭha and meaning",
     cardLine: "Namakam and Chamakam with svara, padapāṭha and meaning — anuvāka by anuvāka.",
     displayTitle: "Śrī Rudra Praśnaḥ Sādhana",
     eyebrow: "Learn Śrī Rudram the way the Veda is meant to be chanted",
@@ -148,7 +148,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     stats: { completed: "100+", rating: "4.9" },
     facts: [
       ["Live classes", "on Google Meet"],
-      ["14 modules", "Namakam & Chamakam"],
+      ["15 modules", "Namakam, Chamakam & Puruṣa Sūktam"],
       ["English", "texts in Devanagari"],
       ["Recordings", "of every class"],
       ["Course manual", "Rudra Śikṣā"],
@@ -208,7 +208,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { title: "Rudra sādhaka community", text: "Chant alongside seekers from 12 countries, and stay connected after your course." },
     ],
     curriculum: {
-      intro: "14 modules, anuvāka by anuvāka. Every lesson uses the Devanagari text with svara marks, transliteration, padapāṭha and word meaning.",
+      intro: "15 modules, anuvāka by anuvāka. Every lesson uses the Devanagari text with svara marks, transliteration, padapāṭha and word meaning.",
       modules: [
         { title: "Module 0 · Foundations", text: "Sanskrit sounds, reading svara marks, hand movement for svara, posture and saṅkalpa, Śānti pāṭha and the Rudra Dhyāna śloka." },
         { title: "Module 1 · Namakam, Anuvāka 1 — namaste rudra manyava", text: "Salutation to Rudra’s wrath and weapons, and the prayer that his arrow, bow and form become auspicious. Rudra as the first physician." },
@@ -223,7 +223,8 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         { title: "Module 10 · Anuvāka 10 — drāpe andhasaspate", text: "Prayers for the protection of family, people and cattle. Rudra as the most gracious." },
         { title: "Module 11 · Anuvāka 11 and closing mantras — sahasrāṇi sahasraśaḥ", text: "The thousands of Rudras in earth, sky and heaven, and the closing mantras including tryambakaṃ yajāmahe." },
         { title: "Module 12 · Chamakam, Anuvākas 1–11 — agnāviṣṇū · vājaś ca me", text: "Prayers for strength, leadership, happiness, food, earth and its metals, the devas, the yajña and its vessels, cattle, and the sacred number sequences." },
-        { title: "Module 13 · Integration", text: "The full Rudram at natural pace, the Ekādaśa Rudra method, and a final chant with your Āchārya." },
+        { title: "Module 13 · Puruṣa Sūktam — sahasraśīrṣā puruṣaḥ", text: "The hymn to the Cosmic Person: the thousand-headed Puruṣa who pervades all that is, and the creation that arises from his offering." },
+        { title: "Module 14 · Integration", text: "The full Rudram at natural pace, the Ekādaśa Rudra method, and a final chant with your Āchārya." },
       ],
     },
     benefits: [
@@ -247,7 +248,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     },
     includes: [
       "Live classes on Google Meet with your Āchārya",
-      "All 14 modules of Namakam and Chamakam",
+      "All 15 modules — Namakam, Chamakam and Puruṣa Sūktam",
       "Svara, padapāṭha and meaning for every mantra",
       "Recordings of every class",
       "Rudra Śikṣā course manual",
@@ -272,7 +273,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     },
     faqs: [
       { question: "I have never chanted Sanskrit. Can I join?", answer: "Yes. Module 0 starts from the sounds and the svara marks. Most of our students have no Sanskrit background." },
-      { question: "How long does it take to learn the whole Rudram?", answer: "The batch moves anuvāka by anuvāka — Namakam first, then Chamakam. With regular classes and 20–30 minutes of daily practice, you will chant with growing confidence week by week." },
+      { question: "How long does it take to learn the whole Rudram?", answer: "The full course takes about 1 year. The batch moves anuvāka by anuvāka — Namakam first, then Chamakam and Puruṣa Sūktam. With regular classes and 20–30 minutes of daily practice, you will chant with growing confidence week by week." },
       { question: "Which svara tradition do you teach?", answer: "The Taittirīya (Kṛṣṇa Yajurveda) svara as taught in the Śṛṅgeri tradition. Regional styles differ slightly, and we explain this in Module 0." },
       { question: "Will I learn the meaning?", answer: "Yes — word by word for every mantra, with the deeper significance from traditional commentaries." },
       { question: "Do you teach Laghunyāsa and Rudrābhiṣeka?", answer: "The Dhyāna śloka is part of Module 0. Laghunyāsa and the Rudrābhiṣeka procedure will be offered as a separate course." },
