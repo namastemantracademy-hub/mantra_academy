@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const shareTitle = x.share?.title || title;
   const shareText = x.share?.text || description;
   const images = x.share
-    ? [{ url: `/images/share/${slug}.jpg`, width: 1200, height: 630, alt: x.displayTitle || "Mantra Academy course" }]
+    ? [{ url: `/images/share/${slug}.jpg?v=2`, width: 1200, height: 630, alt: x.displayTitle || "Mantra Academy course" }]
     : x.heroImage ? [x.heroImage] : undefined;
   return {
     metadataBase: new URL("https://www.mantracademy.in"),
