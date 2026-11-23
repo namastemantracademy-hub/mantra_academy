@@ -11,6 +11,7 @@ import { renderMarkdownToHtml } from "@/lib/markdown";
 import { DEFAULT_FACTS, TEACHERS, getCourseExperience, type JourneyStep } from "@/lib/course-experience";
 import { Illus, IllustrationSprite, type IllusName } from "./illustrations";
 import { batchStatus } from "@/lib/batch";
+import { SampleVerse, Pancayatana, VedaStory, ManualPreview, WhatItTakes } from "./veda-extras";
 import "./sacred-course.css";
 
 const STEP_ICONS: IllusName[] = ["palm", "sound", "kalasha", "flowers", "arati", "home", "lotus", "mala"];
@@ -115,6 +116,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
     x.about ? ["about", "About"] : null,
     journey.length ? ["learn", "How you'll learn"] : null,
     x.curriculum ? ["curriculum", "Curriculum"] : null,
+    x.veda ? ["manual", "Manual"] : null,
     ["support", "Support"],
     ["acharya", "Āchārya"],
     testimonials.length ? ["reviews", "Reviews"] : null,
@@ -268,17 +270,25 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
             {x.about.parts.map((p) => (
               <div className="part" key={p.name} data-rv>
                 <Illus name={p.icon} />
-                <div><h3>{p.name}</h3><div className="tag">{p.tag}</div><p>{p.text}</p></div>
+                <div>
+                  <h3>{p.name}</h3><div className="tag">{p.tag}</div>
+                  {p.source && <div className="src">{p.source}</div>}
+                  <p>{p.text}</p>
+                  {p.puja && <p className="puja"><b>In pūjā</b> {p.puja}</p>}
+                </div>
               </div>
             ))}
           </div>
           {x.about.note && <p className="journey-note" data-rv>{x.about.note}</p>}
+          {x.about.small && <p className="about-small" data-rv>{x.about.small}</p>}
+          {x.veda && <SampleVerse v={x.veda} />}
         </div></section>
       )}
+      {x.veda && <Pancayatana v={x.veda} />}
 
       {/* GURUKULA (Rudra) */}
       {x.gurukula && (
-        <section className={x.about ? "" : "alt"}><div className="wrap">
+        <section className={x.about && !x.veda ? "" : "alt"}><div className="wrap">
           <div className="rudra-head">
             <div>
               <div className="eyebrow" data-rv>Learning the Gurukula way</div>
@@ -306,6 +316,8 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
           </div>
         </div></section>
       )}
+
+      {x.veda && <VedaStory v={x.veda} />}
 
       {/* JOURNEY */}
       {journey.length > 0 && (
@@ -357,8 +369,10 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
         </div></section>
       )}
 
+      {x.veda && <ManualPreview v={x.veda} />}
+
       {/* SUPPORT */}
-      <section id="support" className={x.curriculum ? "alt" : ""}><div className="wrap center">
+      <section id="support" className={x.curriculum && !x.veda ? "alt" : ""}><div className="wrap center">
         <div className="eyebrow" data-rv>Live · Guided · Personal</div>
         <h2 className="h" data-rv><Emph text={x.supportTitle || "Learn live. *Never alone.*"} em /></h2>
         <div className={`guided${support.length > 4 ? " six" : ""}`}>
@@ -479,7 +493,8 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
       {/* FAQ */}
       {faqs.length > 0 && (
         <section id="faq"><div className="wrap">
-          <div className="center"><div className="eyebrow" data-rv>Questions</div><h2 className="h" data-rv>Frequently asked</h2></div>
+          <div className="center"><div className="eyebrow" data-rv>Questions</div><h2 className="h" data-rv>{x.veda ? <>What it <em>takes</em></> : "Frequently asked"}</h2></div>
+          {x.veda && <WhatItTakes v={x.veda} />}
           <div className="faq">
             {faqs.map((f, i) => (
               <details key={i} open={i === 0} data-rv>
