@@ -116,7 +116,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
     x.about ? ["about", "About"] : null,
     journey.length ? ["learn", "How you'll learn"] : null,
     x.curriculum ? ["curriculum", "Curriculum"] : null,
-    x.veda ? ["manual", "Manual"] : null,
+    x.manual ? ["manual", "Manual"] : null,
     ["support", "Support"],
     ["acharya", "Āchārya"],
     testimonials.length ? ["reviews", "Reviews"] : null,
@@ -284,7 +284,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
           {x.veda && <SampleVerse v={x.veda} />}
         </div></section>
       )}
-      {x.veda && <Pancayatana v={x.veda} />}
+      {x.pancayatana && <Pancayatana p={x.pancayatana} />}
 
       {/* GURUKULA (Rudra) */}
       {x.gurukula && (
@@ -368,13 +368,14 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
               </details>
             ))}
           </div>
+          {x.manual && <ManualPreview m={x.manual} inline />}
         </div></section>
       )}
 
-      {x.veda && <ManualPreview v={x.veda} />}
+      {x.manual && !x.curriculum && <ManualPreview m={x.manual} />}
 
       {/* SUPPORT */}
-      <section id="support" className={x.curriculum && !x.veda ? "alt" : ""}><div className="wrap center">
+      <section id="support" className={x.curriculum || x.manual ? "alt" : ""}><div className="wrap center">
         <div className="eyebrow" data-rv>Live · Guided · Personal</div>
         <h2 className="h" data-rv><Emph text={x.supportTitle || "Learn live. *Never alone.*"} em /></h2>
         <div className={`guided${support.length > 4 ? " six" : ""}`}>
@@ -445,7 +446,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
       <section id="acharya" className="alt"><div className="wrap center">
         <div className="eyebrow" data-rv>{teachers.length > 1 ? "Your teachers" : "Meet your Āchārya"}</div>
         <h2 className="h" data-rv>Taught in the <em>Gurukula</em> tradition</h2>
-        <div className={`teachers${teachers.length === 1 ? " one" : ""}`} style={{ ["--n" as any]: teachers.length }}>
+        <div className={`teachers${teachers.length === 1 ? " one" : ""}${teachers.length >= 3 ? " three" : ""}`} style={{ ["--n" as any]: teachers.length }}>
           {teachers.map((t) => (
             <div className="t" key={t.name} data-rv>
               <div className="ph"><img src={t.image} alt={t.name} /></div>

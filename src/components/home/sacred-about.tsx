@@ -7,7 +7,7 @@ import { Illus, IllustrationSprite } from "@/components/course/illustrations";
 import { Mandala, GurukulaCycle, VisionMission, Shloka, useReveal, WHATSAPP_CHANNEL } from "./sacred-home";
 import "@/components/course/sacred-course.css";
 
-const BIOS: Record<"karthik" | "jyothi", string[]> = {
+const BIOS: Record<"karthik" | "jyothi" | "vishwa", string[]> = {
   karthik: [
     "Dr. Karthik Sharma is a scholar shaped by over 13 years of immersive learning in the traditional Gurukula system, with a firm grounding in the Indian Knowledge Systems (IKS). Introduced to the Vedic tradition at the age of 10, he studied the Kṛṣṇa Yajurveda along with the Upaniṣads, Bhagavad Gītā, Brahmasūtras, Yogasūtras, and śāstras such as Vyākaraṇa, Kāvya and Mīmāṃsā.",
     "Under the guidance of Ācārya Dr. Ramachandra Bhat Kotemane, he developed a deeply experiential and contemplative approach to Vedānta. He holds Vidwat (M.A.) in Advaita Vedānta and an M.Phil, and was awarded the Ph.D. (Vidyāvāridhi) by Karnataka Samskrit University, Bengaluru, in 2026 for his doctoral thesis — a critical study of Advaita Vedānta in the Vyāsa Gītā and Īśvara Gītā of the Kūrma Purāṇa. With a heartfelt commitment to preserving India’s sacred wisdom, he shares the Gurukula way of learning — bridging ancient heritage and modern seekers through teaching, reflection and practice.",
@@ -15,6 +15,11 @@ const BIOS: Record<"karthik" | "jyothi", string[]> = {
   jyothi: [
     "Dr. Jyothi Sharma is a scholar and teacher deeply grounded in the wisdom of the Indian Knowledge System (IKS). Trained in the traditional Gurukula way, she carries the living heritage of oral transmission, disciplined study and spiritual practice at the heart of Bhārata’s sacred teachings.",
     "Her understanding of Advaita Vedānta and the Sanskrit scriptures is enriched by immersive Gurukula education, where scholarship meets heartfelt experience. At Mantra Academy she guides learners — children and adults alike — gently but deeply, nurturing not just knowledge but transformation through sound, meaning and devotion.",
+  ],
+  vishwa: [
+    "Vishwaradhyaswamy C Hiremath has trained in the traditional Gurukula system for 13 years — six years at Prabodhini Gurukulam, followed by seven years of intensive Veda and Śāstra study at Veda Vijñāna Gurukulam.",
+    "He holds a Master’s degree in Advaita Vedānta and Śakti Viśiṣṭādvaita Vedānta, and brings a deep understanding of Indian philosophical traditions to his teaching.",
+    "As an Assistant Professor at an Ayurvedic Medical College, he teaches Veda, Saṃskṛta, the Sāṅkhya Sūtras, the Sāṅkhya Kārikā and the Tarka Saṅgraha with the Dīpikā commentary. His teaching combines the rigour of the Gurukula with clear explanations that make these ancient texts easy to follow.",
   ],
 };
 
@@ -88,7 +93,7 @@ export function SacredAbout() {
       <section className="alt"><div className="wrap">
         <div className="center"><div className="eyebrow" data-rv>Your teachers</div><h2 className="h" data-rv>Meet the <em>āchāryas</em></h2></div>
         <div className="bios">
-          {(["karthik", "jyothi"] as const).map((id) => {
+          {(["karthik", "jyothi", "vishwa"] as const).map((id) => {
             const t = TEACHERS[id];
             return (
               <div className="bio" key={id} data-rv>

@@ -5,19 +5,15 @@ import type { IllusName } from "@/components/course/illustrations";
 
 export type JourneyStep = { icon: IllusName; tag: string; title: string; text: string };
 export type Testimonial = { quote: string; name: string; place?: string; stars?: boolean };
-export type TeacherId = "karthik" | "jyothi";
+export type TeacherId = "karthik" | "jyothi" | "vishwa";
 export type VedaExtras = {
   sample: { deva: string; roman: string; meaning: string; source: string; caption: string };
-  pancayatana: { text: string; image: string; alt: string; note: string };
   foundations?: { title: string; text: string }[];
   sikshaIntro: string;
   lessons: { deva: string; name: string; text: string }[];
   svaraStory: string;
   guarded: string;
-  pathaImage: string;
-  pathaAlt: string;
   svaraClose: string;
-  manual: { text: string; pages: { src: string; alt: string }[] };
   takes: [string, string][];
 };
 
@@ -68,6 +64,10 @@ export type CourseExperience = {
   goDeeper?: { eyebrow: string; title: string; text: string; href: string; cta: string };
   /** Vedaśikṣā: extra immersive sections (shown only when present). */
   veda?: VedaExtras;
+  /** Interactive Pañcāyatana diagram. "sukta" labels each deity with its Vedic hymn; "form" with its sacred stone. */
+  pancayatana?: { eyebrow: string; title: string; text: string; label: "sukta" | "form" };
+  /** Course manual preview: small tilted pages (not readable, not downloadable). */
+  manual?: { title: string; text: string; langs?: string; pages: { src: string; alt: string }[] };
   support?: { title: string; text: string; live?: boolean }[];
   supportTitle?: string;
   curriculum?: { intro: string; modules: { title: string; text: string }[] };
@@ -95,6 +95,12 @@ export const TEACHERS: Record<TeacherId, { name: string; role: string; image: st
     image: "/images/course/teacher-jyothi.webp",
     bio: "Teaches Advaita Vedānta and the Sanskrit scriptures, with a focus on clear understanding and daily practice. Known for patient, immersive teaching that makes beginners feel at home.",
   },
+  vishwa: {
+    name: "Vishwaradhyaswamy C Hiremath",
+    role: "Āchārya",
+    image: "/images/course/teacher-vishwa.webp",
+    bio: "13 years of Gurukula training — Prabodhini Gurukulam and Veda Vijñāna Gurukulam. Master's in Advaita Vedānta and Śakti Viśiṣṭādvaita Vedānta. Teaches Veda and Saṃskṛta as an Assistant Professor at an Ayurvedic Medical College.",
+  },
 };
 
 const LIVE_FACTS: [string, string][] = [
@@ -114,14 +120,14 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     lead: "From *Āvāhana* to *Visarjana* — learn what to do, why and how, with correct mantra pronunciation, so every offering at home is done with understanding.",
     heroImage: "/images/course/hero-puja-vidhi.webp",
     heroAlt: "Dr. Karthik Sharma",
-    heroCard: { icon: "palm", title: "Pūjā Handbook", text: "included · yours to keep" },
+    heroCard: { icon: "palm", title: "Course manual", text: "in 5 languages · yours to keep" },
     stats: { completed: "52+", rating: "4.9" },
     facts: [
       ["20 live classes", "on Google Meet"],
       ["3 months", "2 classes a week"],
       ["English", "& Sanskrit"],
       ["Recordings", "of every session"],
-      ["Pūjā Handbook", "e-manual to keep"],
+      ["Course manual", "in 5 languages"],
     ],
     forYou: [
       "I do pūjā at home, but I'm not sure I'm doing it correctly.",
@@ -139,7 +145,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { icon: "kalasha", tag: "Saṅkalpa & Āvāhana", title: "Begin the pūjā", text: "Setting up, the resolve, and inviting the deity — the right way." },
       { icon: "flowers", tag: "Ṣoḍaśa Upacāra", title: "The 16 offerings", text: "Each upacāra demonstrated, then practised — and what each one means. In Vedic pūjā, each is offered with a verse of the Puruṣa Sūktam." },
       { icon: "arati", tag: "Naivedya & Ārati", title: "Offer with devotion", text: "Naivedya, ārati and prayers — understanding the bhāva behind them." },
-      { icon: "home", tag: "Visarjana & Sādhanā", title: "Your pūjā at home", text: "Conclude correctly and perform the full pūjā yourself, with the Pūjā Handbook." },
+      { icon: "home", tag: "Visarjana & Sādhanā", title: "Your pūjā at home", text: "Conclude correctly and perform the full pūjā yourself, with your course manual." },
     ],
     journeyNote: "You're not just learning steps — you're learning to offer them with *understanding* and *bhāva*.",
     teachers: ["karthik", "jyothi"],
@@ -148,6 +154,24 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { quote: "Got to know the Nithya Pooja vidhana in more detail. This gives me confidence that I am not doing it wrongly.", name: "Srirama V.", place: "India" },
       { quote: "Experience of learning Puja Vidhi mantras and the process has been very pleasant, enriching and very professionally delivered.", name: "Krishna M. C.", place: "Professor, Bengaluru" },
     ],
+    pancayatana: {
+      eyebrow: "Pañcāyatana pūjā",
+      title: "Five forms. *One Divine.*",
+      text: "Many homes worship five deities together — Gaṇapati, Sūrya, Viṣṇu, Devī and Śiva — as five forms of the one Brahman. Tradition credits Ādi Śaṅkarācārya with giving this pūjā to householders. Your iṣṭa devatā sits in the centre; each is worshipped in a sacred natural form.",
+      label: "form",
+    },
+    manual: {
+      title: "An 18-page *course manual.*",
+      text: "Every step of the pūjā — each mantra with svara marks, and simple guidance for every offering. Yours to keep.",
+      langs: "English · Sanskrit · Kannada · Tamil · Telugu",
+      pages: [
+        { src: "/images/course/manual/puja-cover.webp", alt: "Pūjā Vidhi manual cover" },
+        { src: "/images/course/manual/puja-read-chant.webp", alt: "Manual page: how to read and chant" },
+        { src: "/images/course/manual/puja-purvanga.webp", alt: "Manual page: Pūrvāṅgapūjā" },
+        { src: "/images/course/manual/puja-pancamrta.webp", alt: "Manual page: Pañcāmṛta snāna" },
+        { src: "/images/course/manual/puja-pradakshina.webp", alt: "Manual page: Uttarāṅgapūjā and pradakṣiṇa" },
+      ],
+    },
     goDeeper: {
       eyebrow: "Your next step",
       title: "After Pūjā Vidhi, offer it with *Vedic mantras*",
@@ -178,7 +202,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       ["15 modules", "Namakam, Chamakam & Puruṣa Sūktam"],
       ["English", "texts in Devanagari"],
       ["Recordings", "of every class"],
-      ["Course manual", "Rudra Śikṣā"],
+      ["Course manual", "in 5 scripts"],
     ],
     badges: [
       "Beginners welcome",
@@ -282,7 +306,19 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       "Personal chanting correction",
       "WhatsApp support with your batch",
     ],
-    teachers: ["karthik"],
+    manual: {
+      title: "A 40-page illustrated *course manual.*",
+      text: "Namakam, Chamakam and Puruṣa Sūktam with svara marks, a key to the svaras, and the meaning of Śrī Rudram explained.",
+      langs: "English (IAST) · Devanagari · Kannada · Tamil · Telugu",
+      pages: [
+        { src: "/images/course/manual/rudra-cover.webp", alt: "Rudra Śikṣā manual cover" },
+        { src: "/images/course/manual/rudra-svaras.webp", alt: "Manual page: key to the svaras" },
+        { src: "/images/course/manual/rudra-namakam.webp", alt: "Manual page: Namakam, first anuvāka" },
+        { src: "/images/course/manual/rudra-meaning.webp", alt: "Manual page: the meaning of Śrī Rudram" },
+        { src: "/images/course/manual/rudra-chant.webp", alt: "Manual page: how to chant" },
+      ],
+    },
+    teachers: ["karthik", "vishwa"],
     teacherStats: "Ph.D. in Advaita Vedānta · 13 years of Veda study · 7 years teaching · 220+ students · 12 countries",
     testimonials: [
       { quote: "What I really appreciate is the attention to detail he gives to pronunciation, clarity, and small corrections. The recordings provided for practice are extremely helpful. Highly recommend Mantra Academy to anyone who wants to learn Rudram with proper pronunciation, discipline, and understanding.", name: "Vamsee K.", place: "Austin, USA", stars: true },
@@ -409,12 +445,6 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         source: "Ṛgveda 2.23.1",
         caption: "The line below a syllable, the stroke above it — these are svara marks. You will learn to read and chant them.",
       },
-      pancayatana: {
-        text: "Gaṇapati, Sūrya, Nārāyaṇa, Devī and Śiva — worshipped together as five forms of the one Brahman. Tradition credits Ādi Śaṅkarācārya with giving this pūjā to householders. Your chosen deity sits in the centre, the other four in the corners.",
-        image: "/images/vedashiksha/pancayatana.webp",
-        alt: "Pañcāyatana layout with Śiva in the centre, Viṣṇu north-east, Sūrya south-east, Gaṇapati south-west and Devī north-west.",
-        note: "Arrangements differ between traditions; this shows Śiva in the centre.",
-      },
       sikshaIntro: "Śikṣā, the science of sound, is called the nose of the Veda — its breath. Our own Veda gives its six lessons in one line.",
       lessons: [
         { deva: "वर्णः", name: "Varṇa — the letter", text: "Each sound from its right place in the mouth." },
@@ -425,21 +455,26 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         { deva: "सन्तानः", name: "Santāna — the flow", text: "Words joined as the text joins them." },
       ],
       svaraStory: "Tvaṣṭṛ poured an offering into the fire, crying *“indraśatrur vardhasva”* — “grow, slayer of Indra!” But he chanted one svara wrongly, and the words meant “one whose slayer is Indra”. And so it happened. *One pitch changed the outcome.*",
-      guarded: "Without writing — by chanting the same words in woven patterns. In the ghana pāṭha, one wrong syllable breaks the pattern at once.",
-      pathaImage: "/images/vedashiksha/patha-patterns.webp",
-      pathaAlt: "Word patterns of the saṃhitā, pada, krama, jaṭā and ghana pāṭhas.",
+      guarded: "Without writing — by chanting the same words in woven patterns, forwards and backwards. Here are the first three words of the Gaṇapati Sūktam you saw above:",
       svaraClose: "This is why, in class, your chanting is corrected one svara at a time.",
-      manual: {
-        text: "The five hymns with svara marks, meanings after Sāyaṇācārya, a guide to Vedic sound and a daily practice plan.",
-        pages: [
-          { src: "/images/vedashiksha/manual-cover.webp", alt: "Vedaśikṣā manual cover" },
-          { src: "/images/vedashiksha/manual-vidya-wheel.webp", alt: "Manual page: the eighteen branches of knowledge" },
-          { src: "/images/vedashiksha/manual-vedangas.webp", alt: "Manual page: the six Vedāṅgas" },
-          { src: "/images/vedashiksha/manual-varnamala.webp", alt: "Manual page: the Sanskrit letters" },
-          { src: "/images/vedashiksha/manual-hymn-page.webp", alt: "Manual page: a hymn with svara marks" },
-        ],
-      },
       takes: [["6 months", "seven modules"], ["8 live classes", "every month, on Google Meet"], ["20 minutes", "of daily practice"]],
+    },
+    pancayatana: {
+      eyebrow: "Pañcāyatana pūjā",
+      title: "Why *these five?*",
+      text: "Gaṇapati, Sūrya, Viṣṇu, Devī and Śiva — worshipped together as five forms of the one Brahman. Tradition credits Ādi Śaṅkarācārya with giving this pūjā to householders. Your chosen deity sits in the centre; each has its own Vedic sūkta.",
+      label: "sukta",
+    },
+    manual: {
+      title: "A 68-page illustrated *course manual.*",
+      text: "The five hymns with svara marks, meanings after Sāyaṇācārya, a guide to Vedic sound and a daily practice plan.",
+      pages: [
+        { src: "/images/vedashiksha/manual-cover.webp", alt: "Vedaśikṣā manual cover" },
+        { src: "/images/vedashiksha/manual-vidya-wheel.webp", alt: "Manual page: the eighteen branches of knowledge" },
+        { src: "/images/vedashiksha/manual-vedangas.webp", alt: "Manual page: the six Vedāṅgas" },
+        { src: "/images/vedashiksha/manual-varnamala.webp", alt: "Manual page: the Sanskrit letters" },
+        { src: "/images/vedashiksha/manual-hymn-page.webp", alt: "Manual page: a hymn with svara marks" },
+      ],
     },
     gurukula: true,
     support: [
@@ -486,7 +521,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     ],
     finalTitle: "Let the Vedic sūktas enter your *daily pūjā*",
     finalLine: "Five sūktas. Five forms of the Divine. One sādhanā, with a teacher beside you.",
-    teachers: ["karthik", "jyothi"],
+    teachers: ["karthik", "jyothi", "vishwa"],
   },
 
   // ---------------- Durgā Saptaśatī ----------------

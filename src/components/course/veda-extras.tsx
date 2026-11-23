@@ -1,15 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Tiro_Devanagari_Sanskrit } from "next/font/google";
-import type { VedaExtras } from "@/lib/course-experience";
+import type { CourseExperience, VedaExtras } from "@/lib/course-experience";
+import { Illus, type IllusName } from "./illustrations";
 
 /** Devanagari with Vedic svara marks. Loaded only on pages that use these sections. */
 const deva = Tiro_Devanagari_Sanskrit({ weight: "400", subsets: ["devanagari", "latin", "latin-ext"], display: "swap" });
 
 /** "*words*" → italic */
-const It = ({ text }: { text: string }) => (
-  <>{text.split(/\*([^*]+)\*/g).map((p, i) => (i % 2 ? <i key={i}>{p}</i> : <React.Fragment key={i}>{p}</React.Fragment>))}</>
+const It = ({ text, em }: { text: string; em?: boolean }) => (
+  <>{text.split(/\*([^*]+)\*/g).map((p, i) => (i % 2 ? (em ? <em key={i}>{p}</em> : <i key={i}>{p}</i>) : <React.Fragment key={i}>{p}</React.Fragment>))}</>
 );
 
 /** A single sample verse, shown large, with its meaning. */
@@ -26,23 +27,103 @@ export function SampleVerse({ v }: { v: VedaExtras }) {
   );
 }
 
-/** Why these five: the Pañcāyatana. */
-export function Pancayatana({ v }: { v: VedaExtras }) {
-  const p = v.pancayatana;
+type Deity = { id: string; name: string; icon: IllusName; sukta: string; form: string };
+const DEITIES: Deity[] = [
+  { id: "siva", name: "Śiva", icon: "linga", sukta: "Sadyojātādi Pañca Mantrāḥ", form: "Bāṇaliṅga · Narmadā" },
+  { id: "vishnu", name: "Viṣṇu", icon: "lotus", sukta: "Puruṣa Sūktam", form: "Śālagrāma · Gaṇḍakī" },
+  { id: "surya", name: "Sūrya", icon: "diya", sukta: "Saura Sūktam", form: "Sphaṭika" },
+  { id: "ganapati", name: "Gaṇapati", icon: "kalasha", sukta: "Gaṇapati Sūktam", form: "Śoṇabhadra · Śoṇa" },
+  { id: "devi", name: "Devī", icon: "trishula", sukta: "Śrī Sūktam", form: "Svarṇamukhī" },
+];
+/** Slot 0 is the centre; then north-east, south-east, south-west, north-west. */
+const SLOTS = ["c", "ne", "se", "sw", "nw"];
+
+/** Pañcāyatana: tap a deity to bring it to the centre. */
+export function Pancayatana({ p }: { p: NonNullable<CourseExperience["pancayatana"]> }) {
+  const [order, setOrder] = useState(DEITIES.map((d) => d.id));
+  const centre = DEITIES.find((d) => d.id === order[0])!;
+  const choose = (id: string) => {
+    const k = order.indexOf(id);
+    if (k <= 0) return;
+    const next = [...order];
+    [next[0], next[k]] = [next[k], next[0]];
+    setOrder(next);
+  };
   return (
     <section><div className="wrap">
       <div className="vx-split">
-        <figure className="vx-diagram" data-rv>
-          <img src={p.image} alt={p.alt} width={900} height={755} loading="lazy" />
-          <figcaption>{p.note}</figcaption>
-        </figure>
+        <div className="pyx-wrap" data-rv>
+          <div className="pyx" role="group" aria-label="Pañcāyatana arrangement">
+            <span className="pyx-dir n">N · uttara</span><span className="pyx-dir e">E</span>
+            <span className="pyx-dir s">S · dakṣiṇa</span><span className="pyx-dir w">W</span>
+            <svg className="pyx-lines" viewBox="0 0 100 100" aria-hidden>
+              <rect x="8" y="8" width="84" height="84" rx="3" />
+              {[[20, 20], [80, 20], [80, 80], [20, 80]].map(([x, y]) => <line key={`${x}${y}`} x1="50" y1="50" x2={x} y2={y} />)}
+            </svg>
+            {DEITIES.map((d) => {
+              const slot = SLOTS[order.indexOf(d.id)];
+              const isC = slot === "c";
+              return (
+                <button key={d.id} type="button" className={`pyx-d ${slot}${isC ? " on" : ""}`} onClick={() => choose(d.id)}
+                  aria-label={isC ? `${d.name}, in the centre` : `Place ${d.name} in the centre`} aria-pressed={isC}>
+                  <span className="pyx-c"><Illus name={d.icon} /></span>
+                  <span className="pyx-n">{d.name}</span>
+                  <span className="pyx-s">{p.label === "sukta" ? d.sukta : d.form}</span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="pyx-tip" aria-live="polite"><b>{centre.name}</b> in the centre · tap any deity to make it yours</p>
+        </div>
         <div>
-          <div className="eyebrow" data-rv>Pañcāyatana pūjā</div>
-          <h2 className="h" data-rv>Why <em>these five?</em></h2>
+          <div className="eyebrow" data-rv>{p.eyebrow}</div>
+          <h2 className="h" data-rv><It text={p.title} em /></h2>
           <p className="lead" data-rv>{p.text}</p>
+          <p className="about-small" data-rv style={{ textAlign: "left" }}>Corner positions differ between traditions; this follows a common arrangement.</p>
         </div>
       </div>
     </div></section>
+  );
+}
+
+const WORDS = ["gaṇānāṃ", "tvā", "gaṇapatiṃ"];
+const PATHAS: { name: string; hint: string; groups: number[][]; joined?: boolean }[] = [
+  { name: "Saṃhitā", hint: "the verse, flowing", groups: [[0, 1, 2]], joined: true },
+  { name: "Pada", hint: "word by word", groups: [[0], [1], [2]] },
+  { name: "Krama", hint: "in pairs", groups: [[0, 1], [1, 2]] },
+  { name: "Jaṭā", hint: "a braid — forward, back, forward", groups: [[0, 1], [1, 0], [0, 1]] },
+  { name: "Ghana", hint: "the dense weave", groups: [[0, 1], [1, 0], [0, 1, 2], [2, 1, 0], [0, 1, 2]] },
+];
+
+/** The pāṭhas, shown with three real words. Tap a word to follow it through every pattern. */
+function Weave({ text }: { text: string }) {
+  const [hi, setHi] = useState<number | null>(null);
+  return (
+    <div className="vx-guard" data-rv>
+      <h4>How the Veda was guarded</h4>
+      <p>{text}</p>
+      <div className="wv-key">
+        {WORDS.map((w, i) => (
+          <button key={w} type="button" className={`wv-w c${i}${hi === i ? " hi" : ""}`} onClick={() => setHi(hi === i ? null : i)} aria-pressed={hi === i}>{w}</button>
+        ))}
+        <span className="wv-tip">← tap a word to follow it</span>
+      </div>
+      <div className={`wv-rows${hi !== null ? " focus" : ""}`}>
+        {PATHAS.map((r) => (
+          <div className="wv-row" key={r.name} data-rv>
+            <div className="wv-name"><b>{r.name}</b><small>{r.hint}</small></div>
+            <div className="wv-seq">
+              {r.groups.map((g, gi) => (
+                <span className={`wv-g${r.joined ? " joined" : ""}`} key={gi}>
+                  {g.map((w, wi) => <span key={wi} className={`wv-w c${w}${hi === w ? " hi" : ""}`}>{WORDS[w]}</span>)}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="wv-foot">Every pattern must agree with the others — so a single wrong syllable stands out at once. <span>(Shown simply, without the sound-joins of real chanting.)</span></p>
+    </div>
   );
 }
 
@@ -71,11 +152,7 @@ export function VedaStory({ v }: { v: VedaExtras }) {
         </div>
         <div className="vx-story">
           <blockquote data-rv><It text={v.svaraStory} /></blockquote>
-          <div className="vx-guard" data-rv>
-            <h4>How the Veda was guarded</h4>
-            <p>{v.guarded}</p>
-            <figure className="vx-diagram"><img src={v.pathaImage} alt={v.pathaAlt} width={1000} height={450} loading="lazy" /></figure>
-          </div>
+          <Weave text={v.guarded} />
         </div>
         <p className="journey-note" data-rv>{v.svaraClose}</p>
         <div className="center" data-rv><a className="btn" href="#pricing">See fees &amp; join →</a></div>
@@ -85,17 +162,20 @@ export function VedaStory({ v }: { v: VedaExtras }) {
 }
 
 /** Course manual: small tilted page previews (not readable, not downloadable). */
-export function ManualPreview({ v }: { v: VedaExtras }) {
-  return (
-    <section id="manual" className="alt"><div className="wrap center">
+export function ManualPreview({ m, inline }: { m: NonNullable<CourseExperience["manual"]>; inline?: boolean }) {
+  const body = (
+    <div className="center">
       <div className="eyebrow" data-rv>Included with the course</div>
-      <h2 className="h" data-rv>A 68-page illustrated <em>course manual.</em></h2>
-      <p className="lead narrow" data-rv>{v.manual.text}</p>
+      <h2 className="h" data-rv><It text={m.title} em /></h2>
+      <p className="lead narrow" data-rv>{m.text}</p>
       <div className="vx-pages" data-rv>
-        {v.manual.pages.map((p, i) => (
-          <img key={p.src} src={p.src} alt={p.alt} width={220} height={311} loading="lazy" style={{ ["--r" as any]: `${(i - 2) * 3}deg` }} />
+        {m.pages.map((p, i) => (
+          <img key={p.src} src={p.src} alt={p.alt} width={220} height={311} loading="lazy" draggable={false} onContextMenu={(e) => e.preventDefault()} style={{ ["--r" as any]: `${(i - 2) * 3}deg` }} />
         ))}
       </div>
-    </div></section>
+      {m.langs && <div className="vx-langs" data-rv><span>Available in</span>{m.langs.split(" · ").map((l) => <b key={l}>{l}</b>)}</div>}
+    </div>
   );
+  if (inline) return <div id="manual" className="vx-manual-inline">{body}</div>;
+  return <section id="manual"><div className="wrap">{body}</div></section>;
 }

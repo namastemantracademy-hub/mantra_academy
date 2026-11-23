@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Download, MessageCircle, Trash2 } from "lucide-react";
+import { courseName, waText, WA_MESSAGES } from "@/lib/admin-data";
 
 type Row = {
   _id: string; courseSlug: string; courseTitle: string; name: string; email: string; phone: string;
@@ -127,10 +128,14 @@ export default function AdminWaitlistPage() {
                 {shown.map((r) => (
                   <TableRow key={r._id}>
                     <TableCell className="font-medium">{r.name}</TableCell>
-                    <TableCell>{r.courseTitle}</TableCell>
+                    <TableCell>{courseName(r.courseSlug, r.courseTitle)}</TableCell>
                     <TableCell className="space-y-1">
                       <a className="block underline" href={`mailto:${r.email}`}>{r.email}</a>
                       <a className="inline-flex items-center gap-1 text-green-700 underline" href={waLink(r.phone)} target="_blank" rel="noopener noreferrer"><MessageCircle className="h-3.5 w-3.5" />{r.phone}</a>
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        <a className="rounded-full border border-green-700/40 bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800 hover:bg-green-100" href={waText(r.phone, WA_MESSAGES.waitlistThanks(r.name, courseName(r.courseSlug, r.courseTitle)))} target="_blank" rel="noopener noreferrer" title="Opens WhatsApp with a thank-you message">💬 Thank you</a>
+                        <a className="rounded-full border border-green-700/40 bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800 hover:bg-green-100" href={waText(r.phone, WA_MESSAGES.batchOpen(r.name, courseName(r.courseSlug, r.courseTitle)))} target="_blank" rel="noopener noreferrer" title="Opens WhatsApp with a 'batch is open' message">💬 Batch open</a>
+                      </div>
                     </TableCell>
                     <TableCell>{new Date(r.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</TableCell>
                     <TableCell><Switch checked={Boolean(r.notifiedAt)} onCheckedChange={(v) => setNotified(r, v)} aria-label="Notified" /></TableCell>

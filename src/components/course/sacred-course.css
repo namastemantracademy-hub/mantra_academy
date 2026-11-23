@@ -699,3 +699,81 @@
 .sacred .deeper p{font-size:15px;color:var(--muted)}
 .sacred .deeper .btn{flex:none;white-space:nowrap}
 @media (max-width:760px){.sacred .deeper{flex-direction:column;text-align:center;padding:24px 18px}}
+
+/* Pañcāyatana: tap a deity to bring it to the centre */
+.sacred .pyx-wrap{max-width:520px;width:100%;margin:0 auto}
+.sacred .pyx{position:relative;width:100%;aspect-ratio:1;border-radius:28px;border:1px solid var(--line);
+  background:radial-gradient(circle at 50% 50%,rgba(224,178,92,.16),transparent 58%),var(--card);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.sacred .pyx-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.sacred .pyx-lines rect{fill:none;stroke:rgba(224,178,92,.4);stroke-width:.3;stroke-dasharray:1 1.2}
+.sacred .pyx-lines line{stroke:rgba(224,178,92,.3);stroke-width:.3}
+.sacred .pyx-dir{position:absolute;font:italic 12px var(--serif);color:var(--gold);opacity:.85}
+.sacred .pyx-dir.n{top:1.2%;left:50%;transform:translateX(-50%)}
+.sacred .pyx-dir.s{bottom:1.2%;left:50%;transform:translateX(-50%)}
+.sacred .pyx-dir.e{right:2.4%;top:50%;transform:translateY(-50%)}
+.sacred .pyx-dir.w{left:2.4%;top:50%;transform:translateY(-50%)}
+.sacred .pyx-d{position:absolute;left:calc(var(--x) - var(--w) / 2);top:calc(var(--y) - var(--w) / 2);width:var(--w);
+  display:flex;flex-direction:column;align-items:center;padding:0;border:0;background:none;color:inherit;cursor:pointer;
+  transition:left .7s cubic-bezier(.6,0,.2,1),top .7s cubic-bezier(.6,0,.2,1),width .7s cubic-bezier(.6,0,.2,1)}
+.sacred .pyx-d.c{--x:50%;--y:47%;--w:30%;cursor:default}
+.sacred .pyx-d.ne{--x:80%;--y:20%;--w:21%}
+.sacred .pyx-d.se{--x:80%;--y:73%;--w:21%}
+.sacred .pyx-d.sw{--x:20%;--y:73%;--w:21%}
+.sacred .pyx-d.nw{--x:20%;--y:20%;--w:21%}
+.sacred .pyx-c{display:grid;place-items:center;width:100%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 50% 38%,#4a1c17,#1e0b09);border:1.5px solid rgba(224,178,92,.65);
+  box-shadow:0 0 0 5px rgba(224,178,92,.06);transition:box-shadow .5s ease,border-color .5s ease}
+.sacred .pyx-c svg{width:66%;height:66%}
+.sacred .pyx-d:hover .pyx-c,.sacred .pyx-d:focus-visible .pyx-c{border-color:var(--gold2)}
+.sacred .pyx-d.on .pyx-c{border-color:var(--gold2);box-shadow:0 0 0 8px rgba(224,178,92,.12),0 0 60px rgba(255,181,71,.38)}
+.sacred .pyx-n{margin-top:6px;font:600 18px/1.2 var(--serif);color:var(--ivory);white-space:nowrap}
+.sacred .pyx-d.on .pyx-n{font-size:22px;color:var(--gold2)}
+.sacred .pyx-s{font:italic 12px/1.3 var(--serif);color:var(--muted);white-space:nowrap}
+.sacred .pyx-tip{text-align:center;color:var(--muted);font-size:14px;margin-top:14px}
+.sacred .pyx-tip b{color:var(--gold2);font:600 16px var(--serif)}
+@media (max-width:640px){
+  .sacred .pyx-n{font-size:14px}.sacred .pyx-d.on .pyx-n{font-size:17px}
+  .sacred .pyx-s{font-size:10px}
+  .sacred .pyx-dir{font-size:10px}
+}
+
+/* How the Veda was guarded: the pāṭhas with three real words */
+.sacred .vx-story{grid-template-columns:1fr;max-width:920px;margin-left:auto;margin-right:auto}
+.sacred .wv-key{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 16px}
+.sacred .wv-tip{font:italic 13px var(--serif);color:var(--muted);margin-left:4px}
+.sacred .wv-w{display:inline-block;padding:5px 11px;border-radius:8px;border:0;font:500 15.5px/1.3 var(--serif);color:#fff6e6;
+  transition:opacity .3s ease,box-shadow .3s ease}
+.sacred button.wv-w{cursor:pointer}
+.sacred .wv-w.c0{background:#8a2326}
+.sacred .wv-w.c1{background:#9a6420}
+.sacred .wv-w.c2{background:#1f5a45}
+.sacred .wv-w.hi{box-shadow:0 0 0 2px var(--gold2),0 0 18px rgba(255,181,71,.4)}
+.sacred .wv-rows.focus .wv-seq .wv-w:not(.hi){opacity:.22}
+.sacred .wv-row{display:grid;grid-template-columns:190px 1fr;gap:16px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.sacred .wv-name b{display:block;font:600 19px/1.2 var(--serif);color:var(--ivory)}
+.sacred .wv-name small{color:var(--muted);font-size:12.5px}
+.sacred .wv-seq{display:flex;flex-wrap:wrap;gap:10px 16px}
+.sacred .wv-g{display:inline-flex;gap:4px}
+.sacred .wv-g.joined{gap:0}
+.sacred .wv-g.joined .wv-w{border-radius:0}
+.sacred .wv-g.joined .wv-w:first-child{border-radius:8px 0 0 8px}
+.sacred .wv-g.joined .wv-w:last-child{border-radius:0 8px 8px 0}
+.sacred .wv-foot{margin:16px 0 0 !important;font-size:15px;color:var(--ivory) !important}
+.sacred .wv-foot span{color:var(--muted);font-size:13px}
+@media (max-width:640px){
+  .sacred .wv-row{grid-template-columns:1fr;gap:8px}
+  .sacred .wv-w{font-size:13.5px;padding:4px 8px}
+  .sacred .wv-seq{gap:8px 10px}
+}
+
+/* Course manual: languages and inline placement */
+.sacred .vx-manual-inline{margin-top:90px;padding-top:70px;border-top:1px solid var(--line)}
+.sacred .vx-pages img{user-select:none;-webkit-user-drag:none}
+.sacred .vx-langs{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin-top:22px}
+.sacred .vx-langs span{color:var(--muted);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;margin-right:6px}
+.sacred .vx-langs b{font:500 15px var(--serif);color:var(--gold2);border:1px solid var(--line);border-radius:999px;padding:5px 14px;background:rgba(224,178,92,.06)}
+
+/* Three teachers: photo on top */
+.sacred .teachers.three .t{grid-template-columns:1fr;text-align:center;justify-items:center;align-items:start}
+.sacred .teachers.three .t .ph{margin:14px auto 10px}
+.sacred .teachers.three .t h4{font-size:25px}

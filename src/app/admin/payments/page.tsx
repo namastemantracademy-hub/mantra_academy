@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Download } from "lucide-react";
-import { getJSON, courseName, rupees, dateTime, waNumber, type AdminEnrollment } from "@/lib/admin-data";
+import { getJSON, courseName, rupees, dateTime, waNumber, waText, WA_MESSAGES, type AdminEnrollment } from "@/lib/admin-data";
 
 type Show = "paid" | "unfinished" | "all";
 const STATUS_LABEL: Record<string, string> = { paid: "Paid", created: "Not finished", failed: "Failed" };
@@ -46,7 +46,7 @@ export default function PaymentsPage() {
   return (
     <div className="adm-page">
       <h1 className="adm-h1">Students &amp; payments</h1>
-      <p className="adm-sub">Everyone who enrolled through the website. Tap a number to call or WhatsApp.</p>
+      <p className="adm-sub">Everyone who enrolled through the website. Tap a number to call or WhatsApp, or “Confirm seat” to send a ready-made welcome message.</p>
 
       <div className="adm-toolbar">
         <div className="adm-seg" role="tablist" aria-label="Show">
@@ -82,6 +82,9 @@ export default function PaymentsPage() {
             <div className="acts">
               <a href={`tel:${r.phone.replace(/[^\d+]/g, "")}`}>📞 {r.phone}</a>
               <a href={`https://wa.me/${waNumber(r.phone)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+              {r.status === "paid" && (
+                <a href={waText(r.phone, WA_MESSAGES.seatConfirmed(r.name, courseName(r.courseSlug, r.courseTitle)))} target="_blank" rel="noopener noreferrer" title="Opens WhatsApp with a seat-confirmed message">💬 Confirm seat</a>
+              )}
               <a href={`mailto:${r.email}`}>Email</a>
             </div>
           </div>
