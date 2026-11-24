@@ -13,6 +13,7 @@ import { Illus, IllustrationSprite, type IllusName } from "./illustrations";
 import { batchStatus } from "@/lib/batch";
 import { SampleVerse, Pancayatana, VedaStory, ManualPreview } from "./veda-extras";
 import "./sacred-course.css";
+import { smallCloudinary } from "@/lib/cloudinary-image";
 
 const STEP_ICONS: IllusName[] = ["palm", "sound", "kalasha", "flowers", "arati", "home", "lotus", "mala"];
 const FACT_ICONS: IllusName[] = ["s-live", "s-cal", "s-lang", "s-rec", "s-book"];
@@ -78,7 +79,10 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
   // ---- content, with database fallbacks ----
   const subtitle = x.subtitle;
   const lead = x.lead || course.description || "";
-  const heroImage = x.heroImage || imageUrl(course.image);
+  // The top photo is the cover set in Admin; the built-in photo is only a fallback.
+  const adminImage = imageUrl(course.image);
+  const heroImage = adminImage ? smallCloudinary(adminImage, 1000) : x.heroImage;
+  const heroAlt = adminImage ? title : x.heroAlt || title;
   const waitlist = course.registrationsOpen === false;
   const batch = waitlist
     ? { label: "Next batch", date: "Opening soon", pill: "Join the waitlist to hear first", short: "Waitlist open" }
@@ -202,7 +206,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
           </div>
           {heroImage && (
             <div className="photo">
-              <div className="img"><img src={heroImage} alt={x.heroAlt || title} /></div>
+              <div className="img"><img src={heroImage} alt={heroAlt} /></div>
               {rating ? (
                 <div className="badge"><b>{rating} ★</b>rated by our students{completed && <span className="bstar">{completed} completed</span>}</div>
               ) : completed ? (

@@ -6,18 +6,12 @@ import { feeShortLabel, formatRupees } from "@/lib/fees";
 import { batchStatus } from "@/lib/batch";
 import { getCourseExperience } from "@/lib/course-experience";
 import { Illus } from "./illustrations";
+import { smallCloudinary } from "@/lib/cloudinary-image";
 
 function imageUrl(img: any): string {
   if (!img) return "";
   if (typeof img === "string") return img;
   return img.secure_url || img.url || img.src || "";
-}
-
-/** Ask Cloudinary for a small, compressed copy (cards are never wider than ~720px). */
-function smallCloudinary(url: string): string {
-  return url.includes("res.cloudinary.com") && url.includes("/upload/") && !url.includes("/upload/w_")
-    ? url.replace("/upload/", "/upload/w_720,q_auto,f_auto/")
-    : url;
 }
 
 /** One course card (used on the courses list and the home page). Needs IllustrationSprite on the page. */
