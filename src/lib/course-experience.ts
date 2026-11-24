@@ -568,7 +568,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Lalitā Sahasranāma (year-long cohort) ----------------
   "lalita-sahasranama": {
-    draft: true,
+    heroAlt: "Śrī Lalitā, the Divine Mother, seated in padmāsana",
     group: "chanting",
     order: 3.5,
     usd: 25,
