@@ -617,7 +617,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     journey: [
       { icon: "letters", tag: "Varṇa-śikṣā", title: "Clear sounds", text: "The sounds of Sanskrit, long and short vowels, and how words join — so every name comes out clearly." },
       { icon: "ear", tag: "Guru-mukha", title: "Listen, then repeat", text: "Chant verse by verse after the Āchāryā, slowly at first, then at natural pace." },
-      { icon: "pada", tag: "Nāma-vibhāga", title: "Name by name", text: "Each verse split into its names, so you know where one name ends and the next begins." },
+      { icon: "mala", tag: "Nāma-vibhāga", title: "Name by name", text: "Each verse split into its names, so you know where one name ends and the next begins." },
       { icon: "palm", tag: "Artha", title: "Meaning of the names", text: "What each name means, with insights from the traditional commentary." },
       { icon: "lotus", tag: "Pārāyaṇa", title: "Chanting as offering", text: "Chant all thousand names fluently — on Fridays, at Navarātri, or every day." },
     ],
@@ -638,13 +638,13 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     curriculum: {
       intro: "About a year, a few verses each week. Every verse in Devanagari and transliteration, with its meaning.",
       modules: [
-        { title: "Stage 1 · Foundations", text: "Sanskrit sounds, posture and saṅkalpa, the nyāsa and dhyāna ślokas, and the story of the hymn." },
-        { title: "Stage 2 · Pūrvabhāga", text: "The opening chapter: Hayagrīva and Agastya, and how the thousand names came to be." },
-        { title: "Stage 3 · Her appearance and form", text: "From Śrīmātā, the first name, to the names that describe her form from crown to feet." },
-        { title: "Stage 4 · Her city and her victory", text: "Names of her abode, and of her victory over the demon Bhaṇḍa." },
-        { title: "Stage 5 · The inner path", text: "Names of Kuṇḍalinī and the subtle centres, and of her worship." },
-        { title: "Stage 6 · Beyond form, full of grace", text: "Names that show her as both beyond all qualities and endlessly kind — up to Lalitāmbikā, the thousandth name." },
-        { title: "Stage 7 · Uttarabhāga and pārāyaṇa", text: "The closing chapter and phalaśruti, the full chant at natural pace, and a final pārāyaṇa together." },
+        { title: "Foundations", text: "Sanskrit sounds, posture and saṅkalpa, the nyāsa and dhyāna ślokas, and the story of the hymn." },
+        { title: "Pūrvabhāga", text: "The opening chapter: Hayagrīva and Agastya, and how the thousand names came to be." },
+        { title: "Her appearance and form", text: "From Śrīmātā, the first name, to the names that describe her form from crown to feet." },
+        { title: "Her city and her victory", text: "Names of her abode, and of her victory over the demon Bhaṇḍa." },
+        { title: "The inner path", text: "Names of Kuṇḍalinī and the subtle centres, and of her worship." },
+        { title: "Beyond form, full of grace", text: "Names that show her as both beyond all qualities and endlessly kind — up to Lalitāmbikā, the thousandth name." },
+        { title: "Uttarabhāga and pārāyaṇa", text: "The closing chapter and phalaśruti, the full chant at natural pace, and a final pārāyaṇa together." },
       ],
     },
     onboarding: {
