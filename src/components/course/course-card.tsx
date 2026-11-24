@@ -13,13 +13,21 @@ function imageUrl(img: any): string {
   return img.secure_url || img.url || img.src || "";
 }
 
+/** Ask Cloudinary for a small, compressed copy (cards are never wider than ~720px). */
+function smallCloudinary(url: string): string {
+  return url.includes("res.cloudinary.com") && url.includes("/upload/") && !url.includes("/upload/w_")
+    ? url.replace("/upload/", "/upload/w_720,q_auto,f_auto/")
+    : url;
+}
+
 /** One course card (used on the courses list and the home page). Needs IllustrationSprite on the page. */
 export function CourseCard({ c, onPay, onWait }: { c: Course; onPay: (c: Course) => void; onWait: (c: Course) => void }) {
   const x = getCourseExperience(c.slug);
   const title = x.displayTitle || c.title;
   const wait = c.registrationsOpen === false;
   const b = wait ? { short: "Opening soon" } : batchStatus(c.startDate);
-  const img = x.heroImage || imageUrl(c.image);
+  // The card shows the cover photo set in Admin; the built-in hero photo is only a fallback.
+  const img = smallCloudinary(imageUrl(c.image)) || x.heroImage;
   const rating = c.studentRating?.trim() || x.stats?.rating;
   const completed = c.studentsCompleted?.trim() || x.stats?.completed;
   const badges = [
