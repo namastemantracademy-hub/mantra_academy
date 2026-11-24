@@ -8,7 +8,7 @@ import { useReveal } from "./sacred-home";
 import { imageUrl, niceDate, type PostCard } from "./sacred-wisdom";
 import "@/components/course/sacred-course.css";
 
-const AUTHORS: Record<string, string> = { "karthik sharma": "Dr. Karthik Sharma", "jyothi sharma": "Dr. Jyothi Sharma" };
+const AUTHORS: Record<string, string> = { "karthik sharma": "Dr. Karthik Sharma", "jyothi sharma": "Vid. Jyothi Sharma" };
 
 export function SacredArticle({ post }: { post: PostCard & { content?: string } }) {
   const rootRef = useRef<HTMLDivElement>(null);

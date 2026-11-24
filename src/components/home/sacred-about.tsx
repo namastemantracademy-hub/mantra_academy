@@ -13,12 +13,12 @@ const BIOS: Record<"karthik" | "jyothi" | "vishwa", string[]> = {
     "Under the guidance of Ācārya Dr. Ramachandra Bhat Kotemane, he developed a deeply experiential and contemplative approach to Vedānta. He holds Vidwat (M.A.) in Advaita Vedānta and an M.Phil, and was awarded the Ph.D. (Vidyāvāridhi) by Karnataka Samskrit University, Bengaluru, in 2026 for his doctoral thesis — a critical study of Advaita Vedānta in the Vyāsa Gītā and Īśvara Gītā of the Kūrma Purāṇa. With a heartfelt commitment to preserving India’s sacred wisdom, he shares the Gurukula way of learning — bridging ancient heritage and modern seekers through teaching, reflection and practice.",
   ],
   jyothi: [
-    "Dr. Jyothi Sharma is a scholar and teacher deeply grounded in the wisdom of the Indian Knowledge System (IKS). Trained in the traditional Gurukula way, she carries the living heritage of oral transmission, disciplined study and spiritual practice at the heart of Bhārata’s sacred teachings.",
-    "Her understanding of Advaita Vedānta and the Sanskrit scriptures is enriched by immersive Gurukula education, where scholarship meets heartfelt experience. At Mantra Academy she guides learners — children and adults alike — gently but deeply, nurturing not just knowledge but transformation through sound, meaning and devotion.",
+    "Vid. Jyothi Sharma is a scholar and teacher deeply grounded in the wisdom of the Indian Knowledge System (IKS). Trained in the traditional Gurukula way, she carries the living heritage of oral transmission, disciplined study and spiritual practice at the heart of Bhārata’s sacred teachings.",
+    "She holds Vidwat (M.A.) in Advaita Vedānta. Her understanding of Advaita Vedānta and the Sanskrit scriptures is enriched by immersive Gurukula education, where scholarship meets heartfelt experience. At Mantra Academy she guides learners — children and adults alike — gently but deeply, nurturing not just knowledge but transformation through sound, meaning and devotion.",
   ],
   vishwa: [
-    "Vishwaradhyaswamy C Hiremath has trained in the traditional Gurukula system for 13 years — six years at Prabodhini Gurukulam, followed by seven years of intensive Veda and Śāstra study at Veda Vijñāna Gurukulam.",
-    "He holds a Master’s degree in Advaita Vedānta and Śakti Viśiṣṭādvaita Vedānta, and brings a deep understanding of Indian philosophical traditions to his teaching.",
+    "Vid. Vishwaradhyaswamy C Hiremath has trained in the traditional Gurukula system for 13 years — six years at Prabodhini Gurukulam, followed by seven years of intensive Veda and Śāstra study at Veda Vijñāna Gurukulam.",
+    "He holds Vidwat (M.A.) in Advaita Vedānta and Śakti Viśiṣṭādvaita Vedānta, and brings a deep understanding of Indian philosophical traditions to his teaching.",
     "As an Assistant Professor at an Ayurvedic Medical College, he teaches Veda, Saṃskṛta, the Sāṅkhya Sūtras, the Sāṅkhya Kārikā and the Tarka Saṅgraha with the Dīpikā commentary. His teaching combines the rigour of the Gurukula with clear explanations that make these ancient texts easy to follow.",
   ],
 };

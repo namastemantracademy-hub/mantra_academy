@@ -4,7 +4,7 @@ import { cormorant, inter, tiro } from "../courses/[slug]/fonts";
 
 export const metadata: Metadata = {
   title: "About Us — Mantra Academy",
-  description: "Mantra Academy is an online home for the Gurukula spirit — the Vedas, mantras, pūjā and Sanskrit taught live by Dr. Karthik Sharma and Dr. Jyothi Sharma.",
+  description: "Mantra Academy is an online home for the Gurukula spirit — the Vedas, mantras, pūjā and Sanskrit taught live by Dr. Karthik Sharma and Vid. Jyothi Sharma.",
 };
 
 export default function AboutPage() {

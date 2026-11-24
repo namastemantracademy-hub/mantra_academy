@@ -56,7 +56,7 @@ export async function handleFaqQuery(query: string): Promise<{ answer: string }>
     // ====== TEAM: JYOTHI SHARMA ======
     if (lowerQuery.includes('jyothi') || lowerQuery.includes('bhat')) {
       return { 
-        answer: "Jyothi M. Bhat is a scholar and teacher deeply rooted in the Gurukula tradition, blending Advaita Vedānta wisdom with a modern approach to teaching. Her path integrates scriptural study, sound-based learning, and lived devotion — helping students experience transformation through Sanskrit, meaning, and spiritual practice." 
+        answer: "Vid. Jyothi Sharma is a scholar and teacher deeply rooted in the Gurukula tradition, with a Vidwat (M.A.) in Advaita Vedānta, blending Advaita Vedānta wisdom with a modern approach to teaching. Her path integrates scriptural study, sound-based learning, and lived devotion — helping students experience transformation through Sanskrit, meaning, and spiritual practice." 
       };
     }
 

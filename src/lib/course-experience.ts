@@ -95,16 +95,16 @@ export const TEACHERS: Record<TeacherId, { name: string; role: string; image: st
     bio: "13 years of Gurukula study — Kṛṣṇa Yajurveda, Upaniṣads and Vedānta under Dr. Ramachandra Bhat Kotemane. Vidwat (M.A.), M.Phil and Ph.D. (Vidyāvāridhi) in Advaita Vedānta.",
   },
   jyothi: {
-    name: "Dr. Jyothi Sharma",
+    name: "Vid. Jyothi Sharma",
     role: "Āchāryā · Co-founder",
     image: "/images/course/teacher-jyothi.webp",
-    bio: "Teaches Advaita Vedānta and the Sanskrit scriptures, with a focus on clear understanding and daily practice. Known for patient, immersive teaching that makes beginners feel at home.",
+    bio: "Vidwat (M.A.) in Advaita Vedānta. Teaches Advaita Vedānta and the Sanskrit scriptures, with a focus on clear understanding and daily practice. Known for patient, immersive teaching that makes beginners feel at home.",
   },
   vishwa: {
-    name: "Vishwaradhyaswamy C Hiremath",
+    name: "Vid. Vishwaradhyaswamy C Hiremath",
     role: "Āchārya",
     image: "/images/course/teacher-vishwa.webp",
-    bio: "13 years of Gurukula training — Prabodhini Gurukulam and Veda Vijñāna Gurukulam. Master's in Advaita Vedānta and Śakti Viśiṣṭādvaita Vedānta. Teaches Veda and Saṃskṛta as an Assistant Professor at an Ayurvedic Medical College.",
+    bio: "13 years of Gurukula training — Prabodhini Gurukulam and Veda Vijñāna Gurukulam. Vidwat (M.A.) in Advaita Vedānta and Śakti Viśiṣṭādvaita Vedānta. Teaches Veda and Saṃskṛta as an Assistant Professor at an Ayurvedic Medical College.",
   },
 };
 
@@ -339,7 +339,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
         "The Veda has been kept alive for thousands of years by careful teaching — one student, one syllable at a time. We have tried to build that same care into every class.",
         "Go slowly. Chant daily, even if only one line. We will be with you.",
       ],
-      signoff: "With praṇāms, Dr. Karthik Sharma & Dr. Jyothi Sharma",
+      signoff: "With praṇāms, Dr. Karthik Sharma & Vid. Jyothi Sharma",
     },
     faqs: [
       { question: "I have never chanted Sanskrit. Can I join?", answer: "Yes. Module 0 starts from the sounds and the svara marks. Most of our students have no Sanskrit background." },
@@ -372,7 +372,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     displayTitle: "Sanskrit Orientation",
     subtitle: "Your first steps into the Devabhāṣā",
     heroImage: "/images/course/hero-sanskrit.webp",
-    heroAlt: "Dr. Jyothi Sharma",
+    heroAlt: "Vid. Jyothi Sharma",
     heroCard: { icon: "letters", title: "Taught in Sanskrit", text: "learn by immersion" },
     journeyTitle: "Sanskrit",
     journey: [
@@ -531,7 +531,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { question: "Why learn live instead of from a book or video?", answer: "The Veda is learnt by ear, from the teacher’s voice. The Pāṇinīya Śikṣā even lists “one who chants from a written page” among the faults of a reciter. In class your chanting is heard and corrected, svara by svara." },
       { question: "How long is the course, and how much time do I need each day?", answer: "6 months, with 8 live classes a month. Each day, about twenty minutes: begin with the Śānti pāṭha, revise, learn the new lines, and read their meaning. You also receive a free e-guide for daily practice." },
       { question: "What will I be able to do after six months?", answer: "Chant all five hymns with correct svara, understand what they mean, and use them in your own pūjā." },
-      { question: "Who are the teachers?", answer: "Dr. Karthik Sharma and Dr. Jyothi Sharma, inspired by Ācārya Dr. Ramachandra Bhat Kotemane." },
+      { question: "Who are the teachers?", answer: "Dr. Karthik Sharma and Vid. Jyothi Sharma, inspired by Ācārya Dr. Ramachandra Bhat Kotemane." },
       { question: "What if I miss a class?", answer: "Every class is recorded. Watch it, practise, and bring your doubts to the next class or the WhatsApp group." },
       { question: "What should I learn after Vedaśikṣā?", answer: "Many students continue with Śrī Rudra Adhyayana (Namakam and Chamakam), which builds on the same svara foundation." },
       { question: "How do the fees work?", answer: "The amount you pay here is your registration fee and also counts as your first month's fee. Fees from the second month are collected separately; we share the details after you join." },
@@ -698,7 +698,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     subtitle: "Daily prayers, stories and values for children",
     lead: "Daily prayers, ślokas and stories for children aged 4–14 — taught with patience, so *values* and *devotion* grow naturally.",
     heroImage: "/images/course/hero-jijnasa.webp",
-    heroAlt: "Dr. Jyothi Sharma",
+    heroAlt: "Vid. Jyothi Sharma",
     heroCard: { icon: "child", title: "Ages 4–14", text: "small, friendly batches" },
     journeyTitle: "Jijñāsā",
     journey: [
