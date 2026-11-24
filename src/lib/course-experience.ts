@@ -377,6 +377,17 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { icon: "palm", tag: "Vyākaraṇa", title: "Verbs & sentences", text: "Build sentences with the most useful verbs and forms." },
       { icon: "sound", tag: "Saṃbhāṣaṇa", title: "Speaking simply", text: "Classes conducted mostly in Sanskrit, so you start to think in it." },
     ],
+    manual: {
+      title: "A 72-page *course manual.*",
+      text: "The letters and their sounds, step-by-step speaking lessons with dialogues and practice, a 30-day speaking streak and a handy word list — yours to keep.",
+      pages: [
+        { src: "/images/course/manual/sanskrit-cover.webp", alt: "Sanskrit Orientation manual cover" },
+        { src: "/images/course/manual/sanskrit-characters.webp", alt: "Manual page: meet the characters" },
+        { src: "/images/course/manual/sanskrit-varnamala.webp", alt: "Manual page: Varṇamālā, the Sanskrit alphabet" },
+        { src: "/images/course/manual/sanskrit-sounds.webp", alt: "Manual page: where each sound is born" },
+        { src: "/images/course/manual/sanskrit-lesson.webp", alt: "Manual page: Lesson 1, Hello, my name is" },
+      ],
+    },
     teachers: ["jyothi"],
     testimonials: [
       { quote: "She makes it easy for everyone in the class, teaching with utmost patience — comfortable even for beginners. And my son wishes Jyothi bhagini was his Sanskrit teacher in his school!", name: "Shrilakshmi", place: "India", stars: true },
@@ -572,6 +583,17 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       { icon: "sound", tag: "Śloka", title: "Ślokas by heart", text: "Learn ślokas with clear pronunciation and meaning." },
       { icon: "home", tag: "Kuṭumba", title: "Chanting with family", text: "Practise at home, together with parents." },
     ],
+    manual: {
+      title: "An 88-page illustrated *course manual.*",
+      text: "Prayers for every part of the day, stotras, Gītā verses, wise sayings and festivals — each with its meaning, a small thing to do, and stars to colour as your child learns.",
+      pages: [
+        { src: "/images/course/manual/jijnasa-cover.webp", alt: "Jijñāsā manual cover" },
+        { src: "/images/course/manual/jijnasa-journey.webp", alt: "Manual page: my twelve-month Jijñāsā journey" },
+        { src: "/images/course/manual/jijnasa-my-day.webp", alt: "Manual page: My Day with God, morning prayers" },
+        { src: "/images/course/manual/jijnasa-shiva.webp", alt: "Manual page: Śiva Pañcākṣara Stotram" },
+        { src: "/images/course/manual/jijnasa-yugadi.webp", alt: "Manual page: Yugādi festival" },
+      ],
+    },
     teachers: ["jyothi"],
   },
 };
