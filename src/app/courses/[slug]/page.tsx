@@ -3,7 +3,7 @@ import { SacredCoursePage } from "@/components/course/sacred-course-page";
 import { getCourseBySlug } from "@/services/courseService";
 import { cormorant, inter, tiro } from "./fonts";
 import type { Metadata } from "next";
-import { getCourseExperience } from "@/lib/course-experience";
+import { getCourseExperience, isHiddenCourse } from "@/lib/course-experience";
 import { getPersonalPricing } from "@/services/settingsService";
 
 // Ensure course detail is always rendered dynamically (fresh data)
@@ -35,6 +35,7 @@ export default async function CourseDetailPage({
 }) {
   const { slug } = await params;
 
+  if (isHiddenCourse(slug)) notFound();
   const courseDoc = await getCourseBySlug(slug);
 
   if (!courseDoc) {

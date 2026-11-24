@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getAllCourses } from "../services/courseService";
+import { getPublicCourses } from "../services/courseService";
 import { getAnnouncements } from "../services/announcementService";
 import { getTestimonies } from "../services/testimonyService";
 import { SacredHome } from "@/components/home/sacred-home";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const [coursesRaw, announcementsRaw, testimoniesRaw] = await Promise.all([
-    getAllCourses(),
+    getPublicCourses(),
     getAnnouncements(),
     getTestimonies().catch(() => []),
   ]);

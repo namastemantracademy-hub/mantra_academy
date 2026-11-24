@@ -50,6 +50,10 @@ export type CourseExperience = {
   journeyNote?: string;
   /** Shows the guru-mukha cycle, "preparing the vessel" and a learning path (Rudra Śikṣā manual). */
   gurukula?: boolean;
+  /** First words of the Gurukula section lead (default "The Veda passes from mouth to ear"). */
+  gurukulaLead?: string;
+  /** Draft: hidden on the live site (page and lists) but visible on Vercel previews and in admin. */
+  draft?: boolean;
   path?: { title: string; text: string }[];
   teachers?: TeacherId[];
   testimonials?: Testimonial[];
@@ -562,6 +566,126 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     teachers: ["karthik", "jyothi"],
   },
 
+  // ---------------- Lalitā Sahasranāma (year-long cohort) ----------------
+  "lalita-sahasranama": {
+    draft: true,
+    group: "chanting",
+    order: 3.5,
+    usd: 25,
+    cardLine: "All thousand names of the Divine Mother, verse by verse, with meaning — a year-long live cohort.",
+    displayTitle: "Lalitā Sahasranāma",
+    eyebrow: "A Gurukula year · starts January 2027",
+    subtitle: "A year with the thousand names of the Divine Mother",
+    lead: "Chant all *thousand names* of Śrī Lalitā with clear pronunciation and *meaning* — live, verse by verse, in a small group that learns together for a year.",
+    heroCard: { icon: "lotus", title: "Starts January 2027", text: "Sat & Sun · 5:30–6:30 PM IST" },
+    facts: [
+      ["Live group cohort", "Sat & Sun · 5:30–6:30 PM IST"],
+      ["11–12 months", "about 90 live classes"],
+      ["All 1,000 names", "with meaning"],
+      ["Recordings", "of every class"],
+      ["Course manual", "included"],
+    ],
+    badges: [
+      "Beginners welcome",
+      "No Sanskrit needed",
+      "Devanagari & transliteration",
+      "Pronunciation corrected live",
+      "Live classes + recordings",
+    ],
+    forYou: [
+      "“I listen to Lalitā Sahasranāma on Fridays, but I can’t chant it myself.”",
+      "“I chant it, but I’m not sure my pronunciation is right.”",
+      "“I want to know what the thousand names mean.”",
+      "“I want to chant it in my Navarātri pūjā with confidence.”",
+    ],
+    forYouNote: "If even one of these is you, this year is for you.",
+    about: {
+      eyebrow: "About Lalitā Sahasranāma",
+      title: "The thousand names of the *Divine Mother*",
+      intro: "Lalitā Sahasranāma comes from the Brahmāṇḍa Purāṇa, where Hayagrīva teaches it to the sage Agastya. Its thousand names praise Śrī Lalitā Tripurasundarī. It has three parts.",
+      parts: [
+        { icon: "palm", name: "Pūrvabhāga", tag: "the opening", text: "The story of how the hymn was revealed, and why it is held so precious." },
+        { icon: "lotus", name: "Sahasranāma", tag: "the thousand names", text: "About 180 verses of names, from Śrīmātā, the first, to Lalitāmbikā, the thousandth." },
+        { icon: "diya", name: "Uttarabhāga", tag: "the closing", text: "The phalaśruti — the fruits of chanting, and how and when it is chanted." },
+      ],
+      note: "Tradition says the names were composed by the Vāgdevīs, the goddesses of speech, at the Devī’s own command. Bhāskararāya’s Saubhāgya-bhāskara is its best-known commentary.",
+    },
+    gurukula: true,
+    gurukulaLead: "Sacred sound passes from mouth to ear",
+    journeyTitle: "Lalitā Sahasranāma",
+    journeyIntro: "Five steps, a few verses each week.",
+    journey: [
+      { icon: "letters", tag: "Varṇa-śikṣā", title: "Clear sounds", text: "The sounds of Sanskrit, long and short vowels, and how words join — so every name comes out clearly." },
+      { icon: "ear", tag: "Guru-mukha", title: "Listen, then repeat", text: "Chant verse by verse after the Āchāryā, slowly at first, then at natural pace." },
+      { icon: "pada", tag: "Nāma-vibhāga", title: "Name by name", text: "Each verse split into its names, so you know where one name ends and the next begins." },
+      { icon: "palm", tag: "Artha", title: "Meaning of the names", text: "What each name means, with insights from the traditional commentary." },
+      { icon: "lotus", tag: "Pārāyaṇa", title: "Chanting as offering", text: "Chant all thousand names fluently — on Fridays, at Navarātri, or every day." },
+    ],
+    journeyNote: "Not a thousand names to memorise — *one Mother*, known a little more each week.",
+    path: [
+      { title: "1 · Pūrvabhāga & Dhyāna", text: "the story and the opening" },
+      { title: "2 · The thousand names", text: "verse by verse, with meaning" },
+      { title: "3 · Uttarabhāga & pārāyaṇa", text: "the full chant, together" },
+    ],
+    supportTitle: "Learn live. *Never alone.*",
+    support: [
+      { title: "Live weekend classes", text: "Saturday and Sunday, 5:30–6:30 PM IST, on Google Meet with your Āchāryā.", live: true },
+      { title: "Pronunciation correction", text: "Your chanting heard and corrected in class, name by name." },
+      { title: "Questions answered", text: "Bring any doubt about sound, meaning or practice to class." },
+      { title: "Recordings", text: "Every class is recorded, so you can revise or catch up anytime." },
+      { title: "WhatsApp support", text: "Stuck on one verse? Send a voice note to your batch group." },
+    ],
+    curriculum: {
+      intro: "About a year, a few verses each week. Every verse in Devanagari and transliteration, with its meaning.",
+      modules: [
+        { title: "Stage 1 · Foundations", text: "Sanskrit sounds, posture and saṅkalpa, the nyāsa and dhyāna ślokas, and the story of the hymn." },
+        { title: "Stage 2 · Pūrvabhāga", text: "The opening chapter: Hayagrīva and Agastya, and how the thousand names came to be." },
+        { title: "Stage 3 · Her appearance and form", text: "From Śrīmātā, the first name, to the names that describe her form from crown to feet." },
+        { title: "Stage 4 · Her city and her victory", text: "Names of her abode, and of her victory over the demon Bhaṇḍa." },
+        { title: "Stage 5 · The inner path", text: "Names of Kuṇḍalinī and the subtle centres, and of her worship." },
+        { title: "Stage 6 · Beyond form, full of grace", text: "Names that show her as both beyond all qualities and endlessly kind — up to Lalitāmbikā, the thousandth name." },
+        { title: "Stage 7 · Uttarabhāga and pārāyaṇa", text: "The closing chapter and phalaśruti, the full chant at natural pace, and a final pārāyaṇa together." },
+      ],
+    },
+    onboarding: {
+      title: "How your year begins",
+      steps: [
+        "Register and pay securely online.",
+        "Within 24 hours, we add you to your batch WhatsApp group.",
+        "Receive your course manual.",
+        "Begin in January with the foundations: sounds, nyāsa and dhyāna.",
+        "Chant daily, even if only one verse.",
+      ],
+    },
+    includes: [
+      "Live group classes · Sat & Sun, 5:30–6:30 PM IST",
+      "11–12 months, about 90 live classes",
+      "All 1,000 names, with pronunciation and meaning",
+      "Pūrvabhāga, dhyāna and phalaśruti",
+      "Recordings of every class",
+      "Course manual",
+      "Pronunciation correction in class",
+      "WhatsApp support with your batch",
+    ],
+    teachers: ["jyothi"],
+    faqs: [
+      { question: "I have never chanted Sanskrit. Can I join?", answer: "Yes. The first month starts from the sounds, and every verse is given in Devanagari and transliteration." },
+      { question: "When are the classes?", answer: "Every Saturday and Sunday, 5:30–6:30 PM India time (IST), starting January 2027. That is 12:00 noon in the UK, 4:00 PM in Dubai and 7:00 AM US Eastern." },
+      { question: "How long is the course, and how much practice do I need?", answer: "11–12 months, about 90 live classes. About 15–20 minutes of practice a day is enough to keep pace." },
+      { question: "Will I learn the meaning?", answer: "Yes — the meaning of the names, with insights from the traditional commentary." },
+      { question: "What if I miss a class?", answer: "Every class is recorded. Watch it, practise, and bring your doubts to the next class or the WhatsApp group." },
+      { question: "How do the fees work?", answer: "The amount you pay here is your registration fee and also counts as your first month's fee. Fees from the second month are collected separately; we share the details after you join." },
+      { question: "Can I get a refund?", answer: "Yes — within 7 days of payment or before your second class, whichever comes first, minus the small payment-gateway charge. See our refund policy for details." },
+      { question: "What do I need?", answer: "A phone, tablet or computer, a stable internet connection and headphones." },
+    ],
+    finalTitle: "Spend a year with the *Divine Mother*",
+    finalLine: "One verse at a time. A thousand names. One Mother.",
+    seo: {
+      title: "Learn Lalitā Sahasranāma Live | Year-long Gurukula Cohort | Mantra Academy",
+      description: "Chant all thousand names of Śrī Lalitā with clear pronunciation and meaning — live weekend classes for a year, starting January 2027. Beginners welcome.",
+    },
+  },
+
   // ---------------- Jijñāsā (children) ----------------
   "jijs": {
     share: { title: "Jijñāsā — for Children | Mantra Academy", text: "Daily prayers, ślokas and stories for children aged 4–14 — taught live, with patience." },
@@ -597,6 +721,10 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
     teachers: ["jyothi"],
   },
 };
+
+/** True for a draft course on the live site. */
+export const isHiddenCourse = (slug: string) =>
+  !!COURSE_EXPERIENCE[slug]?.draft && process.env.VERCEL_ENV === "production";
 
 export function getCourseExperience(slug: string): CourseExperience {
   return COURSE_EXPERIENCE[slug] || {};

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getAllCourses } from "../../services/courseService";
+import { getPublicCourses } from "../../services/courseService";
 import { SacredCoursesList } from "@/components/course/sacred-courses-list";
 import { cormorant, inter, tiro } from "./[slug]/fonts";
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CoursesPage() {
-  const courses = await getAllCourses();
+  const courses = await getPublicCourses();
   // Convert Mongoose documents to plain JSON-safe objects before passing to client components
   const coursesData = JSON.parse(JSON.stringify(courses || []));
   return (

@@ -293,7 +293,7 @@ export function SacredCoursePage({ course, personalPricing = DEFAULT_PERSONAL_PR
             <div>
               <div className="eyebrow" data-rv>Learning the Gurukula way</div>
               <h2 className="h" data-rv>From the Guru&apos;s voice <em>to yours</em></h2>
-              <p className="lead" data-rv>The Veda passes from mouth to ear — <i>gurumukha-paramparā</i>. This is how every class works.</p>
+              <p className="lead" data-rv>{x.gurukulaLead || "The Veda passes from mouth to ear"} — <i>gurumukha-paramparā</i>. This is how every class works.</p>
             </div>
             {completed && <div className="rstat" data-rv><b>{completed}</b><span>students have completed<br />{title}</span></div>}
           </div>

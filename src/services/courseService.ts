@@ -1,9 +1,16 @@
 import connectToDatabase from "../lib/mongodb";
 import { Course } from "../models/course";
+import { isHiddenCourse } from "../lib/course-experience";
 
 export async function getAllCourses() {
   await connectToDatabase();
   return Course.find().sort({ createdAt: -1 }).lean();
+}
+
+/** Courses visitors may see: drafts are hidden on the live site (still shown on previews and in admin). */
+export async function getPublicCourses() {
+  const all = await getAllCourses();
+  return all.filter((c: any) => !isHiddenCourse(c.slug));
 }
 
 export async function getCourseBySlug(slug: string) {
