@@ -568,6 +568,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
 
   // ---------------- Lalitā Sahasranāma (year-long cohort) ----------------
   "lalita-sahasranama": {
+    share: { title: "Śrī Lalitā Sahasranāma — Live Gurukula | Mantra Academy", text: "Chant all thousand names of Śrī Lalitā with clear pronunciation and meaning — live weekend classes for a year, starting January 2027." },
     heroAlt: "Śrī Lalitā, the Divine Mother, seated in padmāsana",
     group: "chanting",
     order: 3.5,
