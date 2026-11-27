@@ -584,7 +584,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       ["11–12 months", "about 90 live classes"],
       ["All 1,000 names", "with meaning"],
       ["Recordings", "of every class"],
-      ["Course manual", "included"],
+      ["2 course manuals", "chanting + meaning"],
     ],
     badges: [
       "Beginners welcome",
@@ -653,7 +653,7 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       steps: [
         "Register and pay securely online.",
         "Within 24 hours, we add you to your batch WhatsApp group.",
-        "Receive your course manual.",
+        "Receive your Chanting and Meaning manuals.",
         "Begin in January with the foundations: sounds, nyāsa and dhyāna.",
         "Chant daily, even if only one verse.",
       ],
@@ -664,10 +664,22 @@ export const COURSE_EXPERIENCE: Record<string, CourseExperience> = {
       "All 1,000 names, with pronunciation and meaning",
       "Pūrvabhāga, dhyāna and phalaśruti",
       "Recordings of every class",
-      "Course manual",
+      "Chanting Manual and Meaning Manual",
       "Pronunciation correction in class",
       "WhatsApp support with your batch",
     ],
+    manual: {
+      title: "Two illustrated *course manuals.*",
+      text: "A 200-page Chanting Manual with all 183 ślokas, colour-marked pronunciation and the chanting rhythm, plus a 204-page Meaning Manual that explains all 1,000 names, following Bhāskararāya.",
+      langs: "English (IAST) · Devanāgarī",
+      pages: [
+        { src: "/images/course/manual/lalita-chant-cover.webp", alt: "Lalitā Sahasranāma Chanting Manual cover" },
+        { src: "/images/course/manual/lalita-pronunciation.webp", alt: "Manual page: how to use this manual and the pronunciation key" },
+        { src: "/images/course/manual/lalita-chant-sloka.webp", alt: "Chanting Manual page: Śloka 4 with phonetics and rhythm" },
+        { src: "/images/course/manual/lalita-meaning-sloka.webp", alt: "Meaning Manual page: Śloka 4, names 13–14" },
+        { src: "/images/course/manual/lalita-meaning-cover.webp", alt: "Lalitā Sahasranāma Meaning Manual cover" },
+      ],
+    },
     teachers: ["jyothi"],
     faqs: [
       { question: "I have never chanted Sanskrit. Can I join?", answer: "Yes. The first month starts from the sounds, and every verse is given in Devanagari and transliteration." },
